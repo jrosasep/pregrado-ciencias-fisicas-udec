@@ -1,0 +1,1013 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{svg}
+\svgsetup{inkscapelatex=false}
+\DeclareUnicodeCharacter{2212}{\ensuremath{-}}
+\usepackage{amsmath,amssymb,mathtools,bm,graphicx,xcolor,float,booktabs,array,enumitem}
+\usepackage[a4paper,margin=1.6cm,top=1.35cm,bottom=1.55cm]{geometry}
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=green,
+    urlcolor=red
+]{hyperref}
+\spanishdecimal{.}
+
+\graphicspath{{figuras/}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayshortskip}{4pt}
+\setlist[itemize]{topsep=0.15em,itemsep=0.1em,leftmargin=1.6em}
+\setlist[enumerate]{topsep=0.15em,itemsep=0.1em,leftmargin=1.8em}
+\allowdisplaybreaks
+
+\newcommand{\encabezado}[3]{%
+{\Large\bfseries #1\par}
+\vspace{2pt}
+{\normalsize #2\hfill #3\par}
+\vspace{6pt}\hrule\vspace{8pt}}
+
+\newcommand{\problema}[2]{%
+\vspace{0.75em}
+\noindent\textbf{#1.}\enspace{\small #2}\par
+\vspace{0.3em}}
+
+\newcommand{\solucion}{\textbf{Solución.}\enspace}
+\newcommand{\resultado}{\textbf{Resultado.}\enspace}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\tr}{\operatorname{tr}}
+
+\begin{document}
+
+\encabezado{Certamen 1 --- Sistemas Dinámicos y Caos}{José Rosas}{8 de junio de 2026}
+
+\problema{Problema 1}{Para el mapa $g(x)=3{,}05x(1-x)$, encontrar y clasificar los puntos fijos y de período $2$.}
+
+\solucion
+Consideremos
+\begin{equation}\label{p1.g}
+g(x)=\frac{61}{20}x(1-x),
+\end{equation}
+donde $3{,}05=305/100=61/20$.
+
+Se denomina \textbf{punto fijo} de un mapa $g$ a todo punto $x\in \operatorname{Dom}(g)$ tal que $g(x)=x$. A estos puntos se les denota usualmente por $x^*$, donde $\operatorname{Dom}(g)$ representa el dominio del mapa $g$. Entonces, de la definición de punto fijo,
+\begin{align}\label{p1.ecuacion}
+g(x^*)=x^* \quad &\Rightarrow \quad \frac{61}{20}x^*(1-x^*)=x^*,\notag\\
+&\Rightarrow \quad\frac{61}{20}x^* - \frac{61}{20}(x^*)^2 -x^*=0,\notag\\
+&\Rightarrow \quad x^*\left(\frac{41}{20}-\frac{61}{20}x^*\right)=0.
+\end{align}
+La ecuación \eqref{p1.ecuacion} se satisface para $x_1^*=0$ y para
+\begin{align*}
+\frac{41}{20}-\frac{61}{20}x^*=0
+\quad &\Rightarrow \quad
+-\frac{61}{20}x_2^*=-\frac{41}{20},\\
+&\Rightarrow \quad
+x_2^*=\frac{41}{61}.
+\end{align*}
+Por lo tanto, los puntos fijos del mapa son
+\begin{equation}\label{p1.fijos}
+x_1^*=0,
+\qquad
+x_2^*=\frac{41}{61}.
+\end{equation}
+
+Para clasificar los puntos fijos hallados, debemos evaluar la derivada del mapa en cada uno de ellos. En un mapa unidimensional, si $|g'(x^*)|<1$, el punto fijo es atractor; mientras que si $|g'(x^*)|>1$, el punto fijo es repulsor. Entonces, derivando \eqref{p1.g}, se obtiene
+\begin{equation}\label{p1.derivada}
+g'(x)=\frac{61}{20}(1-2x).
+\end{equation}
+Evaluamos ahora los puntos fijos \eqref{p1.fijos} en la derivada \eqref{p1.derivada}.
+
+\begin{itemize}
+   
+
+ \item Para $x_1^*=0$, se tiene
+\begin{align*}
+g'(0)
+&=\frac{61}{20}(1-2\cdot 0)\\
+&=\frac{61}{20}.
+\end{align*}
+Luego,
+\begin{equation*}
+|g'(0)|=\frac{61}{20}>1.
+\end{equation*}
+Por consiguiente, $x_1^*=0$ es un punto fijo \textbf{repulsor}.
+
+\newpage
+
+ \item Para $x_2^*=41/61$, se tiene
+\begin{align*}
+g'\left(\frac{41}{61}\right)
+&=\frac{61}{20}\left(1-2\cdot\frac{41}{61}\right) \\
+&=\frac{61}{20}\left(\frac{61}{61}-\frac{82}{61}\right) \\
+&=\frac{61}{20}\left(-\frac{21}{61}\right) \\
+&=-\frac{21}{20}.
+\end{align*}
+Luego,
+\begin{equation*}
+\left|g'\left(\frac{41}{61}\right)\right|
+=
+\frac{21}{20}>1.
+\end{equation*}
+Por consiguiente, $x_2^*=41/61$ también es un punto fijo \textbf{repulsor}.
+\end{itemize}
+Así, \textbf{ambos puntos fijos del mapa $g(x)=3{,}05x(1-x)$ son repulsores.}
+
+Ahora buscamos los puntos de período $2$ del mapa. Recordemos que un punto $p\in \operatorname{Dom}(g)$ es un \textbf{punto de período $2$} si satisface
+\begin{equation}\label{p1.periodo2}
+g^2(p)=p,
+\end{equation}
+pero no es punto fijo, es decir,
+\begin{equation*}
+g(p)\neq p.
+\end{equation*}
+Aquí $g^2$ denota la composición del mapa consigo mismo, esto es,
+\begin{equation*}
+g^2(p)=g(g(p)).
+\end{equation*}
+
+Para el mapa logístico
+\begin{equation*}
+g(x)=\mu x(1-x),
+\end{equation*}
+la ecuación $g^2(p)=p$ contiene tanto a los puntos fijos como a los puntos de período $2$. Por esta razón, al resolverla, debemos descartar los puntos fijos encontrados anteriormente.
+
+Primero calculemos la segunda iteración del mapa. Como
+\begin{equation*}
+g(p)=\mu p(1-p),
+\end{equation*}
+entonces
+\begin{align*}
+g^2(p)
+&=g(g(p))\\
+&=\mu g(p)\left(1-g(p)\right)\\
+&=\mu\left[\mu p(1-p)\right]\left[1-\mu p(1-p)\right]\\
+&=\mu^2p(1-p)\left[1-\mu p+\mu p^2\right].
+\end{align*}
+Por lo tanto, la condición $g^2(p)=p$ queda dada por
+\begin{equation*}
+\mu^2p(1-p)\left[1-\mu p+\mu p^2\right]=p.
+\end{equation*}
+Llevando todos los términos a un mismo lado,
+\begin{equation*}
+\mu^2p(1-p)\left[1-\mu p+\mu p^2\right]-p=0.
+\end{equation*}
+Esta expresión se factoriza como
+\begin{equation*}
+-p\left(\mu p-\mu+1\right)
+\left(\mu^2p^2-\mu(\mu+1)p+(\mu+1)\right)=0.
+\end{equation*}
+
+Los dos primeros factores entregan los puntos fijos:
+\begin{equation*}
+p=0,
+\end{equation*}
+y
+\begin{equation*}
+\mu p-\mu+1=0
+\quad \Rightarrow \quad
+p=\frac{\mu-1}{\mu}.
+\end{equation*}
+Estos corresponden exactamente a los puntos fijos $x_1^*=0$ y $x_2^*=41/61$, ya encontrados en \eqref{p1.fijos}. Por lo tanto, para encontrar los puntos de período $2$, debemos resolver el factor restante:
+\begin{equation}\label{p1.periodo2.ec}
+\mu^2p^2-\mu(\mu+1)p+(\mu+1)=0.
+\end{equation}
+
+En nuestro caso, $\mu=61/20$. Así,
+\begin{equation*}
+\mu+1=\frac{61}{20}+1=\frac{81}{20}.
+\end{equation*}
+Luego, usando la fórmula cuadrática en \eqref{p1.periodo2.ec}, se obtiene
+\begin{align*}
+p_{1,2}
+&=
+\frac{\mu(\mu+1)\pm
+\sqrt{\mu^2(\mu+1)^2-4\mu^2(\mu+1)}}{2\mu^2}\\
+&=
+\frac{\mu(\mu+1)\pm
+\mu\sqrt{(\mu+1)^2-4(\mu+1)}}{2\mu^2}\\
+&=
+\frac{(\mu+1)\pm
+\sqrt{(\mu+1)(\mu-3)}}{2\mu}.
+\end{align*}
+Por tanto,
+\begin{equation}\label{p1.p12}
+    p_{1,2}=\frac{(\mu+1)\pm\sqrt{(\mu+1)(\mu-3)}}{2\mu}.
+\end{equation}
+
+Sustituyendo $\mu=61/20$ en \eqref{p1.p12}, resulta
+\begin{align*}
+p_{1,2}
+&=
+\frac{\frac{81}{20}\pm
+\sqrt{\left(\frac{81}{20}\right)\left(\frac{1}{20}\right)}}{2\cdot \frac{61}{20}}\\
+&=
+\frac{\frac{81}{20}\pm
+\sqrt{\frac{81}{400}}}{\frac{61}{10}}\\
+&=
+\frac{\frac{81}{20}\pm\frac{9}{20}}{\frac{61}{10}},
+\end{align*}
+
+\begin{equation}\label{p1.p12pm}
+    p_{1,2}=\frac{\frac{81}{20}\pm\frac{9}{20}}{\frac{61}{10}}.
+\end{equation}
+De este modo, tomando $\pm \to +$ en \eqref{p1.p12pm}, se tendrá,
+\begin{align*}
+p_1
+&=
+\frac{\frac{81}{20}+\frac{9}{20}}{\frac{61}{10}}\\
+&=
+\frac{\frac{90}{20}}{\frac{61}{10}}\\
+&=
+\frac{9}{2}\cdot\frac{10}{61}\\
+&=
+\frac{45}{61}.
+\end{align*}
+
+Tomando $\pm \to -$ en \eqref{p1.p12pm}, se tendrá,
+\begin{align*}
+p_2
+&=
+\frac{\frac{81}{20}-\frac{9}{20}}{\frac{61}{10}}\\
+&=
+\frac{\frac{72}{20}}{\frac{61}{10}}\\
+&=
+\frac{18}{5}\cdot\frac{10}{61}\\
+&=
+\frac{36}{61}.
+\end{align*}
+
+Por lo tanto, los candidatos a puntos que satisfacen \eqref{p1.periodo2} (sin considerar los puntos fijos) y son candidatos a ser puntos de período $2$ son
+\begin{equation*}
+p_1=\frac{45}{61},
+\qquad
+p_2=\frac{36}{61}.
+\end{equation*}
+
+Verifiquemos ahora que efectivamente forman una órbita de período $2$. Evaluando el mapa en $p_1=45/61$,
+\begin{align*}
+g\left(\frac{45}{61}\right)
+&=
+\frac{61}{20}\cdot\frac{45}{61}
+\left(1-\frac{45}{61}\right)\\
+&=
+\frac{61}{20}\cdot\frac{45}{61}
+\cdot\frac{16}{61}\\
+&=
+\frac{36}{61}.
+\end{align*}
+Por tanto,
+\begin{equation*}
+    g\left(\frac{45}{61}\right)=
+\frac{36}{61}.
+\end{equation*}
+Luego,
+\begin{equation*}
+g(p_1)=p_2.
+\end{equation*}
+Por otra parte,
+\begin{align*}
+g\left(\frac{36}{61}\right)
+&=
+\frac{61}{20}\cdot\frac{36}{61}
+\left(1-\frac{36}{61}\right)\\
+&=
+\frac{61}{20}\cdot\frac{36}{61}
+\cdot\frac{25}{61}\\
+&=
+\frac{45}{61}.
+\end{align*}
+Luego,
+\begin{equation*}
+g(p_2)=p_1.
+\end{equation*}
+Así, como $g(p_1)=p_2$ y $g(p_2)=p_1$, concluimos que
+\begin{equation*}
+\left\{\frac{45}{61},\frac{36}{61}\right\}
+\end{equation*}
+es una órbita de período $2$.
+
+Finalmente, debemos clasificar la estabilidad de esta órbita. Para una órbita de período $2$, el multiplicador está dado por
+\begin{equation} \label{p1.lambda}
+\lambda=(g^2)'(p_1)=g'(p_2)g'(p_1).
+\end{equation}
+Como la derivada del mapa ya fue calculada en \eqref{p1.derivada},
+\begin{equation*}
+g'(x)=\frac{61}{20}(1-2x),
+\end{equation*}
+evaluamos en los puntos de la órbita.
+
+\newpage
+
+\begin{itemize}
+    \item Para $p_1=45/61$,
+        \begin{align*}
+            g'\left(\frac{45}{61}\right)
+            &=
+            \frac{61}{20}\left(1-2\cdot\frac{45}{61}\right)\\
+            &=
+            \frac{61}{20}\left(\frac{61}{61}-\frac{90}{61}\right)\\
+            &=
+            \frac{61}{20}\left(-\frac{29}{61}\right)\\
+            &=
+            -\frac{29}{20}.
+        \end{align*}
+    Por lo tanto,
+    \begin{equation}\label{p1.gp45}
+        g'\left(\frac{45}{61}\right)=
+            -\frac{29}{20}.
+    \end{equation}
+\item Para $p_2=36/61$,
+        \begin{align*}
+        g'\left(\frac{36}{61}\right)
+        &=
+        \frac{61}{20}\left(1-2\cdot\frac{36}{61}\right)\\
+        &=
+        \frac{61}{20}\left(\frac{61}{61}-\frac{72}{61}\right)\\
+        &=
+        \frac{61}{20}\left(-\frac{11}{61}\right)\\
+        &=
+        -\frac{11}{20}.
+        \end{align*}
+    Por lo tanto,
+    \begin{equation}\label{p1.gp36}
+        g'\left(\frac{36}{61}\right)=
+        -\frac{11}{20}.
+    \end{equation}
+\end{itemize}
+Por lo tanto, el multiplicador de la órbita se obtiene reemplazando \eqref{p1.gp45} y \eqref{p1.gp36} en \eqref{p1.lambda}, 
+\begin{align*}
+\lambda
+&=
+g'\left(\frac{45}{61}\right)
+g'\left(\frac{36}{61}\right)\\
+&=
+\left(-\frac{29}{20}\right)
+\left(-\frac{11}{20}\right)\\
+&=
+\frac{319}{400}.
+\end{align*}
+Como
+\begin{equation*}
+|\lambda|=\frac{319}{400}=0{,}7975<1,
+\end{equation*}
+la órbita de período $2$ es \textbf{atractora}.
+
+En resumen, los puntos fijos
+\begin{equation*}
+x_1^*=0,
+\qquad
+x_2^*=\frac{41}{61}
+\end{equation*}
+son repulsores, mientras que la órbita de período $2$
+\begin{equation*}
+\left\{\frac{45}{61},\frac{36}{61}\right\}
+\end{equation*}
+es atractora.
+
+
+\resultado
+\begin{equation*}
+    x_1^*=0,\quad x_2^*=\frac{41}{61}\quad \text{son repulsores},
+    \qquad
+    \left\{\frac{45}{61},\frac{36}{61}\right\}\quad \text{es una 2-órbita atractora}.
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.68\textwidth]{figuras/p1_cobweb}
+    \caption{Diagrama cobweb del mapa $g(x)=3{,}05x(1-x)$, con puntos fijos y puntos de período $2$.}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problema{Problema 2}{Sea el mapa en $2$-D $g(x,y)=(x^2-5x+y,x^2)$. Encontrar y clasificar los puntos fijos de $g$ en sinks, sources o saddles.}
+
+\solucion
+Un punto fijo $(x^*,y^*)$ satisface
+\begin{equation*}
+    g(x^*,y^*)=(x^*,y^*).
+\end{equation*}
+Por tanto,
+\begin{align}
+    (x^*)^2-5x^*+y^*&=x^*,\label{p2.fijo.1}\\
+    (x^*)^2&=y^* .\label{p2.fijo.2}
+\end{align}
+Sustituyendo \eqref{p2.fijo.2} en \eqref{p2.fijo.1},
+\begin{align*}
+    (x^*)^2-5x^*+(x^*)^2&=x^*,\\
+    2(x^*)^2-6x^*&=0,\\
+    2x^*(x^*-3)&=0.
+\end{align*}
+Luego
+\begin{equation}\label{p2.fijos}
+    P_1=(0,0),\qquad P_2=(3,9).
+\end{equation}
+
+El jacobiano del mapa es
+\begin{equation}\label{p2.jac}
+    Dg(x,y)=
+    \begin{pmatrix}
+        2x-5 & 1\\
+        2x & 0
+    \end{pmatrix}.
+\end{equation}
+En $P_1=(0,0)$,
+\begin{equation*}
+    Dg(0,0)=
+    \begin{pmatrix}
+        -5 & 1\\
+        0 & 0
+    \end{pmatrix}.
+\end{equation*}
+El polinomio característico es
+\begin{equation*}
+    \det(Dg(0,0)-\lambda I)=(-5-\lambda)(-\lambda)=\lambda(\lambda+5).
+\end{equation*}
+Así,
+\begin{equation*}
+    \lambda_1=0,\qquad \lambda_2=-5.
+\end{equation*}
+Como $|\lambda_1|<1$ y $|\lambda_2|>1$, $P_1$ es un saddle.
+
+En $P_2=(3,9)$,
+\begin{equation*}
+    Dg(3,9)=
+    \begin{pmatrix}
+        1 & 1\\
+        6 & 0
+    \end{pmatrix}.
+\end{equation*}
+El polinomio característico viene dado por
+\begin{align*}
+    \det(Dg(3,9)-\lambda I)
+    &=\det
+    \begin{pmatrix}
+        1-\lambda & 1\\
+        6 & -\lambda
+    \end{pmatrix}\\
+    &=\lambda^2-\lambda-6.
+\end{align*}
+Entonces
+\begin{equation*}
+    \lambda^2-\lambda-6=0
+    \quad\Longrightarrow\quad
+    \lambda_1=3,
+    \qquad
+    \lambda_2=-2.
+\end{equation*}
+Como ambos valores propios tienen módulo mayor que $1$, $P_2$ es un source.
+
+\resultado
+\begin{equation*}
+    (0,0)\quad \text{es saddle},
+    \qquad
+    (3,9)\quad \text{es source}.
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.70\textwidth]{figuras/p2_retrato}
+    \caption{Retrato de algunas iteraciones del mapa $g(x,y)=(x^2-5x+y,x^2)$.}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\problema{Problema 3}{Tenemos el mapa en $1$-D $f(x)=x^3+x$. Encontrar todos los puntos fijos de $f$ y decidir si son atractores o repulsores. Se debe trabajar sin el Teorema 1.5, pues no es aplicable.}
+
+\solucion
+Consideremos el mapa
+\begin{equation}\label{p3.f}
+    f(x)=x^3+x.
+\end{equation}
+Un punto fijo $x^*$ de $f$ es un punto que satisface $f(x^*)=x^*$. Entonces, sustituyendo \eqref{p3.f} en la condición de punto fijo, se obtiene
+\begin{align}
+    f(x^*)=x^*
+    \quad &\Rightarrow \quad
+    (x^*)^3+x^*=x^*,\notag\\
+    &\Rightarrow \quad
+    (x^*)^3=0.
+\end{align}
+Por lo tanto, el único punto fijo del mapa es
+\begin{equation}\label{p3.fijo}
+    x^*=0.
+\end{equation}
+
+Para clasificarlo, primero observamos que
+\begin{equation}\label{p3.derivada}
+    f'(x)=3x^2+1.
+\end{equation}
+Sustituyendo \eqref{p3.fijo} en \eqref{p3.derivada}, resulta
+\begin{equation*}
+    f'(0)=1.
+\end{equation*}
+Luego, $|f'(0)|=1$. Por esta razón, el criterio lineal usual no permite decidir si el punto fijo es atractor o repulsor. En este caso es necesario comparar directamente el mapa con la recta identidad $y=x$.
+
+A partir de \eqref{p3.f}, se tiene
+\begin{equation}\label{p3.diferencia}
+    f(x)-x=x^3+x-x=x^3.
+\end{equation}
+Ahora analizamos el signo de \eqref{p3.diferencia} a ambos lados del punto fijo $x^*=0$.
+\begin{itemize}
+    \item Si $x>0$, entonces $x^3>0$. Sustituyendo esto en \eqref{p3.diferencia}, se obtiene
+    \begin{equation*}
+        f(x)-x>0,
+    \end{equation*}
+    de donde $f(x)>x$. Por lo tanto, si $x_n>0$, entonces
+    \begin{equation*}
+        x_{n+1}=f(x_n)>x_n.
+    \end{equation*}
+    La órbita queda empujada hacia la derecha y se aleja del origen.
+
+    \item Si $x<0$, entonces $x^3<0$. Sustituyendo esto en \eqref{p3.diferencia}, se obtiene
+    \begin{equation*}
+        f(x)-x<0,
+    \end{equation*}
+    de donde $f(x)<x$. Por lo tanto, si $x_n<0$, entonces
+    \begin{equation*}
+        x_{n+1}=f(x_n)<x_n.
+    \end{equation*}
+    La órbita queda empujada hacia la izquierda y también se aleja del origen.
+\end{itemize}
+
+Así, por ambos lados del punto fijo, las iteraciones se alejan de $x^*=0$. Por lo tanto, el punto fijo encontrado en \eqref{p3.fijo} es \textbf{repulsor}.
+
+\resultado
+\begin{equation*}
+    x^*=0\quad \text{es el único punto fijo de $f(x)=x^3+x$ y es repulsor.}
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.60\textwidth]{figuras/p3_cobweb}
+    \caption{Diagrama cobweb para $f(x)=x^3+x$. El punto fijo $x^*=0$ no atrae órbitas cercanas.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.60\textwidth]{figuras/p3_diferencia}
+    \caption{Signo de $f(x)-x=x^3$. Para $x>0$ el mapa queda sobre la identidad, mientras que para $x<0$ queda bajo ella.}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problema{Problema 4}{La órbita de período $2$ del mapa $f(x)=2x^2-5x$ sobre $\R$, ¿es atractora o repulsora?}
+
+\solucion
+Consideremos el mapa
+\begin{equation}\label{p4.f}
+    f(x)=2x^2-5x.
+\end{equation}
+Para estudiar una órbita de período $2$, debemos resolver la ecuación $f^2(x)=x$ y luego descartar los puntos fijos de $f$. Por esto, comenzamos determinando los puntos fijos.
+
+Un punto fijo $x^*$ satisface $f(x^*)=x^*$. Sustituyendo \eqref{p4.f} en esta condición,
+\begin{align}
+    f(x^*)=x^*
+    \quad &\Rightarrow \quad
+    2(x^*)^2-5x^*=x^*,\notag\\
+    &\Rightarrow \quad
+    2(x^*)^2-6x^*=0,\notag\\
+    &\Rightarrow \quad
+    2x^*(x^*-3)=0.
+\end{align}
+Por lo tanto, los puntos fijos son
+\begin{equation}\label{p4.fijos}
+    x_1^*=0,
+    \qquad
+    x_2^*=3.
+\end{equation}
+
+Ahora calculamos $f^2(x)=f(f(x))$. Usando \eqref{p4.f}, se tiene
+\begin{align}
+    f^2(x)
+    &=f(2x^2-5x)\notag\\
+    &=2(2x^2-5x)^2-5(2x^2-5x)\notag\\
+    &=2(4x^4-20x^3+25x^2)-10x^2+25x\notag\\
+    &=8x^4-40x^3+40x^2+25x.
+\end{align}
+Imponiendo la condición $f^2(x)=x$, resulta
+\begin{align}
+    8x^4-40x^3+40x^2+25x&=x,\notag\\
+    8x^4-40x^3+40x^2+24x&=0,\notag\\
+    8x(x^3-5x^2+5x+3)&=0.
+\end{align}
+El factor cúbico se factoriza como
+\begin{equation*}
+    x^3-5x^2+5x+3=(x-3)(x^2-2x-1).
+\end{equation*}
+Luego, la ecuación $f^2(x)=x$ queda escrita como
+\begin{equation}\label{p4.factorizacion}
+    8x(x-3)(x^2-2x-1)=0.
+\end{equation}
+Los factores $x=0$ y $x=3$ reproducen los puntos fijos encontrados en \eqref{p4.fijos}; por lo tanto, no corresponden a puntos de período $2$. Para obtener la órbita de período $2$, resolvemos el factor restante:
+\begin{align}
+    x^2-2x-1=0
+    \quad &\Rightarrow \quad
+    x=\frac{2\pm\sqrt{4+4}}{2}\notag\\
+    &\Rightarrow \quad
+    x=1\pm\sqrt{2}.
+\end{align}
+Por lo tanto, los candidatos a puntos de período $2$ son
+\begin{equation}\label{p4.puntos.periodo2}
+    p_1=1+\sqrt{2},
+    \qquad
+    p_2=1-\sqrt{2}.
+\end{equation}
+
+Verifiquemos ahora que estos puntos forman efectivamente una órbita de período $2$. Sustituyendo $p_1=1+\sqrt{2}$ en \eqref{p4.f}, se obtiene
+\begin{align*}
+    f(1+\sqrt{2})
+    &=2(1+\sqrt{2})^2-5(1+\sqrt{2})\\
+    &=2(3+2\sqrt{2})-5-5\sqrt{2}\\
+    &=1-\sqrt{2}.
+\end{align*}
+Por lo tanto, $f(p_1)=p_2$. De forma análoga,
+\begin{align*}
+    f(1-\sqrt{2})
+    &=2(1-\sqrt{2})^2-5(1-\sqrt{2})\\
+    &=2(3-2\sqrt{2})-5+5\sqrt{2}\\
+    &=1+\sqrt{2}.
+\end{align*}
+Por lo tanto, $f(p_2)=p_1$. Así, los puntos dados en \eqref{p4.puntos.periodo2} forman una órbita de período $2$.
+
+Para clasificar la estabilidad de una órbita de período $2$, usamos el multiplicador
+\begin{equation}\label{p4.mult}
+    \lambda=f'(p_1)f'(p_2).
+\end{equation}
+Derivando \eqref{p4.f}, resulta
+\begin{equation}\label{p4.derivada}
+    f'(x)=4x-5.
+\end{equation}
+Evaluamos ahora \eqref{p4.derivada} en los puntos de la órbita.
+\begin{itemize}
+    \item Para $p_1=1+\sqrt{2}$,
+    \begin{align*}
+        f'(1+\sqrt{2})
+        &=4(1+\sqrt{2})-5\\
+        &=-1+4\sqrt{2}.
+    \end{align*}
+
+    \item Para $p_2=1-\sqrt{2}$,
+    \begin{align*}
+        f'(1-\sqrt{2})
+        &=4(1-\sqrt{2})-5\\
+        &=-1-4\sqrt{2}.
+    \end{align*}
+\end{itemize}
+Sustituyendo estos valores en \eqref{p4.mult}, se obtiene
+\begin{align*}
+    \lambda
+    &=(-1+4\sqrt{2})(-1-4\sqrt{2})\\
+    &=1-(4\sqrt{2})^2\\
+    &=1-32\\
+    &=-31.
+\end{align*}
+Como $|\lambda|=31>1$, la órbita de período $2$ es \textbf{repulsora}.
+
+\resultado
+\begin{equation*}
+    \left\{1+\sqrt{2},1-\sqrt{2}\right\}
+    \quad \text{es una órbita de período $2$ repulsora.}
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.68\textwidth]{figuras/p4_periodo2}
+    \caption{Diagrama cobweb asociado a la órbita de período $2$ del mapa $f(x)=2x^2-5x$.}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problema{Problema 5}{Considerar el intervalo unitario. Una variación del conjunto de Cantor se construye eliminando dos segmentos de longitud $1/5$. En la etapa $1$, se retiran los segmentos entre $1/5$ y $2/5$, y entre $3/5$ y $4/5$. Determine la dimensión fractal.}
+
+\solucion
+Partimos del intervalo unitario $[0,1]$. En la primera etapa se eliminan los intervalos abiertos
+\begin{equation*}
+    \left(\frac{1}{5},\frac{2}{5}\right),
+    \qquad
+    \left(\frac{3}{5},\frac{4}{5}\right).
+\end{equation*}
+Después de retirar estos segmentos, quedan los tres intervalos
+\begin{equation}\label{p5.etapa1}
+    \left[0,\frac{1}{5}\right],
+    \qquad
+    \left[\frac{2}{5},\frac{3}{5}\right],
+    \qquad
+    \left[\frac{4}{5},1\right].
+\end{equation}
+Cada intervalo en \eqref{p5.etapa1} tiene longitud $1/5$ de la longitud original.
+
+La construcción se repite de manera autosimilar sobre cada uno de los intervalos que sobreviven. Es decir, en cada etapa, cada intervalo se reemplaza por tres copias de sí mismo, cada una reducida por un factor $1/5$.
+
+Por lo tanto, en esta construcción autosimilar se tiene
+\begin{equation}\label{p5.Nr}
+    N=3,
+    \qquad
+    r=\frac{1}{5},
+\end{equation}
+donde $N$ es el número de copias que sobreviven en cada etapa y $r$ es el factor de escala de cada copia.
+
+La dimensión de autosimilitud $D$ se define mediante la relación
+\begin{equation}\label{p5.def.dimension}
+    N r^D=1.
+\end{equation}
+Sustituyendo \eqref{p5.Nr} en \eqref{p5.def.dimension}, resulta
+\begin{align*}
+    3\left(\frac{1}{5}\right)^D&=1,\\
+    \left(\frac{1}{5}\right)^D&=\frac{1}{3},\\
+    5^D&=3.
+\end{align*}
+Tomando logaritmo en ambos lados,
+\begin{align*}
+    \log(5^D)&=\log 3,\\
+    D\log 5&=\log 3.
+\end{align*}
+Por lo tanto,
+\begin{equation}\label{p5.dimension}
+    D=\frac{\log 3}{\log 5}\approx 0{,}6826.
+\end{equation}
+
+También podemos obtener el mismo resultado mirando las etapas de la construcción. En la etapa $n$ sobreviven $3^n$ intervalos, y cada uno tiene longitud $5^{-n}$. Por tanto, si $\varepsilon=5^{-n}$, entonces el número de intervalos necesarios para cubrir el conjunto es $N(\varepsilon)=3^n$. Luego,
+\begin{align*}
+    D
+    &=\lim_{n\to\infty}\frac{\log N(\varepsilon)}{\log(1/\varepsilon)}\\
+    &=\lim_{n\to\infty}\frac{\log(3^n)}{\log(5^n)}\\
+    &=\frac{\log 3}{\log 5},
+\end{align*}
+lo cual coincide con \eqref{p5.dimension}.
+
+\resultado
+\begin{equation*}
+    \boxed{D=\frac{\log 3}{\log 5}\approx 0{,}6826.}
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.80\textwidth]{figuras/p5_cantor}
+    \caption{Primeras etapas de la variación del conjunto de Cantor. En cada etapa sobreviven tres copias a escala $1/5$.}
+\end{figure}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\problema{Problema 6}{Sea el mapa en $2$-D, con $a,b\in\R$: $x_{n+1}=y_n$, $y_{n+1}=-bx_n+ay_n-y_n^3$. \textbf{a)} Obtenga el diagrama de bifurcación con $b=0{,}15$ y $a\in[1{,}5,2{,}8]$. \textbf{b)} Encontrar los puntos fijos y su estabilidad para $b=0{,}15$ y $a=2{,}0$. \textbf{c)} Grafique el atractor extraño para $b=0{,}15$ y $a=2{,}75$.}
+
+\solucion
+Escribamos el mapa como
+\begin{equation}\label{p6.mapa}
+    F(x,y)=\left(y,-bx+ay-y^3\right).
+\end{equation}
+El jacobiano del mapa \eqref{p6.mapa} es
+\begin{equation}\label{p6.jac}
+    DF(x,y)=
+    \begin{pmatrix}
+        0 & 1\\
+        -b & a-3y^2
+    \end{pmatrix}.
+\end{equation}
+Además,
+\begin{equation}\label{p6.det}
+    \det DF(x,y)=b.
+\end{equation}
+Por lo tanto, para $b=0{,}15$, el mapa contrae áreas por un factor $0{,}15$ en cada iteración.
+
+\textbf{Puntos fijos generales.}
+Un punto fijo $(x^*,y^*)$ satisface
+\begin{equation*}
+    F(x^*,y^*)=(x^*,y^*).
+\end{equation*}
+Usando \eqref{p6.mapa}, esto implica
+\begin{align*}
+    x^*&=y^*,\\
+    y^*&=-bx^*+ay^*-(y^*)^3.
+\end{align*}
+De la primera ecuación, escribimos $x^*=y^*=s$. Sustituyendo esto en la segunda ecuación,
+\begin{align}
+    s&=-bs+as-s^3,\notag\\
+    0&=(a-b-1)s-s^3,\notag\\
+    0&=s(a-b-1-s^2).
+\end{align}
+Por lo tanto, siempre existe el punto fijo
+\begin{equation}\label{p6.P0}
+    P_0=(0,0),
+\end{equation}
+y, si $a-b-1>0$, existen además los puntos fijos
+\begin{equation}\label{p6.Ppm}
+    P_\pm=\left(\pm\sqrt{a-b-1},\pm\sqrt{a-b-1}\right).
+\end{equation}
+
+\textbf{Parte b). Estabilidad para $b=0{,}15$ y $a=2{,}0$.}
+En este caso,
+\begin{equation*}
+    a-b-1=2{,}0-0{,}15-1=0{,}85=\frac{17}{20}.
+\end{equation*}
+Sustituyendo este valor en \eqref{p6.P0} y \eqref{p6.Ppm}, resulta
+\begin{equation}\label{p6.fijos.a2}
+    P_0=(0,0),
+    \qquad
+    P_\pm=\left(\pm\sqrt{\frac{17}{20}},\pm\sqrt{\frac{17}{20}}\right).
+\end{equation}
+Para estudiar su estabilidad, evaluamos el jacobiano \eqref{p6.jac} en cada punto fijo.
+
+\begin{itemize}
+    \item Para $P_0=(0,0)$, se tiene
+    \begin{equation}\label{p6.jac.P0}
+        DF(0,0)=
+        \begin{pmatrix}
+            0 & 1\\
+            -0{,}15 & 2
+        \end{pmatrix}.
+    \end{equation}
+    El polinomio característico asociado a \eqref{p6.jac.P0} es
+    \begin{equation*}
+        \lambda^2-2\lambda+0{,}15=0.
+    \end{equation*}
+    Resolviendo,
+    \begin{align*}
+        \lambda_{1,2}
+        &=\frac{2\pm\sqrt{4-4(0{,}15)}}{2}\\
+        &=1\pm\sqrt{0{,}85}.
+    \end{align*}
+    Por lo tanto,
+    \begin{equation*}
+        \lambda_1\approx 1{,}922,
+        \qquad
+        \lambda_2\approx 0{,}078.
+    \end{equation*}
+    Como $|\lambda_1|>1$ y $|\lambda_2|<1$, se concluye que $P_0$ es un \textbf{saddle}.
+
+    \item Para $P_\pm$, se cumple $s^2=17/20$. Sustituyendo este valor en \eqref{p6.jac}, obtenemos
+    \begin{align*}
+        a-3s^2
+        &=2-3\frac{17}{20}\\
+        &=-\frac{11}{20}.
+    \end{align*}
+    Por lo tanto,
+    \begin{equation}\label{p6.jac.Ppm}
+        DF(P_\pm)=
+        \begin{pmatrix}
+            0 & 1\\
+            -0{,}15 & -0{,}55
+        \end{pmatrix}.
+    \end{equation}
+    El polinomio característico asociado a \eqref{p6.jac.Ppm} es
+    \begin{equation*}
+        \lambda^2+0{,}55\lambda+0{,}15=0.
+    \end{equation*}
+    Su discriminante es
+    \begin{align*}
+        \Delta
+        &=(0{,}55)^2-4(0{,}15)\\
+        &=-0{,}2975<0.
+    \end{align*}
+    Luego, los valores propios son complejos conjugados. Como su producto es $\det DF=0{,}15$, el módulo común es
+    \begin{equation*}
+        |\lambda_1|=|\lambda_2|=\sqrt{0{,}15}\approx 0{,}3873<1.
+    \end{equation*}
+    Por consiguiente, $P_+$ y $P_-$ son \textbf{sinks espirales}.
+\end{itemize}
+
+\resultado
+\begin{equation*}
+    (0,0)\quad \text{es saddle},
+    \qquad
+    \left(\pm\sqrt{0{,}85},\pm\sqrt{0{,}85}\right)
+    \quad \text{son sinks espirales}.
+\end{equation*}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.58\textwidth]{figuras/p6_estabilidad_a2}
+    \caption{Valores propios para los puntos fijos del mapa con $a=2{,}0$ y $b=0{,}15$.}
+\end{figure}
+
+\textbf{Parte a). Diagrama de bifurcación con $b=0{,}15$.}
+Para construir el diagrama de bifurcación, se fija $b=0{,}15$ y se itera el mapa \eqref{p6.mapa} para valores de $a\in[1{,}5,2{,}8]$. Para cada valor de $a$, se descarta un transiente inicial y se grafican los valores asintóticos de $x_n$.
+
+La rama fija no nula se obtiene de \eqref{p6.Ppm}. Con $b=0{,}15$, queda
+\begin{equation}\label{p6.rama}
+    s_\pm(a)=\pm\sqrt{a-1{,}15}.
+\end{equation}
+Para analizar la estabilidad de esta rama, evaluamos la traza y el determinante de \eqref{p6.jac} en $P_\pm$. Como $s^2=a-b-1$, se tiene
+\begin{align}
+    \operatorname{tr}DF(P_\pm)
+    &=a-3s^2\notag\\
+    &=a-3(a-b-1)\notag\\
+    &=-2a+3b+3.
+\end{align}
+Con $b=0{,}15$, definimos
+\begin{equation}\label{p6.tau.delta}
+    \tau=\operatorname{tr}DF(P_\pm)=3{,}45-2a,
+    \qquad
+    \delta=\det DF(P_\pm)=0{,}15.
+\end{equation}
+El polinomio característico toma la forma
+\begin{equation*}
+    \lambda^2-\tau\lambda+\delta=0.
+\end{equation*}
+Para un mapa discreto bidimensional, las condiciones de estabilidad de Jury son
+\begin{equation}\label{p6.jury}
+    1-\tau+\delta>0,
+    \qquad
+    1+\tau+\delta>0,
+    \qquad
+    1-\delta>0.
+\end{equation}
+Sustituyendo \eqref{p6.tau.delta} en \eqref{p6.jury}, resulta
+\begin{itemize}
+    \item Primera condición:
+    \begin{align*}
+        1-\tau+\delta>0
+        &\quad\Rightarrow\quad
+        1-(3{,}45-2a)+0{,}15>0\\
+        &\quad\Rightarrow\quad
+        2a-2{,}30>0\\
+        &\quad\Rightarrow\quad
+        a>1{,}15.
+    \end{align*}
+
+    \item Segunda condición:
+    \begin{align*}
+        1+\tau+\delta>0
+        &\quad\Rightarrow\quad
+        1+(3{,}45-2a)+0{,}15>0\\
+        &\quad\Rightarrow\quad
+        4{,}60-2a>0\\
+        &\quad\Rightarrow\quad
+        a<2{,}30.
+    \end{align*}
+
+    \item Tercera condición:
+    \begin{equation*}
+        1-\delta=1-0{,}15=0{,}85>0.
+    \end{equation*}
+\end{itemize}
+Por lo tanto, las ramas fijas no nulas son estables para
+\begin{equation}\label{p6.estabilidad.ramas}
+    1{,}15<a<2{,}30.
+\end{equation}
+En $a=2{,}30$ se pierde estabilidad porque un valor propio cruza el círculo unitario por $\lambda=-1$. Por consiguiente, allí ocurre una bifurcación tipo \textbf{flip}, también llamada doblamiento de período.
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.80\textwidth]{figuras/p6_bifurcacion}
+    \caption{Diagrama de bifurcación para $b=0{,}15$ y $a\in[1{,}5,2{,}8]$. Se muestran los valores asintóticos de $x_n$ después de descartar el transiente.}
+\end{figure}
+
+\textbf{Parte c). Atractor extraño para $b=0{,}15$ y $a=2{,}75$.}
+Para $a=2{,}75$ y $b=0{,}15$, el mapa \eqref{p6.mapa} queda
+\begin{equation}\label{p6.mapa.atractor}
+    x_{n+1}=y_n,
+    \qquad
+    y_{n+1}=-0{,}15x_n+2{,}75y_n-y_n^3.
+\end{equation}
+Para graficar el atractor, se itera \eqref{p6.mapa.atractor}, se descarta un transiente inicial y luego se grafican los pares $(x_n,y_n)$ restantes.
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.60\textwidth]{figuras/p6_atractor}
+    \caption{Atractor numérico para $a=2{,}75$ y $b=0{,}15$.}
+\end{figure}
+
+La figura muestra una órbita acotada con plegamiento y estructura no periódica. Además, como por \eqref{p6.det} se tiene $\det DF=b=0{,}15$, el mapa sigue siendo disipativo: contrae áreas en cada iteración. Por lo tanto, la dinámica combina contracción global con estiramiento y plegamiento local, lo cual es compatible con la aparición de un atractor extraño.
+
+Una verificación numérica adicional mediante exponentes de Lyapunov entrega aproximadamente
+\begin{equation*}
+    \lambda_1\approx 0{,}618,
+    \qquad
+    \lambda_2\approx -2{,}515.
+\end{equation*}
+El primer exponente positivo indica sensibilidad a condiciones iniciales. Además,
+\begin{equation*}
+    \lambda_1+
+    \lambda_2\approx -1{,}897\approx \log(0{,}15),
+\end{equation*}
+lo cual es consistente con la contracción de área indicada por \eqref{p6.det}.
+
+\resultado
+Para $a=2{,}75$ y $b=0{,}15$, el sistema presenta un atractor extraño numérico. La órbita permanece acotada por la contracción de área, pero posee sensibilidad a condiciones iniciales debido al exponente de Lyapunov positivo.
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[inkscapelatex=false,width=0.72\textwidth]{figuras/p6_serie_temporal}
+    \caption{Serie temporal de $x_n$ para $a=2{,}75$ y $b=0{,}15$, después de descartar el transiente.}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

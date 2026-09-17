@@ -1,0 +1,231 @@
+% Transcripción LaTeX reconstruida a partir de certamen-1.pdf.
+% La fuente original del PDF no se encontró entre los archivos disponibles.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\usepackage{lmodern}
+\geometry{margin=2.5cm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\opm}{\mathbin{\oplus_m}}
+
+\title{Certamen 1 --- Teoría de Grupos}
+\author{José Ignacio Rosas Sepúlveda}
+\date{28 de julio de 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problema 1}
+
+Sea $m$ cualquier entero positivo fijo y sea
+\[
+S=\set{0,1,2,\ldots,m-1}.
+\]
+Definir en $S$ la suma reducida al conjunto $S$ y probar que el sistema obtenido es un grupo de orden $m$.
+
+\subsection*{Solución}
+
+Sean $a,b\in S$. Como $0\leq a+b\leq 2m-2$, para reducir la suma $a+b$ al conjunto $S$ basta restar $m$ cuando $a+b\geq m$. Definimos entonces
+\[
+a\opm b:=
+\begin{cases}
+a+b, & 0\leq a+b<m,\\
+a+b-m, & m\leq a+b\leq 2m-2.
+\end{cases}
+\]
+
+\subsubsection*{A1) Clausura}
+
+Sean $a,b\in S$. Si $a+b<m$, entonces
+\[
+0\leq a\opm b=a+b\leq m-1,
+\]
+y, por tanto, $a\opm b\in S$. Si $a+b\geq m$, entonces
+\[
+0\leq a\opm b=a+b-m\leq m-2,
+\]
+y nuevamente $a\opm b\in S$. Por lo tanto,
+\[
+a,b\in S\quad\Longrightarrow\quad a\opm b\in S.
+\]
+
+\subsubsection*{A2) Asociatividad}
+
+Sean $a,b,c\in S$ y denotemos $T=a+b+c$. Como $0\leq a,b,c\leq m-1$, se tiene $0\leq T\leq 3m-3$. Compararemos las dos formas de asociar la operación.
+
+\paragraph{Caso 1: $0\leq T<m$.}
+Como $a+b\leq T<m$ y $b+c\leq T<m$, ninguna de las dos sumas parciales requiere reducción. Luego
+\[
+(a\opm b)\opm c=(a+b)+c=T=a+(b+c)=a\opm(b\opm c).
+\]
+
+\paragraph{Caso 2: $m\leq T<2m$.}
+Para el miembro izquierdo hay dos posibilidades. Si $a+b<m$, entonces
+\[
+(a\opm b)\opm c=(a+b)\opm c=T-m,
+\]
+pues $m\leq T<2m$. Si $a+b\geq m$, entonces $a\opm b=a+b-m$ y, como $0\leq T-m<m$,
+\[
+(a\opm b)\opm c=(a+b-m)+c=T-m.
+\]
+Por consiguiente, $(a\opm b)\opm c=T-m$. Aplicando el mismo razonamiento a la suma parcial $b+c$, se obtiene $a\opm(b\opm c)=T-m$. Por tanto,
+\[
+(a\opm b)\opm c=a\opm(b\opm c).
+\]
+
+\paragraph{Caso 3: $2m\leq T\leq 3m-3$.}
+Como $c\leq m-1$,
+\[
+a+b=T-c\geq 2m-(m-1)=m+1,
+\]
+de modo que $a\opm b=a+b-m$. Además, $m\leq T-m\leq 2m-3$, por lo que la segunda suma también debe reducirse:
+\[
+(a\opm b)\opm c=(a+b-m)\opm c=T-2m.
+\]
+Análogamente, como $a\leq m-1$, se tiene $b+c\geq m+1$ y, por tanto,
+\[
+a\opm(b\opm c)=T-2m.
+\]
+Luego $(a\opm b)\opm c=a\opm(b\opm c)$. Los tres casos posibles para $T$ muestran que $\oplus_m$ es asociativa.
+
+\subsubsection*{A3) Existencia de identidad}
+
+El candidato a elemento identidad es $0\in S$. Sea $a\in S$. Como $a<m$,
+\[
+a\opm 0=a+0=a,\qquad 0\opm a=0+a=a.
+\]
+Por lo tanto, $a\opm 0=0\opm a=a$ para todo $a\in S$. Luego el elemento identidad es $0$.
+
+\subsubsection*{A4) Existencia de inverso}
+
+Sea $a\in S$. Si $a=0$, su inverso es $0$, pues $0\opm 0=0$. Si $a\neq 0$, entonces $1\leq a\leq m-1$. Definimos
+\[
+a^{-1}:=m-a.
+\]
+Como $1\leq m-a\leq m-1$, se tiene $a^{-1}\in S$. Además,
+\[
+a+a^{-1}=a+(m-a)=m,
+\]
+por lo que, de acuerdo con la segunda parte de la definición, $a\opm a^{-1}=m-m=0$. Como la suma ordinaria de enteros es conmutativa, también $a^{-1}\opm a=0$. Luego todo elemento de $S$ posee inverso en $S$.
+
+\subsection*{Orden del grupo}
+
+El conjunto $S=\set{0,1,2,\ldots,m-1}$ contiene exactamente $m$ elementos. Por tanto, $|S|=m$.
+
+\subsection*{Resultado}
+
+La operación $\oplus_m$ satisface clausura, asociatividad, existencia de identidad y existencia de inverso. En consecuencia,
+\[
+(S,\oplus_m)
+\]
+es un grupo de orden $m$.
+
+\newpage
+\section*{Problema 2}
+
+Sea el grupo $(\R,+)$. Muestre que el grupo $(\Z,+)$ es un subgrupo normal de $(\R,+)$, encuentre el grupo cociente y determine a qué grupo es isomorfo.
+
+\subsection*{Solución}
+
+\subsubsection*{$(\Z,+)$ es subgrupo de $(\R,+)$}
+
+Se tiene $\Z\subset\R$ y $0\in\Z$. Sean $m,n\in\Z$. Entonces $m-n\in\Z$. Por el criterio de subgrupo,
+\[
+(\Z,+)\leq(\R,+).
+\]
+
+\subsubsection*{Normalidad}
+
+El grupo $(\R,+)$ es abeliano. Por lo tanto, todo subgrupo de $(\R,+)$ es normal. En particular,
+\[
+(\Z,+)\trianglelefteq(\R,+).
+\]
+De forma explícita, para todo $x\in\R$,
+\[
+x+\Z-x=\set{x+n-x:n\in\Z}=\Z.
+\]
+
+\subsubsection*{Grupo cociente}
+
+Los elementos de $\R/\Z$ son los cosets
+\[
+x+\Z=\set{x+n:n\in\Z},\qquad x\in\R.
+\]
+La operación del grupo cociente es la suma de cosets,
+\[
+(x+\Z)+(y+\Z):=(x+y)+\Z.
+\]
+Como $\Z$ es normal en $\R$, esta operación está bien definida.
+
+Todo coset posee un representante en el intervalo $[0,1)$. En efecto, para $x\in\R$ tomamos $n=\lfloor x\rfloor\in\Z$ y $t=x-n\in[0,1)$. Entonces $x+\Z=t+\Z$. Además, este representante es único: si $s,t\in[0,1)$ y $s+\Z=t+\Z$, entonces $s-t\in\Z$; pero $-1<s-t<1$, de modo que $s-t=0$ y $s=t$.
+
+Por lo tanto, el grupo cociente puede escribirse como
+\[
+\R/\Z=\set{t+\Z:0\leq t<1},
+\]
+con la operación
+\[
+(s+\Z)+(t+\Z)=(s+t)+\Z.
+\]
+
+\subsubsection*{Isomorfismo con el grupo circular}
+
+Consideremos el grupo circular
+\[
+(S^1,\cdot),\qquad S^1=\set{z\in\mathbb{C}:|z|=1}.
+\]
+Definimos la aplicación
+\[
+\varphi:(\R,+)\longrightarrow(S^1,\cdot),\qquad \varphi(x)=e^{2\pi i x}.
+\]
+
+\paragraph{Homomorfismo.} Sean $x,y\in\R$. Entonces
+\[
+\varphi(x+y)=e^{2\pi i(x+y)}=e^{2\pi i x}e^{2\pi i y}=\varphi(x)\varphi(y).
+\]
+Por lo tanto, $\varphi$ es un homomorfismo.
+
+\paragraph{Núcleo.} Se tiene
+\[
+\ker\varphi=\set{x\in\R:\varphi(x)=1}
+=\set{x\in\R:e^{2\pi i x}=1}=\Z.
+\]
+
+\paragraph{Sobreyectividad.} Sea $z\in S^1$. Existe $\theta\in[0,2\pi)$ tal que $z=e^{i\theta}$. Tomando $x=\theta/(2\pi)\in\R$, se obtiene
+\[
+\varphi(x)=e^{2\pi i(\theta/(2\pi))}=e^{i\theta}=z.
+\]
+Por lo tanto, $\operatorname{Im}\varphi=S^1$.
+
+Por el teorema fundamental de los homomorfismos,
+\[
+\R/\ker\varphi\cong\operatorname{Im}\varphi.
+\]
+Como $\ker\varphi=\Z$ y $\operatorname{Im}\varphi=S^1$, concluimos que
+\[
+\R/\Z\cong(S^1,\cdot).
+\]
+
+\subsection*{Resultado}
+
+Se ha demostrado que
+\[
+(\Z,+)\trianglelefteq(\R,+).
+\]
+El grupo cociente está formado por los cosets $x+\Z$ y su operación es
+\[
+(x+\Z)+(y+\Z)=(x+y)+\Z.
+\]
+Cada coset tiene un único representante en $[0,1)$ y, finalmente,
+\[
+\R/\Z\cong(S^1,\cdot).
+\]
+
+\end{document}

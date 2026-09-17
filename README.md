@@ -1,19 +1,24 @@
-# Tareas de Licenciatura en Ciencias Físicas
+# Pregrado en Ciencias Físicas — UdeC
 
-Repositorio donde recopilo tareas, certámenes, scripts y otros materiales de asignaturas cursadas.
+Repositorio personal donde recopilo tareas, certámenes, informes, problemas resueltos, scripts y otros materiales desarrollados en las asignaturas que he cursado durante la Licenciatura en Ciencias Físicas de la Universidad de Concepción, entre 2023 y 2026.
 
 ## Asignaturas
 
 - `fisica-matematica-2/`
 - `teoria-de-circuitos/`
 - `optica/`
-- `mecanica-clasica-1/` – **certámenes**.
-- `mecanica-clasica-2/` – **certámenes**.
+- `mecanica-clasica-1/` 
+- `mecanica-clasica-2/` 
 - `mecanica-de-fluidos/`
 - `electrodinamica-1/`
 - `electrodinamica-2/`
-- `relatividad-general-1/` 
-- `introducción-mecanica-cuantica/` 
-- `laboratorio2/` 
+- `relatividad-general-1/`
+- `introduccion-mecanica-cuantica/`
+- `laboratorio-2/`
+- `fisica-computacional-2/`
+- `sistemas-dinamicos/`
+- `teoria-de-grupos/`
 
+## Agradecimientos
 
+Agradezco a **Nicolás Ulloa, Gustavo Gatica, Martín Fierro, Fabián Contreras y Javier Chandia** por su colaboración en distintos trabajos desarrollados durante el pregrado, particularmente en las tareas de **Mecánica de Fluidos** y en los informes de **Laboratorio II** e **Introducción a la Mecánica Cuántica**, según corresponde.

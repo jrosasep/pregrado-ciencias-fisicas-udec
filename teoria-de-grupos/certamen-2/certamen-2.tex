@@ -1,0 +1,345 @@
+% Transcripción LaTeX reconstruida a partir de certamen-2.pdf.
+% La fuente original del PDF no se encontró entre los archivos disponibles.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage{geometry}
+\usepackage{lmodern}
+\geometry{margin=2.5cm}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\M}{\mathrm{M}}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\kerp}{\operatorname{ker}}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+\title{Certamen 2 --- Introducción a la Teoría de Grupos}
+\author{José Ignacio Rosas Sepúlveda}
+\date{10 de julio de 2026}
+
+\begin{document}
+\maketitle
+
+\section*{Problema}
+
+Muestre que
+\[
+\SU(2)/\mathbb{Z}_2\cong\SO(3).
+\]
+
+\section*{Solución}
+
+La idea de la demostración consiste en construir un homomorfismo sobreyectivo
+\[
+\Phi:\SU(2)\longrightarrow\SO(3)
+\]
+cuya pérdida de información sea exactamente el subgrupo de dos elementos
+\[
+\mathbb{Z}_2=\set{I_2,-I_2}.
+\]
+Luego, usando el teorema fundamental de los homomorfismos, se obtendrá
+\[
+\SU(2)/\ker\Phi\cong\SO(3),
+\]
+y como $\ker\Phi=\mathbb{Z}_2$, seguirá el resultado pedido.
+
+\subsection*{Grupos involucrados}
+
+Recordemos que
+\[
+\SU(2)=\set{U\in\M_2(\C):U^\dagger U=I_2,\ \det U=1},
+\]
+y
+\[
+\SO(3)=\set{R\in\M_3(\R):R^{\mathsf T}R=I_3,\ \det R=1}.
+\]
+El grupo $\SU(2)$ está formado por matrices unitarias complejas de determinante uno, mientras que $\SO(3)$ está formado por rotaciones reales tridimensionales.
+
+Dentro de $\SU(2)$ consideramos el subconjunto
+\[
+\mathbb{Z}_2=\set{I_2,-I_2}.
+\]
+Este conjunto es un subgrupo de $\SU(2)$, pues
+\[
+I_2I_2=I_2,\qquad I_2(-I_2)=-I_2,\qquad (-I_2)^2=I_2.
+\]
+Además,
+\[
+\det(I_2)=1,\qquad \det(-I_2)=(-1)^2\det(I_2)=1,
+\]
+por lo que $I_2,-I_2\in\SU(2)$. Este subgrupo es isomorfo al grupo cíclico de dos elementos. Por abuso usual de notación, escribiremos el mismo símbolo $\mathbb{Z}_2$ para este subgrupo central de $\SU(2)$. Como $I_2$ y $-I_2$ conmutan con toda matriz $U\in\SU(2)$, se tiene
+\[
+U\mathbb{Z}_2U^{-1}=\mathbb{Z}_2,\qquad \forall U\in\SU(2).
+\]
+Por lo tanto,
+\[
+\mathbb{Z}_2\trianglelefteq\SU(2),
+\]
+y el grupo cociente $\SU(2)/\mathbb{Z}_2$ está bien definido.
+
+\subsection*{Matrices de Pauli y representación de vectores de $\R^3$}
+
+Consideremos las matrices de Pauli
+\[
+\sigma_1=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+\sigma_2=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\qquad
+\sigma_3=\begin{pmatrix}1&0\\0&-1\end{pmatrix}.
+\]
+Estas matrices satisfacen
+\[
+\sigma_i\sigma_j=\delta_{ij}I_2+i\varepsilon_{ijk}\sigma_k,
+\]
+donde $\varepsilon_{ijk}$ es el símbolo de Levi--Civita. En particular, para $\vect a,\vect b\in\R^3$,
+\[
+(\vect a\cdot\vect\sigma)(\vect b\cdot\vect\sigma)
+=(\vect a\cdot\vect b)I_2+i(\vect a\times\vect b)\cdot\vect\sigma.
+\]
+
+A cada vector $\vect x=(x_1,x_2,x_3)\in\R^3$ le asociamos la matriz
+\[
+X(\vect x)=\vect x\cdot\vect\sigma=x_1\sigma_1+x_2\sigma_2+x_3\sigma_3.
+\]
+En forma explícita,
+\[
+X(\vect x)=
+\begin{pmatrix}
+x_3&x_1-ix_2\\
+x_1+ix_2&-x_3
+\end{pmatrix}.
+\]
+Esta matriz es hermítica y de traza cero:
+\[
+X(\vect x)^\dagger=X(\vect x),\qquad \tr X(\vect x)=0.
+\]
+Además,
+\[
+X(\vect x)^2=(\vect x\cdot\vect x)I_2=|\vect x|^2I_2,
+\]
+y, por lo tanto,
+\[
+\det X(\vect x)=-|\vect x|^2.
+\]
+Así, la norma euclidiana de $\vect x$ queda codificada en el determinante de la matriz $X(\vect x)$.
+
+\subsection*{Construcción del homomorfismo $\Phi:\SU(2)\to\SO(3)$}
+
+Sea $U\in\SU(2)$. Definimos una transformación sobre las matrices $X(\vect x)$ por conjugación:
+\[
+X(\vect x)\longmapsto UX(\vect x)U^\dagger.
+\]
+Como $U$ es unitaria, se tiene $U^\dagger=U^{-1}$. Además, si $X(\vect x)$ es hermítica y de traza cero, entonces $UX(\vect x)U^\dagger$ también es hermítica y de traza cero. En efecto,
+\[
+\bigl(UX(\vect x)U^\dagger\bigr)^\dagger
+=UX(\vect x)^\dagger U^\dagger
+=UX(\vect x)U^\dagger,
+\]
+y
+\[
+\tr\bigl(UX(\vect x)U^\dagger\bigr)
+=\tr\bigl(U^\dagger U X(\vect x)\bigr)
+=\tr X(\vect x)=0.
+\]
+Por lo tanto, existe un único vector $\vect x'\in\R^3$ tal que
+\[
+UX(\vect x)U^\dagger=X(\vect x').
+\]
+Definimos entonces $\Phi(U)$ mediante la relación
+\[
+X\bigl(\Phi(U)\vect x\bigr)=UX(\vect x)U^\dagger,\qquad \vect x\in\R^3.
+\]
+La transformación $\Phi(U):\R^3\to\R^3$ es lineal, pues la conjugación por $U$ es lineal en $X(\vect x)$.
+
+Mostremos ahora que $\Phi(U)$ preserva la norma. Usando la invariancia del determinante bajo conjugación,
+\begin{align*}
+-|\Phi(U)\vect x|^2
+&=\det X\bigl(\Phi(U)\vect x\bigr)\\
+&=\det\bigl(UX(\vect x)U^\dagger\bigr)\\
+&=\det(U)\det X(\vect x)\det(U^\dagger)\\
+&=1\cdot\det X(\vect x)\cdot1\\
+&=-|\vect x|^2.
+\end{align*}
+Luego $|\Phi(U)\vect x|=|\vect x|$ para todo $\vect x\in\R^3$. Por lo tanto, $\Phi(U)\in O(3)$.
+
+Falta ver que el determinante es $+1$. Recordemos que todo elemento de $\SU(2)$ puede escribirse en la forma
+\[
+U=\begin{pmatrix}\alpha&\beta\\-\beta^*&\alpha^*\end{pmatrix},
+\qquad |\alpha|^2+|\beta|^2=1.
+\]
+Por tanto, como variedad real, $\SU(2)$ se identifica con la esfera $S^3$, y en particular es conexo. Como $\Phi$ es continua, la función
+\[
+U\longmapsto\det\Phi(U)
+\]
+toma valores en el conjunto discreto $\{+1,-1\}$. Por continuidad, no puede cambiar de signo dentro de $\SU(2)$. Como $\Phi(I_2)=I_3$, se tiene $\det\Phi(I_2)=1$. Así,
+\[
+\det\Phi(U)=1,\qquad \forall U\in\SU(2).
+\]
+Concluimos que $\Phi(U)\in\SO(3)$.
+
+\subsection*{$\Phi$ es homomorfismo}
+
+Sean $U,V\in\SU(2)$. Entonces
+\begin{align*}
+X\bigl(\Phi(UV)\vect x\bigr)
+&=(UV)X(\vect x)(UV)^\dagger\\
+&=UVX(\vect x)V^\dagger U^\dagger\\
+&=U\bigl(VX(\vect x)V^\dagger\bigr)U^\dagger\\
+&=UX\bigl(\Phi(V)\vect x\bigr)U^\dagger\\
+&=X\bigl(\Phi(U)\Phi(V)\vect x\bigr).
+\end{align*}
+Como la correspondencia $\vect x\mapsto X(\vect x)$ es inyectiva, se obtiene
+\[
+\Phi(UV)\vect x=\Phi(U)\Phi(V)\vect x,\qquad \forall\vect x\in\R^3.
+\]
+Luego $\Phi(UV)=\Phi(U)\Phi(V)$. Por lo tanto, $\Phi$ es un homomorfismo de grupos.
+
+\subsection*{Cálculo del núcleo}
+
+El núcleo de $\Phi$ está dado por
+\[
+\kerp\Phi=\set{U\in\SU(2):\Phi(U)=I_3}.
+\]
+Si $U\in\kerp\Phi$, entonces $X(\Phi(U)\vect x)=X(\vect x)$ para todo $\vect x\in\R^3$. Pero, por definición de $\Phi$,
+\[
+UX(\vect x)U^\dagger=X(\vect x),\qquad \forall\vect x\in\R^3.
+\]
+Multiplicando a la derecha por $U$, se obtiene
+\[
+UX(\vect x)=X(\vect x)U,\qquad \forall\vect x\in\R^3.
+\]
+En particular, $U$ conmuta con las tres matrices de Pauli: $U\sigma_i=\sigma_iU$, $i=1,2,3$.
+
+Escribamos
+\[
+U=\begin{pmatrix}a&b\\c&d\end{pmatrix}.
+\]
+Primero, de $U\sigma_3=\sigma_3U$, se tiene
+\[
+\begin{pmatrix}a&-b\\c&-d\end{pmatrix}
+=\begin{pmatrix}a&b\\-c&-d\end{pmatrix}.
+\]
+Por lo tanto, $b=0$, $c=0$, y así
+\[
+U=\begin{pmatrix}a&0\\0&d\end{pmatrix}.
+\]
+Ahora, de $U\sigma_1=\sigma_1U$, se obtiene
+\[
+\begin{pmatrix}0&a\\d&0\end{pmatrix}
+=\begin{pmatrix}0&d\\a&0\end{pmatrix}.
+\]
+Luego $a=d$ y, por tanto, $U=aI_2$. Como $U\in\SU(2)$, se cumple $\det U=1$. Pero $\det(aI_2)=a^2$. Entonces $a^2=1$, y de aquí $a=\pm1$. Por lo tanto,
+\[
+\kerp\Phi=\set{I_2,-I_2}=\mathbb{Z}_2.
+\]
+
+\subsection*{Sobreyectividad de $\Phi$}
+
+Mostraremos ahora que toda rotación de $\SO(3)$ proviene de algún elemento de $\SU(2)$. Sea $\vect n\in\R^3$ un vector unitario, $|\vect n|=1$, y sea $\theta\in\R$. Definimos
+\[
+N=\vect n\cdot\vect\sigma.
+\]
+Como $|\vect n|=1$, se tiene $N^2=I_2$. Consideremos ahora la matriz
+\[
+U_{\vect n,\theta}=\cos\left(\frac{\theta}{2}\right)I_2-i\sin\left(\frac{\theta}{2}\right)N.
+\]
+Esta matriz pertenece a $\SU(2)$. En efecto,
+\begin{align*}
+U_{\vect n,\theta}^\dagger U_{\vect n,\theta}
+&=\left(\cos\frac{\theta}{2}I_2+i\sin\frac{\theta}{2}N\right)
+  \left(\cos\frac{\theta}{2}I_2-i\sin\frac{\theta}{2}N\right)\\
+&=\cos^2\frac{\theta}{2}I_2+\sin^2\frac{\theta}{2}N^2\\
+&=I_2.
+\end{align*}
+Además, como $N$ tiene autovalores $+1$ y $-1$, los autovalores de $U_{\vect n,\theta}$ son $e^{-i\theta/2}$ y $e^{i\theta/2}$. Por lo tanto,
+\[
+\det U_{\vect n,\theta}=e^{-i\theta/2}e^{i\theta/2}=1,
+\]
+y así $U_{\vect n,\theta}\in\SU(2)$.
+
+Calculemos ahora la acción inducida sobre $\R^3$. Escribamos
+\[
+c=\cos\left(\frac{\theta}{2}\right),\qquad s=\sin\left(\frac{\theta}{2}\right).
+\]
+Entonces $U_{\vect n,\theta}=cI_2-isN$ y $U_{\vect n,\theta}^\dagger=cI_2+isN$. Para $X(\vect x)=\vect x\cdot\vect\sigma$, se tiene
+\begin{align*}
+U_{\vect n,\theta}X(\vect x)U_{\vect n,\theta}^\dagger
+&=(cI_2-isN)X(\vect x)(cI_2+isN)\\
+&=c^2X(\vect x)+ics\bigl(X(\vect x)N-NX(\vect x)\bigr)+s^2NX(\vect x)N.
+\end{align*}
+Usando la identidad de Pauli, se obtiene
+\[
+X(\vect x)N-NX(\vect x)=2i(\vect x\times\vect n)\cdot\vect\sigma=-2i(\vect n\times\vect x)\cdot\vect\sigma,
+\]
+y también
+\[
+NX(\vect x)N=\bigl(2(\vect n\cdot\vect x)\vect n-\vect x\bigr)\cdot\vect\sigma.
+\]
+Luego
+\[
+U_{\vect n,\theta}X(\vect x)U_{\vect n,\theta}^\dagger
+=\bigl[(c^2-s^2)\vect x+2cs(\vect n\times\vect x)+2s^2(\vect n\cdot\vect x)\vect n\bigr]\cdot\vect\sigma.
+\]
+Como $c^2-s^2=\cos\theta$, $2cs=\sin\theta$ y $2s^2=1-\cos\theta$, resulta
+\[
+U_{\vect n,\theta}X(\vect x)U_{\vect n,\theta}^\dagger
+=X\bigl(\cos\theta\,\vect x+\sin\theta(\vect n\times\vect x)+(1-\cos\theta)(\vect n\cdot\vect x)\vect n\bigr).
+\]
+La expresión vectorial
+\[
+R_{\vect n,\theta}\vect x=\cos\theta\,\vect x+\sin\theta(\vect n\times\vect x)+(1-\cos\theta)(\vect n\cdot\vect x)\vect n
+\]
+es la fórmula de Rodrigues para una rotación en $\R^3$ de ángulo $\theta$ alrededor del eje $\vect n$. Por lo tanto,
+\[
+\Phi(U_{\vect n,\theta})=R_{\vect n,\theta}.
+\]
+
+Pero todo elemento de $\SO(3)$ es una rotación de este tipo. En efecto, si $R\in\SO(3)$, entonces $R$ es una matriz ortogonal real de dimensión tres y determinante uno. Sus autovalores tienen módulo uno y, al ser el polinomio característico de grado impar, existe al menos un autovalor real. La condición $\det R=1$ fuerza que ese autovalor real sea $1$. Por lo tanto, existe un vector unitario $\vect n$ tal que $R\vect n=\vect n$. El plano perpendicular a $\vect n$ queda invariante y la restricción de $R$ a dicho plano es una rotación plana de cierto ángulo $\theta$. Así, existe un eje unitario $\vect n$ y un ángulo $\theta$ tales que $R=R_{\vect n,\theta}$.
+
+En consecuencia, para todo $R\in\SO(3)$ existe $U_{\vect n,\theta}\in\SU(2)$ tal que $\Phi(U_{\vect n,\theta})=R$. Así, $\im\Phi=\SO(3)$ y $\Phi$ es sobreyectiva.
+
+\subsection*{Aplicación del teorema fundamental de los homomorfismos}
+
+Hemos construido un homomorfismo sobreyectivo
+\[
+\Phi:\SU(2)\longrightarrow\SO(3),
+\]
+con núcleo
+\[
+\kerp\Phi=\set{I_2,-I_2}=\mathbb{Z}_2.
+\]
+Por el teorema fundamental de los homomorfismos,
+\[
+\SU(2)/\kerp\Phi\cong\im\Phi.
+\]
+Como $\im\Phi=\SO(3)$, se concluye que
+\[
+\SU(2)/\mathbb{Z}_2\cong\SO(3).
+\]
+
+\subsection*{Resultado}
+
+El homomorfismo
+\[
+\Phi:\SU(2)\longrightarrow\SO(3)
+\]
+definido por
+\[
+X\bigl(\Phi(U)\vect x\bigr)=UX(\vect x)U^\dagger
+\]
+es sobreyectivo y tiene núcleo
+\[
+\kerp\Phi=\set{I_2,-I_2}\cong\mathbb{Z}_2.
+\]
+Por lo tanto,
+\[
+\SU(2)/\mathbb{Z}_2\cong\SO(3).
+\]
+Esto significa que $\SU(2)$ cubre dos veces a $\SO(3)$: los elementos $U$ y $-U$ de $\SU(2)$ representan la misma rotación en $\SO(3)$.
+
+\end{document}
