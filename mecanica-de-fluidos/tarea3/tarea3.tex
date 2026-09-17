@@ -1,0 +1,429 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,mathtools,bm,graphicx,xcolor}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage[
+    colorlinks=true,
+    linkcolor=red,
+    citecolor=green,
+    urlcolor=red
+]{hyperref}
+\spanishdecimal{.}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{4pt}
+\setlength{\belowdisplayshortskip}{4pt}
+
+\newcommand{\encabezado}[3]{%
+{\Large\bfseries #1\par}
+\vspace{2pt}
+{\normalsize #2\hfill #3\par}
+\vspace{6pt}\hrule\vspace{8pt}}
+
+\newcommand{\problema}[2]{%
+\vspace{0.55em}
+\noindent\textbf{#1.}\enspace #2\par
+\vspace{0.3em}}
+
+\newcommand{\inciso}[1]{\vspace{0.35em}\noindent\textbf{(#1)}\enspace}
+
+\begin{document}
+
+\encabezado{Tarea 3 -- Mecánica de Fluidos}{Gustavo Gatica, José Rosas, Nicolás Ulloa}{Domingo 21 de junio de 2026}
+
+\noindent\textbf{Pregunta 1 (1 pt).} Un flujo irrotacional e incompresible satisface simultáneamente $\vec u=\nabla\phi$ y $\vec u=\nabla\times\vec\psi$, donde $\vec u$ es el campo de velocidades del fluido, $\phi$ el potencial de velocidades y $\vec\psi$ el potencial de flujo.
+
+\textbf{(a)} Si el flujo es bidimensional, demuestre que en coordenadas polares con $\vec\psi=\psi(r,\theta)\hat z$ se cumplen las ecuaciones de Cauchy--Riemann:
+\begin{equation}
+\frac{\partial\phi}{\partial r}=\frac{1}{r}\frac{\partial\psi}{\partial\theta},
+\qquad
+\frac{1}{r}\frac{\partial\phi}{\partial\theta}=-\frac{\partial\psi}{\partial r}.
+\label{eq:enun-cr-polares}
+\end{equation}
+
+\textbf{(b)} Use las ecuaciones de Cauchy--Riemann en coordenadas polares para demostrar que $w(z)=\phi(r,\theta)+i\psi(r,\theta)$, con $z=re^{i\theta}$, es una función analítica, es decir, que su derivada compleja existe. Argumente además por qué, en general, $f(z)=\psi(r,\theta)+i\phi(r,\theta)$ no puede ser una función analítica.
+
+\textbf{(c)} Demuestre que las componentes polares del campo de velocidades pueden obtenerse a partir de la derivada del potencial complejo mediante
+\begin{equation}
+ u_r-iu_\theta=e^{i\theta}\frac{dw}{dz}.
+\label{eq:enun-vel-polar}
+\end{equation}
+
+\noindent\textbf{Solución.}
+\inciso{a} En coordenadas polares, las dos representaciones del mismo campo de velocidades son
+\begin{equation}
+\vec u=\nabla\phi=\frac{\partial\phi}{\partial r}\hat r+
+\frac1r\frac{\partial\phi}{\partial\theta}\hat\theta,
+\qquad
+\vec u=\nabla\times(\psi\hat z)=\frac1r\frac{\partial\psi}{\partial\theta}\hat r-
+\frac{\partial\psi}{\partial r}\hat\theta .
+\label{eq:p1-campos}
+\end{equation}
+La segunda igualdad se obtiene al extender el flujo polar a coordenadas cilíndricas e imponer independencia en $z$. Igualando componente a componente en la base ortonormal local $\{\hat r,\hat\theta\}$, se obtiene
+\begin{equation}
+\frac{\partial\phi}{\partial r}=\frac1r\frac{\partial\psi}{\partial\theta},
+\qquad
+\frac1r\frac{\partial\phi}{\partial\theta}=-\frac{\partial\psi}{\partial r}.
+\label{eq:cr-polares}
+\end{equation}
+Estas son las ecuaciones de Cauchy--Riemann escritas en coordenadas polares.
+
+\inciso{b} Sea $w=\phi+i\psi$. Si el límite que define $dw/dz$ se toma manteniendo $\theta$ fijo, entonces $dz=e^{i\theta}dr$, de modo que
+\begin{equation}
+\left.\frac{dw}{dz}\right|_{\theta}=e^{-i\theta}
+\left(\frac{\partial\phi}{\partial r}+i\frac{\partial\psi}{\partial r}\right).
+\label{eq:der-r}
+\end{equation}
+Si el límite se toma manteniendo $r$ fijo, entonces $dz=ire^{i\theta}d\theta$ y
+\begin{equation}
+\left.\frac{dw}{dz}\right|_{r}=\frac{e^{-i\theta}}{ir}
+\left(\frac{\partial\phi}{\partial\theta}+i\frac{\partial\psi}{\partial\theta}\right).
+\label{eq:der-theta}
+\end{equation}
+Sustituyendo \eqref{eq:cr-polares} en \eqref{eq:der-theta} se obtiene exactamente \eqref{eq:der-r}. Por tanto, la derivada compleja no depende de estas dos direcciones independientes de aproximación; si $\phi$ y $\psi$ tienen derivadas parciales continuas, $w$ es analítica salvo en las singularidades del flujo.
+
+En cambio, si $f=\psi+i\phi$ fuese analítica, debería cumplir
+\begin{equation}
+\frac{\partial\psi}{\partial r}=\frac1r\frac{\partial\phi}{\partial\theta},
+\qquad
+\frac1r\frac{\partial\psi}{\partial\theta}=-\frac{\partial\phi}{\partial r}.
+\label{eq:cr-intercambiadas}
+\end{equation}
+Comparando \eqref{eq:cr-intercambiadas} con \eqref{eq:cr-polares}, se obtiene $\partial_r\phi=\partial_\theta\phi=\partial_r\psi=\partial_\theta\psi=0$. Luego, excepto para potenciales constantes, $\psi+i\phi$ no es analítica.
+
+\inciso{c} De \eqref{eq:p1-campos}, $u_r=\partial_r\phi$ y $u_\theta=r^{-1}\partial_\theta\phi$. Además, por \eqref{eq:cr-polares}, $\partial_r\psi=-r^{-1}\partial_\theta\phi=-u_\theta$. Sustituyendo estas identidades en \eqref{eq:der-r},
+\begin{equation}
+\frac{dw}{dz}=e^{-i\theta}(u_r-iu_\theta),
+\qquad
+u_r-iu_\theta=e^{i\theta}\frac{dw}{dz}.
+\label{eq:vel-polar-compleja}
+\end{equation}
+
+\noindent\textbf{Pregunta 2 (1 pt).} Considere dos líneas de vórtice paralelas al eje $\hat z$, modeladas en el plano complejo como dos vórtices puntuales de circulaciones $\Gamma_+$ y $\Gamma_-$. El vórtice de circulación $\Gamma_\pm$ se encuentra inicialmente en $\pm z_0$, con $z_0\neq0$. Si $\Gamma_++\Gamma_-\neq0$, demuestre que los dos vórtices rotan alrededor de un punto fijo ubicado sobre la línea que une ambos vórtices, y encuentre dicho punto y la velocidad angular de rotación del par. En el caso especial $\Gamma_-=-\Gamma_+$, demuestre que forman un dipolo que se traslada rígidamente con velocidad constante, y encuentre dicha velocidad.
+
+\noindent\textbf{Solución.}
+Sean $z_+(t)$ y $z_-(t)$ las posiciones de los vórtices. Para un vórtice de circulación $\Gamma$ ubicado en $c$,
+\begin{equation}
+w(z)=-\frac{i\Gamma}{2\pi}\ln(z-c),
+\qquad
+\frac{dw}{dz}=u_x-iu_y=-\frac{i\Gamma}{2\pi(z-c)}.
+\label{eq:vortice-potencial}
+\end{equation}
+La velocidad física es $\dot z=u_x+iu_y=(dw/dz)^*$. Evaluando \eqref{eq:vortice-potencial} en la posición de cada vórtice, y conservando solo la contribución inducida por el otro, se obtiene
+\begin{equation}
+\dot z_+=\frac{i\Gamma_-}{2\pi (z_+-z_-)^*},
+\qquad
+\dot z_- =\frac{i\Gamma_+}{2\pi (z_--z_+)^*}.
+\label{eq:vortices-edo}
+\end{equation}
+Con $r=z_+-z_-$, las ecuaciones \eqref{eq:vortices-edo} dan
+\begin{equation}
+\dot r=\frac{i(\Gamma_++\Gamma_-)}{2\pi r^*},
+\qquad
+\frac{d}{dt}|r|^2=\dot r r^*+r\dot r^*=0.
+\label{eq:relativa-vortices}
+\end{equation}
+Luego la distancia entre vórtices es constante; en particular, $|r|=2|z_0|$.
+
+Para $\Gamma_++\Gamma_-\ne0$ definimos
+\begin{equation}
+z_f=\frac{\Gamma_+z_+ +\Gamma_-z_-}{\Gamma_++\Gamma_-}.
+\label{eq:centro-vorticidad}
+\end{equation}
+Derivando \eqref{eq:centro-vorticidad} y sustituyendo \eqref{eq:vortices-edo},
+\begin{equation}
+(\Gamma_++\Gamma_-)\dot z_f=
+\frac{i\Gamma_+\Gamma_-}{2\pi r^*}-\frac{i\Gamma_-\Gamma_+}{2\pi r^*}=0.
+\label{eq:zf-fijo}
+\end{equation}
+Por tanto, $z_f$ es fijo. Además, $z_f=z_-+\lambda(z_+-z_-)$, con $\lambda=\Gamma_+/(\Gamma_++\Gamma_-)$, de modo que $z_f$ está sobre la recta que une ambos vórtices. Como $1/r^*=r/|r|^2$, \eqref{eq:relativa-vortices} puede escribirse como
+\begin{equation}
+\dot r=i\omega r,
+\qquad
+\omega=\frac{\Gamma_++\Gamma_-}{2\pi |r|^2}
+       =\frac{\Gamma_++\Gamma_-}{8\pi |z_0|^2}.
+\label{eq:omega-vortices}
+\end{equation}
+Así, ambos vórtices rotan rígidamente alrededor de $z_f$ con velocidad angular \eqref{eq:omega-vortices}.
+
+Si $\Gamma_-=-\Gamma_+$, entonces \eqref{eq:relativa-vortices} entrega $\dot r=0$; la separación y la orientación del par permanecen constantes. Evaluando \eqref{eq:vortices-edo} en $r(0)=2z_0$,
+\begin{equation}
+\dot z_+=\dot z_-=\frac{i\Gamma_-}{4\pi z_0^*}
+             =-\frac{i\Gamma_+}{4\pi z_0^*}.
+\label{eq:dipolo-velocidad}
+\end{equation}
+Por consiguiente, el dipolo se traslada rígidamente con la velocidad compleja constante \eqref{eq:dipolo-velocidad}, perpendicular a la línea que une los vórtices.
+
+\noindent\textbf{Pregunta 3 (4 pts).} Un fluido bidimensional, incompresible e irrotacional, se encuentra contenido en la región acotada por dos placas rectas infinitas que forman un ángulo $\alpha$ y por una pared en forma de arco circular de radio $a$, centrada en el punto donde se juntarían las placas rectas, como se muestra en la figura 1. A una distancia $r_0>a$ y ángulo $\theta_0$ tal que $|\theta_0|<\alpha/2$ hay una fuente puntual de potencia $m$. Se supone que no hay flujo normal a través de las paredes.
+
+\textbf{(a)} Resuelva explícitamente la ecuación de Poisson para el potencial de velocidades (argumente por qué existe este potencial), usando separación de variables en coordenadas polares y las condiciones de borde adecuadas para el problema. Encuentre las componentes polares del campo de velocidades. Hint: La fuente se representa por una combinación de $\delta(r-r_0)$ y $\delta(\theta-\theta_0)$. Se recomienda expandir $\delta(\theta-\theta_0)$ en las funciones propias del problema asociado a esta geometría para luego integrar explícitamente en $r$.
+
+\textbf{(b)} Resuelva nuevamente el problema, esta vez usando técnicas de potenciales complejos a partir del potencial de una fuente puntual $w_0(\xi)=(m/2\pi)\ln(\xi-\xi_0)$. Calcule la velocidad compleja y, a partir de ella, encuentre las componentes polares del campo de velocidades de esta forma. Hint: Es posible que requiera cuatro transformaciones: una rotación, un mapeo tipo ley de potencia, el teorema del círculo de Milne--Thomson y el método de imágenes.
+
+\textbf{(c)} Compare los resultados de ambos métodos de resolución y demuestre que son equivalentes. Complemente el análisis con figuras de las líneas de flujo.
+
+\noindent\textbf{Solución.}
+El dominio físico es
+\begin{equation}
+D=\{(r,\theta): r>a,\ -\alpha/2<\theta<\alpha/2\}.
+\label{eq:dominio}
+\end{equation}
+Como $\nabla\times\vec u=0$, existe un potencial de velocidades $\phi$ en $D\setminus\{(r_0,\theta_0)\}$ tal que $\vec u=\nabla\phi$. La fuente puntual impone
+\begin{equation}
+\nabla^2\phi=\frac1r\partial_r(r\partial_r\phi)+\frac1{r^2}\partial_\theta^2\phi
+=\frac{m}{r}\delta(r-r_0)\delta(\theta-\theta_0),
+\label{eq:poisson}
+\end{equation}
+con condiciones de impermeabilidad
+\begin{equation}
+\partial_r\phi(a,\theta)=0,
+\qquad
+\partial_\theta\phi(r,\pm\alpha/2)=0.
+\label{eq:neumann}
+\end{equation}
+La primera condición corresponde al arco circular y la segunda a las placas.
+
+
+\inciso{a} Conviene escribir primero la separación de variables del problema homogéneo asociado. Definimos
+\begin{equation}
+\eta=\theta+\frac{\alpha}{2},
+\qquad 0<\eta<\alpha,
+\label{eq:eta}
+\end{equation}
+de modo que las placas corresponden a $\eta=0$ y $\eta=\alpha$. Para $r\ne r_0$ se tiene $\nabla^2\phi=0$, por lo que buscamos modos de la forma $\phi(r,\theta)=R(r)\Theta(\theta)$. Al sustituir en la ecuación de Laplace resulta
+\begin{equation}
+\frac{r}{R}\frac{d}{dr}\left(r\frac{dR}{dr}\right)
+=-\frac1\Theta\frac{d^2\Theta}{d\theta^2}=\lambda.
+\label{eq:sep-p3}
+\end{equation}
+La condición de no flujo normal en las placas es $u_\theta=(1/r)\partial_\theta\phi=0$ en $\theta=\pm\alpha/2$. Por tanto, la parte angular debe satisfacer
+\begin{equation}
+\Theta''+\lambda\Theta=0,
+\qquad
+\Theta'(0)=\Theta'(\alpha)=0,
+\label{eq:angular-neumann-p3}
+\end{equation}
+donde ahora la prima angular se entiende respecto de $\eta$. Este problema de Sturm--Liouville selecciona los modos de Neumann
+\begin{equation}
+\Theta_n(\theta)=\cos k_n\left(\theta+\frac{\alpha}{2}\right),
+\qquad
+k_n=\frac{n\pi}{\alpha},
+\qquad n=0,1,2,\ldots.
+\label{eq:modos-angulares}
+\end{equation}
+Por ortogonalidad, la fuente angular se expande como
+\begin{equation}
+\delta(\theta-\theta_0)=\frac1\alpha
++\frac2\alpha\sum_{n=1}^{\infty}\Theta_n(\theta)\Theta_n(\theta_0).
+\label{eq:delta-angular}
+\end{equation}
+Luego escribimos
+\begin{equation}
+\phi(r,\theta)=\phi_0(r)+\sum_{n=1}^{\infty}\phi_n(r)\Theta_n(\theta).
+\label{eq:ansatz-p3}
+\end{equation}
+Sustituyendo \eqref{eq:delta-angular} y \eqref{eq:ansatz-p3} en \eqref{eq:poisson}, y usando la ortogonalidad de los modos angulares, se obtienen las ecuaciones radiales
+\begin{equation}
+\frac1r\frac{d}{dr}\left(r\frac{d\phi_0}{dr}\right)
+=\frac{m}{\alpha r}\delta(r-r_0),
+\label{eq:radial-cero-p3}
+\end{equation}
+\begin{equation}
+\frac1r\frac{d}{dr}\left(r\frac{d\phi_n}{dr}\right)-\frac{k_n^2}{r^2}\phi_n
+=\frac{2m}{\alpha r}\Theta_n(\theta_0)\delta(r-r_0),
+\qquad n\ge1.
+\label{eq:radiales}
+\end{equation}
+Multiplicando por $r$ e integrando en un intervalo pequeño alrededor de $r_0$, el término regular proporcional a $\phi_n/r$ no contribuye en el límite. Así,
+\begin{equation}
+\left[r\phi_0'(r)\right]_{r_0^-}^{r_0^+}=\frac{m}{\alpha},
+\qquad
+\left[r\phi_n'(r)\right]_{r_0^-}^{r_0^+}=\frac{2m}{\alpha}\Theta_n(\theta_0).
+\label{eq:saltos-radiales}
+\end{equation}
+El modo $n=0$ se obtiene integrando \eqref{eq:radial-cero-p3}. En la región $a<r<r_0$, la condición $\phi_0'(a)=0$ elimina el término logarítmico; en la región $r>r_0$, el salto de \eqref{eq:saltos-radiales} fija el coeficiente. Salvo una constante aditiva,
+\begin{equation}
+\phi_0(r)=\frac{m}{\alpha}H(r-r_0)\ln\frac{r}{r_0}.
+\label{eq:modo-cero-p3}
+\end{equation}
+Para $n\ge1$, la ecuación homogénea radial tiene soluciones $r^{k_n}$ y $r^{-k_n}$. La condición de Neumann en $r=a$ se impone escogiendo, para $a<r<r_0$,
+\begin{equation}
+\phi_n^{\mathrm{int}}(r)=A_n\left(r^{k_n}+a^{2k_n}r^{-k_n}\right),
+\qquad
+\left.\frac{d\phi_n^{\mathrm{int}}}{dr}\right|_{r=a}=0.
+\label{eq:radial-interna-p3}
+\end{equation}
+En cambio, para $r>r_0$ se descarta el modo creciente, pues no debe aparecer una contribución multipolar divergente en el infinito:
+\begin{equation}
+\phi_n^{\mathrm{ext}}(r)=B_n r^{-k_n}.
+\label{eq:radial-externa-p3}
+\end{equation}
+La continuidad del potencial en $r=r_0$ y el salto radial de \eqref{eq:saltos-radiales} dan
+\begin{equation}
+B_n r_0^{-k_n}=A_n\left(r_0^{k_n}+a^{2k_n}r_0^{-k_n}\right),
+\label{eq:continuidad-p3}
+\end{equation}
+\begin{equation}
+-k_nB_n r_0^{-k_n}-k_nA_n\left(r_0^{k_n}-a^{2k_n}r_0^{-k_n}\right)
+=\frac{2m}{\alpha}\Theta_n(\theta_0).
+\label{eq:salto-coef-p3}
+\end{equation}
+De \eqref{eq:continuidad-p3} y \eqref{eq:salto-coef-p3} se obtiene
+\begin{equation}
+A_n=-\frac{m}{\alpha k_n}\frac{\Theta_n(\theta_0)}{r_0^{k_n}},
+\qquad
+B_n=-\frac{m}{\alpha k_n}\Theta_n(\theta_0)
+\left(r_0^{k_n}+a^{2k_n}r_0^{-k_n}\right).
+\label{eq:coeficientes-radiales-p3}
+\end{equation}
+Por tanto, introduciendo $s=\min(r,r_0)$ y $R=\max(r,r_0)$, la solución queda escrita de forma compacta como
+\begin{equation}
+\phi=\frac{m}{\alpha}H(r-r_0)\ln\frac{r}{r_0}
+-\frac{m}{\alpha}\sum_{n=1}^{\infty}\frac{\Theta_n(\theta_0)\Theta_n(\theta)}{k_n}
+\left[
+\left(\frac{s}{R}\right)^{k_n}
++\left(\frac{a^2}{rr_0}\right)^{k_n}
+\right].
+\label{eq:phi-separacion}
+\end{equation}
+El primer término es el modo medio del flujo y garantiza que el flujo neto a través de un arco grande sea $m$; la serie contiene los modos que ajustan la posición angular de la fuente y la pared circular.
+
+Para derivar el campo de velocidades, definimos
+\begin{equation}
+\mathcal R_n(r)=\left(\frac{s}{R}\right)^{k_n}
++\left(\frac{a^2}{rr_0}\right)^{k_n},
+\label{eq:Rn-p3}
+\end{equation}
+\begin{equation}
+\mathcal D_n(r)=
+\begin{cases}
+-\left(\dfrac{r}{r_0}\right)^{k_n}
++\left(\dfrac{a^2}{rr_0}\right)^{k_n}, & a<r<r_0,\\[0.6em]
+\left(\dfrac{r_0}{r}\right)^{k_n}
++\left(\dfrac{a^2}{rr_0}\right)^{k_n}, & r>r_0.
+\end{cases}
+\label{eq:Dn-p3}
+\end{equation}
+Como $\vec u=\nabla\phi$, para $r\ne r_0$ se obtiene
+\begin{equation}
+\boxed{
+\begin{aligned}
+u_r&=\frac{m}{\alpha r}H(r-r_0)
++\frac{m}{\alpha r}\sum_{n=1}^{\infty}
+\Theta_n(\theta_0)\Theta_n(\theta)\mathcal D_n(r),\\
+u_\theta&=\frac{m}{\alpha r}\sum_{n=1}^{\infty}
+\Theta_n(\theta_0)
+\sin k_n\left(\theta+\frac{\alpha}{2}\right)\mathcal R_n(r).
+\end{aligned}}
+\label{eq:vel-separacion}
+\end{equation}
+Estas expresiones satisfacen las condiciones de borde: en $r=a$ se cumple $\mathcal D_n(a)=0$ y, como $a<r_0$, también $H(a-r_0)=0$; por tanto $u_r(a,\theta)=0$. En las placas, el factor seno de $u_\theta$ se anula para $\theta=\pm\alpha/2$, luego no hay flujo normal a través de ellas.
+
+\inciso{b} Conviene resolver el problema en un plano auxiliar. Primero rotamos la cuña y luego usamos una ley de potencia:
+\begin{equation}
+\eta=e^{i\alpha/2}z,\qquad
+\zeta=\eta^\beta,\qquad
+\beta=\frac{\pi}{\alpha}.
+\label{eq:mapeo}
+\end{equation}
+Con esto, las placas se transforman en el eje real del plano $\zeta$, mientras que la pared circular $r=a$ se transforma en el semicírculo $|\zeta|=b$, con $b=a^\beta$. La fuente queda ubicada en
+\begin{equation}
+\zeta_0=(e^{i\alpha/2}z_0)^\beta
+=r_0^\beta e^{i\beta(\theta_0+\alpha/2)}.
+\label{eq:zeta0-p3}
+\end{equation}
+Así, el dominio transformado es el semiplano superior exterior al círculo $|\zeta|=b$.
+
+Partimos con una fuente puntual en $\zeta_0$,
+\[
+w_0(\zeta)=\frac{m}{2\pi}\ln(\zeta-\zeta_0).
+\]
+Para imponer impermeabilidad sobre la pared circular, el teorema del círculo de Milne--Thomson introduce la imagen inversa
+\begin{equation}
+\zeta_c=\frac{b^2}{\bar\zeta_0}.
+\label{eq:imagen-circular-p3}
+\end{equation}
+Esta imagen está dentro del círculo $|\zeta|=b$ y corresponde a la fuente imagen asociada a la pared circular. Además, aparece un término $-\ln\zeta$, que representa un sumidero en el origen. Luego, para imponer impermeabilidad sobre las placas, se refleja todo este sistema respecto del eje real. Por tanto aparecen también las imágenes $\bar\zeta_0$ y $\bar\zeta_c=b^2/\zeta_0$, junto con otro sumidero en el origen. Salvo constantes aditivas, el potencial complejo queda
+\begin{equation}
+w(\zeta)=\frac{m}{2\pi}\left[
+\ln(\zeta-\zeta_0)+\ln(\zeta-\bar\zeta_0)
++\ln(\zeta-\zeta_c)+\ln(\zeta-\bar\zeta_c)
+-2\ln\zeta\right].
+\label{eq:wcomplejo}
+\end{equation}
+Esta construcción deja al eje real y al círculo $|\zeta|=b$ como líneas de corriente. Por lo tanto, al volver al plano físico, las placas y el arco circular son fronteras impermeables.
+
+Derivando \eqref{eq:wcomplejo} respecto de $\zeta$,
+\begin{equation}
+\frac{dw}{d\zeta}=
+\frac{m}{2\pi}\left[
+\frac1{\zeta-\zeta_0}+\frac1{\zeta-\bar\zeta_0}
++\frac1{\zeta-\zeta_c}+\frac1{\zeta-\bar\zeta_c}
+-\frac2\zeta\right].
+\label{eq:vel-zeta-p3}
+\end{equation}
+Como $d\zeta/dz=\beta\zeta/z$, la velocidad compleja en el plano físico es
+\begin{equation}
+\frac{dw}{dz}=
+\frac{m}{2\alpha}\frac{\zeta}{z}\left[
+\frac1{\zeta-\zeta_0}+\frac1{\zeta-\bar\zeta_0}
++\frac1{\zeta-\zeta_c}+\frac1{\zeta-\bar\zeta_c}
+-\frac2\zeta\right].
+\label{eq:vel-compleja-p3}
+\end{equation}
+Finalmente, usando \eqref{eq:vel-polar-compleja}, se obtiene
+\begin{equation}
+u_r-iu_\theta=e^{i\theta}\frac{dw}{dz},
+\qquad
+u_r=\operatorname{Re}\left(e^{i\theta}\frac{dw}{dz}\right),
+\qquad
+u_\theta=-\operatorname{Im}\left(e^{i\theta}\frac{dw}{dz}\right).
+\label{eq:componentes-complejas-p3}
+\end{equation}
+
+\inciso{c} Sea $\zeta=\rho e^{iq}$ y $\zeta_0=\rho_0e^{iq_0}$, con
+\begin{equation}
+\rho=r^\beta,
+\qquad
+q=\beta(\theta+\alpha/2).
+\label{eq:rho-q}
+\end{equation}
+Para comparar \eqref{eq:wcomplejo} con \eqref{eq:phi-separacion}, se usa
+\begin{equation}
+\ln|1-\lambda e^{i\chi}|=-\sum_{n=1}^{\infty}\frac{\lambda^n}{n}\cos(n\chi),
+\qquad |\lambda|<1.
+\label{eq:log-expansion}
+\end{equation}
+Separando los casos $\rho>\rho_0$ y $b<\rho<\rho_0$, la parte real de \eqref{eq:wcomplejo} se escribe como
+\begin{equation}
+\operatorname{Re}w=C+\frac{m}{\pi}H(\rho-\rho_0)\ln\frac{\rho}{\rho_0}
+-\frac{m}{\pi}\sum_{n=1}^{\infty}\frac{\cos(nq)\cos(nq_0)}{n}
+\left[\left(\frac{\rho_s}{\rho_R}\right)^n+\left(\frac{b^2}{\rho\rho_0}\right)^n\right],
+\label{eq:rew-expandido}
+\end{equation}
+donde $C$ es constante, $\rho_s=\min(\rho,\rho_0)$ y $\rho_R=\max(\rho,\rho_0)$. Al volver a las variables originales,
+\begin{equation}
+\cos(nq)=\Theta_n(\theta),
+\qquad
+\cos(nq_0)=\Theta_n(\theta_0),
+\qquad
+\left(\frac{\rho_s}{\rho_R}\right)^n=\left(\frac{s}{R}\right)^{k_n},
+\qquad
+\left(\frac{b^2}{\rho\rho_0}\right)^n=\left(\frac{a^2}{rr_0}\right)^{k_n}.
+\label{eq:comparacion-terminos}
+\end{equation}
+Además, $(m/\pi)n^{-1}=(m/\alpha)k_n^{-1}$ y $(m/\pi)\ln(\rho/\rho_0)=(m/\alpha)\ln(r/r_0)$. Sustituyendo estas identidades en \eqref{eq:rew-expandido}, se recupera \eqref{eq:phi-separacion} salvo por la constante $C$. Como $\vec u=\nabla\phi$, esa constante no modifica el campo de velocidades; por lo tanto, \eqref{eq:componentes-complejas-p3} y \eqref{eq:vel-separacion} describen el mismo flujo.
+
+\begin{center}
+\vspace{-0.2em}
+\includegraphics[width=0.95\linewidth]{Gráfico.pdf}\par\vspace{-0.2em}
+{\scriptsize Líneas de flujo obtenidas por separación de variables y por potencial complejo.}
+\end{center}
+
+\end{document}

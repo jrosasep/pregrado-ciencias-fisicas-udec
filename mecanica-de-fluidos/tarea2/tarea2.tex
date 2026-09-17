@@ -1,0 +1,207 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage[a4paper,margin=1.75cm,top=1.55cm,bottom=1.65cm]{geometry}
+\usepackage{microtype}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\newcommand{\encabezado}[3]{%
+{\Large\bfseries #1\par}\vspace{2pt}
+{\normalsize #2\hfill #3\par}\vspace{6pt}\hrule\vspace{8pt}}
+\begin{document}
+
+\encabezado{Tarea 2 --- Mecánica de Fluidos}{Gustavo Gatica, José Rosas, Nicolás Ulloa}{Lunes 27 de abril de 2026}
+
+\textbf{Pregunta 1 (3 pts).} Demuestre que el gradiente vectorial $\nabla\bm u$ de un campo
+\[
+\bm u=u_r\hat r+u_\theta\hat\theta+u_\phi\hat\phi
+\]
+en coordenadas esféricas es
+\begin{align}
+\nabla\bm u={}&
+\frac{\partial u_r}{\partial r}\hat r\hat r
++\frac1r\left(\frac{\partial u_r}{\partial\theta}-u_\theta\right)\hat\theta\hat r
++\frac{1}{r\sin\theta}\left(\frac{\partial u_r}{\partial\phi}-u_\phi\sin\theta\right)\hat\phi\hat r\\
+&+\frac{\partial u_\theta}{\partial r}\hat r\hat\theta
++\frac1r\left(\frac{\partial u_\theta}{\partial\theta}+u_r\right)\hat\theta\hat\theta
++\frac{1}{r\sin\theta}\left(\frac{\partial u_\theta}{\partial\phi}-u_\phi\cos\theta\right)\hat\phi\hat\theta\\
+&+\frac{\partial u_\phi}{\partial r}\hat r\hat\phi
++\frac1r\frac{\partial u_\phi}{\partial\theta}\hat\theta\hat\phi
++\frac{1}{r\sin\theta}\left(\frac{\partial u_\phi}{\partial\phi}+u_r\sin\theta+u_\theta\cos\theta\right)\hat\phi\hat\phi.
+\end{align}
+Usando este resultado, escriba explícitamente las componentes de la ecuación de Euler en coordenadas esféricas.
+
+\textit{Solución.} Introducimos las derivadas direccionales asociadas a la base ortonormal esférica,
+\begin{equation}
+D_r=\frac{\partial}{\partial r},\qquad
+D_\theta=\frac1r\frac{\partial}{\partial\theta},\qquad
+D_\phi=\frac{1}{r\sin\theta}\frac{\partial}{\partial\phi}.
+\end{equation}
+Con la convención diádica usada en el enunciado,
+\begin{equation}
+\nabla\bm u=\hat r\,D_r\bm u+\hat\theta\,D_\theta\bm u+\hat\phi\,D_\phi\bm u.
+\end{equation}
+Las derivadas de la base que se necesitan son
+\begin{align}
+&\partial_r\hat r=\partial_r\hat\theta=\partial_r\hat\phi=0,\\
+&\partial_\theta\hat r=\hat\theta,\qquad
+\partial_\theta\hat\theta=-\hat r,\qquad
+\partial_\theta\hat\phi=0,\\
+&\partial_\phi\hat r=\sin\theta\,\hat\phi,\qquad
+\partial_\phi\hat\theta=\cos\theta\,\hat\phi,\qquad
+\partial_\phi\hat\phi=-\sin\theta\,\hat r-\cos\theta\,\hat\theta.
+\end{align}
+Aplicando la regla del producto,
+\begin{align}
+D_r\bm u={}&
+\frac{\partial u_r}{\partial r}\hat r
++\frac{\partial u_\theta}{\partial r}\hat\theta
++\frac{\partial u_\phi}{\partial r}\hat\phi,\\
+D_\theta\bm u={}&\frac1r\left[
+\left(\frac{\partial u_r}{\partial\theta}-u_\theta\right)\hat r
++\left(\frac{\partial u_\theta}{\partial\theta}+u_r\right)\hat\theta
++\frac{\partial u_\phi}{\partial\theta}\hat\phi\right],\\
+D_\phi\bm u={}&\frac{1}{r\sin\theta}\left[
+\left(\frac{\partial u_r}{\partial\phi}-u_\phi\sin\theta\right)\hat r
++\left(\frac{\partial u_\theta}{\partial\phi}-u_\phi\cos\theta\right)\hat\theta\right.\\
+&\left.\hspace{3.3cm}+\left(\frac{\partial u_\phi}{\partial\phi}+u_r\sin\theta+u_\theta\cos\theta\right)\hat\phi\right].
+\end{align}
+Al sustituir estas tres expresiones en $\nabla\bm u=\hat r D_r\bm u+\hat\theta D_\theta\bm u+\hat\phi D_\phi\bm u$, se obtiene exactamente la expresión solicitada.
+
+Para la segunda parte partimos de la ecuación de Euler
+\begin{equation}
+\frac{\partial\bm u}{\partial t}+(\bm u\cdot\nabla)\bm u
+=\bm g-\frac1\rho\nabla p.
+\end{equation}
+La contracción de $\bm u=u_r\hat r+u_\theta\hat\theta+u_\phi\hat\phi$ con el primer índice de $\nabla\bm u$ da las tres componentes convectivas. Por tanto,
+\begin{align}
+\hat r:\quad
+&\frac{\partial u_r}{\partial t}
++u_r\frac{\partial u_r}{\partial r}
++\frac{u_\theta}{r}\frac{\partial u_r}{\partial\theta}
++\frac{u_\phi}{r\sin\theta}\frac{\partial u_r}{\partial\phi}
+-\frac{u_\theta^2+u_\phi^2}{r}
+=g_r-\frac1\rho\frac{\partial p}{\partial r},\\
+\hat\theta:\quad
+&\frac{\partial u_\theta}{\partial t}
++u_r\frac{\partial u_\theta}{\partial r}
++\frac{u_\theta}{r}\frac{\partial u_\theta}{\partial\theta}
++\frac{u_\phi}{r\sin\theta}\frac{\partial u_\theta}{\partial\phi}
++\frac{u_ru_\theta}{r}-\frac{u_\phi^2\cot\theta}{r}
+=g_\theta-\frac{1}{\rho r}\frac{\partial p}{\partial\theta},\\
+\hat\phi:\quad
+&\frac{\partial u_\phi}{\partial t}
++u_r\frac{\partial u_\phi}{\partial r}
++\frac{u_\theta}{r}\frac{\partial u_\phi}{\partial\theta}
++\frac{u_\phi}{r\sin\theta}\frac{\partial u_\phi}{\partial\phi}
++\frac{u_ru_\phi}{r}+\frac{u_\theta u_\phi\cot\theta}{r}
+=g_\phi-\frac{1}{\rho r\sin\theta}\frac{\partial p}{\partial\phi}.
+\end{align}
+
+\textbf{Pregunta 2 (3 pts).} Considere la atmósfera terrestre como un gas ideal en equilibrio hidrostático e isotérmico, de temperatura constante $T_0$, y lo suficientemente tenue como para despreciar su autogravitación. Suponga que la Tierra es una esfera sólida de radio $R_T$ y masa $M_T$, de modo que el gas está sometido únicamente al campo gravitacional terrestre.
+
+\textbf{(a)} Si la presión y la densidad a nivel de la superficie terrestre son $p_0$ y $\rho_0$, respectivamente, determine los perfiles $p(r')$ y $\rho(r')$ en función de la altura $r'$ sobre la superficie terrestre, con $r=R_T+r'$.
+
+\textbf{(b)} El número de Knudsen, $\mathrm{Kn}=\lambda/L$, permite estimar la validez de la aproximación de continuo. Use $\lambda\sim k_BT_0/(\pi d^2p)$ y $L\sim\rho/|\nabla\rho|$ para determinar hasta qué altura sigue siendo válida la descripción de medio continuo.
+
+\textit{Solución.}
+
+\textbf{(a)} En equilibrio hidrostático,
+\begin{equation}
+\nabla p=\rho\bm g,
+\qquad
+\bm g=-\frac{GM_T}{r^2}\hat r.
+\end{equation}
+Como el gas es ideal e isotérmico,
+\begin{equation}
+p=\frac{RT_0}{M}\rho,
+\end{equation}
+donde $M$ es la masa molar media. Sustituyendo en la ecuación hidrostática,
+\begin{equation}
+\frac{dp}{dr}=-\frac{A}{r^2}p,
+\qquad
+A:=\frac{MGM_T}{RT_0}.
+\end{equation}
+Integrando desde $r=R_T$, donde $p=p_0$, hasta $r=R_T+r'$, resulta
+\begin{equation}
+\ln\frac{p(r')}{p_0}=A\left(\frac{1}{R_T+r'}-\frac1{R_T}\right).
+\end{equation}
+Por tanto,
+\begin{equation}
+\boxed{p(r')=p_0\exp\left[A\left(\frac{1}{R_T+r'}-\frac1{R_T}\right)\right]}.\label{eq:p-profile}
+\end{equation}
+Como $p/\rho=RT_0/M$ es constante,
+\begin{equation}
+\boxed{\rho(r')=\rho_0\exp\left[A\left(\frac{1}{R_T+r'}-\frac1{R_T}\right)\right]}.\label{eq:rho-profile}
+\end{equation}
+
+\textbf{(b)} Derivando explícitamente el perfil de densidad \eqref{eq:rho-profile},
+\begin{equation}
+\frac{d\rho}{dr}=-\frac{A}{r^2}\rho,
+\end{equation}
+y por ello
+\begin{equation}
+L\sim\frac{\rho}{|\nabla\rho|}=\frac{r^2}{A}.
+\end{equation}
+Sustituyendo el perfil de presión \eqref{eq:p-profile} en la expresión dada para el camino libre medio,
+\begin{equation}
+\lambda(r')\sim\lambda_0\exp\left[A\left(\frac1{R_T}-\frac{1}{R_T+r'}\right)\right],
+\qquad
+\lambda_0:=\frac{k_BT_0}{\pi d^2p_0}.
+\end{equation}
+De este modo,
+\begin{equation}
+\boxed{\mathrm{Kn}(r')\sim
+\frac{A\lambda_0}{(R_T+r')^2}
+\exp\left[A\left(\frac1{R_T}-\frac{1}{R_T+r'}\right)\right]}.
+\end{equation}
+La condición de continuo es $\mathrm{Kn}\ll1$. Para localizar el borde de ese régimen introducimos una altura crítica $r'_c$ mediante $\mathrm{Kn}(r'_c)\sim1$. Esta igualdad de orden de magnitud no reemplaza la condición $\mathrm{Kn}\ll1$: sólo identifica el primer punto en que la separación entre escalas microscópica y macroscópica deja de ser grande.
+
+En la superficie,
+\begin{equation}
+\mathrm{Kn}(0)\sim\frac{A\lambda_0}{R_T^2}.
+\end{equation}
+Si esta cantidad es mucho menor que uno, la descripción continua es válida inicialmente. Definimos entonces $r'_c$ como la \emph{primera} altura, al ascender desde la superficie, en la que $\mathrm{Kn}$ alcanza un valor de orden uno. Con esta definición, el régimen continuo conectado con la superficie corresponde a
+\begin{equation}
+\boxed{0\le r'<r'_c}.
+\end{equation}
+Si además se quiere comprobar que $\mathrm{Kn}$ crece en el intervalo considerado, basta observar que
+\begin{equation}
+\frac{d}{dr}\ln\mathrm{Kn}=\frac{A-2r}{r^2};
+\end{equation}
+por tanto, es monótona creciente mientras $A>2r$. Para parámetros atmosféricos terrestres usuales se cumple $A\gg 2R_T$; en forma puramente simbólica basta exigir $A>2(R_T+r'_c)$ en el intervalo estudiado. Bajo esa condición, $\mathrm{Kn}$ aumenta al ascender y queda justificado que el régimen continuo conectado con la superficie sea $r'<r'_c$.
+
+La altura exacta queda determinada implícitamente por
+\begin{equation}
+\frac{A\lambda_0}{(R_T+r'_c)^2}
+\exp\left[A\left(\frac1{R_T}-\frac{1}{R_T+r'_c}\right)\right]\sim1.
+\end{equation}
+
+Si además $r'\ll R_T$, entonces
+\begin{equation}
+\frac1{R_T+r'}=\frac1{R_T}-\frac{r'}{R_T^2}+O\!\left(\frac{r'^2}{R_T^3}\right).
+\end{equation}
+Definiendo la altura de escala
+\begin{equation}
+H:=\frac{R_T^2}{A}=\frac{RT_0R_T^2}{MGM_T},
+\end{equation}
+se obtiene
+\begin{equation}
+L\sim H,
+\qquad
+\lambda(r')\sim\lambda_0e^{r'/H},
+\qquad
+\mathrm{Kn}(r')\sim\frac{\lambda_0}{H}e^{r'/H}.
+\end{equation}
+Así,
+\begin{equation}
+\boxed{r'_c\sim H\ln\left(\frac{H}{\lambda_0}\right)}.
+\end{equation}
+La expansión usada es autoconsistente sólo si el resultado verifica
+$\,r'_c/R_T=(H/R_T)\ln(H/\lambda_0)\ll1\,$. Nótese que $H=R_T^2/A$ tiene dimensiones de longitud: no escala simplemente como $R_T^2$, porque $A$ también tiene dimensiones de longitud. Esta condición debe comprobarse a posteriori.
+
+\end{document}

@@ -1,0 +1,200 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amssymb,mathtools,bm}
+\usepackage[a4paper,margin=1.6cm,top=1.35cm,bottom=1.55cm]{geometry}
+\usepackage[
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=green,
+    urlcolor=red
+]{hyperref}
+\spanishdecimal{.}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.38em}
+\setlength{\abovedisplayskip}{5pt}
+\setlength{\belowdisplayskip}{5pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+
+\newcommand{\encabezado}[3]{%
+{\Large\bfseries #1\par}
+\vspace{2pt}
+{\normalsize #2\hfill #3\par}
+\vspace{6pt}\hrule\vspace{8pt}}
+
+\newcommand{\problema}[2]{%
+\vspace{0.45em}
+\noindent\textbf{#1.}\enspace{\small #2}\par
+\vspace{0.2em}}
+
+\begin{document}
+
+\encabezado{Tarea 1 --- Mecánica de Fluidos}{Gustavo Gatica, José Rosas, Nicolás Ulloa}{Martes 17 de marzo de 2026}
+
+\problema{Problema 1}{Calcule $C_i = \dfrac{\partial r}{\partial x_i}$ con $r = \sqrt{x_i x_i}$ usando notación de Einstein.}
+
+En $C_i$ el índice $i$ es libre. Por lo tanto, en la expresión de $r$ conviene renombrar el índice mudo para no usar el mismo símbolo con dos funciones distintas. Escribimos
+\begin{equation}
+    r^2=x_jx_j.
+    \label{eq:p1-r2}
+\end{equation}
+Derivando \eqref{eq:p1-r2} respecto de $x_i$,
+\begin{equation}
+    2r\,\partial_i r
+    =\partial_i(x_jx_j)
+    =(\partial_i x_j)x_j+x_j(\partial_i x_j).
+    \label{eq:p1-der}
+\end{equation}
+En una base cartesiana, $\partial_i x_j=\delta_{ij}$, de modo que
+\begin{equation}
+    2r\,\partial_i r
+    =\delta_{ij}x_j+x_j\delta_{ij}
+    =2x_i.
+\end{equation}
+Por consiguiente,
+\begin{equation}
+    \boxed{C_i=\partial_i r=\frac{x_i}{r}}.
+\end{equation}
+
+\problema{Problema 2}{La condición de conservación de momento angular en fluidos resulta en una expresión de la forma $\epsilon_{ijk}\sigma_{ij}=0$. Demuestre que esto implica que el tensor $\check\sigma$ es simétrico.}
+
+En $\epsilon_{ijk}\sigma_{ij}=0$ los índices $i$ y $j$ están contraídos y $k$ es libre. Para obtener una relación entre dos componentes arbitrarias $\sigma_{mn}$ y $\sigma_{nm}$, introducimos dos nuevos índices libres $m,n$ y contraemos el índice $k$ con $\epsilon_{mnk}$:
+\begin{equation}
+    \epsilon_{mnk}\epsilon_{ijk}\sigma_{ij}=0.
+    \label{eq:p2-contraccion}
+\end{equation}
+Usando
+\begin{equation}
+    \epsilon_{mnk}\epsilon_{ijk}
+    =\delta_{mi}\delta_{nj}-\delta_{mj}\delta_{ni},
+\end{equation}
+la ecuación \eqref{eq:p2-contraccion} queda
+\begin{align}
+    0
+    &=(\delta_{mi}\delta_{nj}-\delta_{mj}\delta_{ni})\sigma_{ij} \notag\\
+    &=\sigma_{mn}-\sigma_{nm}.
+\end{align}
+Como $m$ y $n$ son arbitrarios,
+\begin{equation}
+    \boxed{\sigma_{mn}=\sigma_{nm}},
+\end{equation}
+y por lo tanto $\check\sigma$ es simétrico.
+
+\problema{Problema 3}{Verifique la identidad de Jacobi usando notación de Einstein: $\vec A\times(\vec B\times\vec C)+\vec C\times(\vec A\times\vec B)+\vec B\times(\vec C\times\vec A)=\vec 0$.}
+
+Trabajamos componente a componente. Para dos vectores cualesquiera,
+\begin{equation}
+    (\vec A\times\vec B)_i=\epsilon_{ijk}A_jB_k.
+    \label{eq:p3-cross}
+\end{equation}
+Entonces,
+\begin{align}
+[\vec A\times(\vec B\times\vec C)]_i
+&=\epsilon_{ijk}A_j\epsilon_{klm}B_lC_m \notag\\
+&=(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl})A_jB_lC_m \notag\\
+&=(\vec A\cdot\vec C)B_i-(\vec A\cdot\vec B)C_i. \label{eq:p3-1}
+\end{align}
+De manera análoga,
+\begin{align}
+[\vec C\times(\vec A\times\vec B)]_i
+&=(\vec C\cdot\vec B)A_i-(\vec C\cdot\vec A)B_i, \label{eq:p3-2}\\
+[\vec B\times(\vec C\times\vec A)]_i
+&=(\vec B\cdot\vec A)C_i-(\vec B\cdot\vec C)A_i. \label{eq:p3-3}
+\end{align}
+Sumando \eqref{eq:p3-1}--\eqref{eq:p3-3}, los términos se cancelan por pares porque el producto escalar es conmutativo. Así,
+\begin{equation}
+[\vec A\times(\vec B\times\vec C)+\vec C\times(\vec A\times\vec B)+\vec B\times(\vec C\times\vec A)]_i=0.
+\end{equation}
+Como esto vale para todo $i$, se concluye la identidad vectorial solicitada.
+
+\problema{Problema 4}{A partir de $dp=d\vec r\cdot\nabla p$, deduzca una expresión para el gradiente $\nabla p$ de un campo escalar $p=p(r,\theta,\phi)$ en coordenadas esféricas.}
+
+Usamos la base esférica ortonormal
+\begin{align}
+\hat r&=\sin\theta\cos\phi\,\hat x+\sin\theta\sin\phi\,\hat y+\cos\theta\,\hat z,\notag\\
+\hat\theta&=\cos\theta\cos\phi\,\hat x+\cos\theta\sin\phi\,\hat y-\sin\theta\,\hat z,\notag\\
+\hat\phi&=-\sin\phi\,\hat x+\cos\phi\,\hat y.
+\label{eq:p4-base}
+\end{align}
+De estas definiciones se verifica directamente que $\hat e_a\cdot\hat e_b=\delta_{ab}$ para $\hat e_a,\hat e_b\in\{\hat r,\hat\theta,\hat\phi\}$. Además,
+\begin{equation}
+    \frac{\partial\hat r}{\partial\theta}=\hat\theta,
+    \qquad
+    \frac{\partial\hat r}{\partial\phi}=\sin\theta\,\hat\phi.
+\end{equation}
+Como $\vec r=r\hat r$,
+\begin{equation}
+    d\vec r
+    =\hat r\,dr+r\hat\theta\,d\theta+r\sin\theta\,\hat\phi\,d\phi.
+    \label{eq:p4-dr}
+\end{equation}
+Escribamos $\nabla p=(\nabla p)_r\hat r+(\nabla p)_\theta\hat\theta+(\nabla p)_\phi\hat\phi$. Usando \eqref{eq:p4-dr} y la ortonormalidad,
+\begin{equation}
+    d\vec r\cdot\nabla p
+    =(\nabla p)_r\,dr+r(\nabla p)_\theta\,d\theta+r\sin\theta(\nabla p)_\phi\,d\phi.
+    \label{eq:p4-dot}
+\end{equation}
+Por otra parte,
+\begin{equation}
+    dp=\frac{\partial p}{\partial r}dr
+      +\frac{\partial p}{\partial\theta}d\theta
+      +\frac{\partial p}{\partial\phi}d\phi.
+    \label{eq:p4-dp}
+\end{equation}
+Comparando los coeficientes de los diferenciales independientes $dr,d\theta,d\phi$ en \eqref{eq:p4-dot} y \eqref{eq:p4-dp}, obtenemos
+\begin{equation}
+    \boxed{\nabla p
+    =\hat r\frac{\partial p}{\partial r}
+    +\hat\theta\frac{1}{r}\frac{\partial p}{\partial\theta}
+    +\hat\phi\frac{1}{r\sin\theta}\frac{\partial p}{\partial\phi}}.
+\end{equation}
+
+\problema{Problema 5}{Use la notación de Einstein para demostrar la identidad $ (\vec u\cdot\nabla)\vec u=\dfrac12\nabla u^2-\vec u\times\vec\omega$, donde $u^2=\vec u\cdot\vec u$ y $\vec\omega=\nabla\times\vec u$ es la vorticidad del fluido.}
+
+La componente $i$-ésima del término convectivo es
+\begin{equation}
+    [(\vec u\cdot\nabla)\vec u]_i=u_j\partial_j u_i.
+    \label{eq:p5-conv}
+\end{equation}
+Por otro lado,
+\begin{equation}
+    \omega_k=(\nabla\times\vec u)_k=\epsilon_{k\ell m}\partial_\ell u_m,
+\end{equation}
+y por tanto
+\begin{align}
+(\vec u\times\vec\omega)_i
+&=\epsilon_{ijk}u_j\omega_k \notag\\
+&=\epsilon_{ijk}\epsilon_{k\ell m}u_j\partial_\ell u_m \notag\\
+&=(\delta_{i\ell}\delta_{jm}-\delta_{im}\delta_{j\ell})u_j\partial_\ell u_m \notag\\
+&=u_j\partial_i u_j-u_j\partial_j u_i. \label{eq:p5-cross}
+\end{align}
+Despejando de \eqref{eq:p5-cross},
+\begin{equation}
+    u_j\partial_j u_i
+    =u_j\partial_i u_j-(\vec u\times\vec\omega)_i.
+    \label{eq:p5-despeje}
+\end{equation}
+La regla del producto da
+\begin{equation}
+    \partial_i(u_ju_j)=2u_j\partial_i u_j,
+\end{equation}
+de modo que, como $u^2=u_ju_j$,
+\begin{equation}
+    u_j\partial_i u_j=\frac12\partial_i u^2.
+    \label{eq:p5-grad}
+\end{equation}
+Sustituyendo \eqref{eq:p5-grad} en \eqref{eq:p5-despeje} y usando \eqref{eq:p5-conv},
+\begin{equation}
+    [(\vec u\cdot\nabla)\vec u]_i
+    =\frac12\partial_i u^2-(\vec u\times\vec\omega)_i.
+\end{equation}
+Como la igualdad vale para cada componente $i$,
+\begin{equation}
+    \boxed{(\vec u\cdot\nabla)\vec u
+    =\frac12\nabla u^2-\vec u\times\vec\omega}.
+\end{equation}
+
+\end{document}
