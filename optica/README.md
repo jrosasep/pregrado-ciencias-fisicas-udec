@@ -17,6 +17,5 @@ El material recorre óptica geométrica, óptica matricial y óptica ondulatoria
 
 ## Colaboración
 
-- **Tarea 1:** trabajo individual.
 - **Tarea 2:** desarrollada junto a **Kevin Vergara** y **Víctor Maureira**.
 - **Tarea 3:** desarrollada junto a **Nicolás Ulloa** y **Joaquín Ayala**.
