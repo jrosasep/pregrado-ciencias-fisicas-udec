@@ -19,7 +19,7 @@ Cada carpeta de curso contiene:
 
 ## Estructura de carpetas
 
-```text
+```tex
 curso/
 ├── README.md
 ├── tarea1/
