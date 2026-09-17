@@ -1,0 +1,107 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Problema de caída libre}
+\label{ch:caida-libre}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 26 de octubre de 2024
+
+\medskip
+
+    En este capítulo, desarrollaremos una simulación computacional de la caída libre de una pelota desde una altura inicial $y_0 = H$, partiendo del reposo ($v_0 = 0$), bajo la acción de la aceleración gravitatoria $g$. Ignoraremos la resistencia del aire y otras fuerzas externas para simplificar el problema. Utilizaremos las ecuaciones del Movimiento Rectilíneo Uniformemente Acelerado (MRUA):  
+
+    \begin{itemize}
+        \item \textbf{Posición en función del tiempo}:
+        \begin{equation}
+            \label{eq:posicion-en-el-tiempo}
+            y(t) = H - \frac{1}{2} \cdot g \cdot t^2
+        \end{equation}
+    
+        \item \textbf{Velocidad en función del tiempo}:
+        \begin{equation}
+            \label{eq:velocidad-en-el-tiempo}
+            v(t) = - g \cdot t
+        \end{equation}
+    \end{itemize}
+
+    Donde $H > 0$ es la altura inicial, y $g = 9.81 \, \text{m/s}^2$ es la aceleración gravitatoria en la superficie terrestre. La simulación calculará las velocidades en intervalos regulares de tiempo $\Delta t$ mediante un ciclo \texttt{for}, e imprimirá los resultados en pantalla. Adicionalmente, se generará un gráfico de altura vs tiempo que destacará con una flecha el instante de impacto con el suelo.
+
+\section{Deducción del instante de impacto}
+
+    Cuando la pelota toca el suelo, $y(t_f) = 0$. Evaluando este instante en la ecuación (\ref{eq:posicion-en-el-tiempo}), obtenemos:
+        \begin{equation}
+            \label{eq:deducción-tiempo-caida}
+                0 = H - \frac{1}{2} \cdot g \cdot t_f^2
+        \end{equation}
+    Despejando para $t_f$:
+    \begin{equation}
+        \label{eq:tiempo-impacto}
+        t_f = \sqrt{\frac{2 H}{g}}
+    \end{equation}
+    
+    \section{Implementación de Python}
+    
+    Definimos los parámetros de simulación, estos son $H$ en metros, $g$ en metros sobre segundos cuadrados y $\Delta t$ segundos. Suponiendo $H = 100$ m, $g = 9.81 $ m/s $^2$ y $\Delta t = 0.01$ s. Así, tenemos en \texttt{Python}:
+        \begin{minted}{python}
+H = 100  
+Delta t = 0.01
+g = 9.81
+        \end{minted}
+    
+    Creamos una matriz de tiempos desde $t = 0$ hasta $t_f$, con $t_f > 0$:
+        \begin{minted}{python}
+tiempo = np.arange(0, np.sqrt(2 * H / g), Dt)
+        \end{minted}
+        
+    Calculamos e imprimimos la velocidad en cada instante, empleando la ecuación (\ref{eq:velocidad-en-el-tiempo}):
+        \begin{minted}{python}
+for t in tiempo:
+    velocidad = - g * t
+    print(f"t = {t:.2f} s, v(t) = {velocidad:.2f} m/s")
+        \end{minted}
+
+\section{Gráfico Altura vs Tiempo}
+
+    Guardamos espacio en la memoria para las posiciones correspondientes a cada instante, y las calculamos en un ciclo \texttt{for}:
+        \begin{minted}{python}
+posiciones = np.zeros(len(tiempo))
+            
+for i in range(len(tiempo)):
+    posiciones[i] = H - 0.5 * g * tiempo[i]**2
+        \end{minted}
+
+    Generamos el gráfico con \texttt{matplotlib}:
+        \begin{minted}{python}
+plt.plot(tiempo, posiciones, label="Altura (m) vs Tiempo (s)")
+        \end{minted}
+        
+    Para el titulo del gráfico, queremos que indique el valor de H en el titulo, para ello usamos la siguiente linea de codigo:
+        \begin{minted}{python}
+plt.title(f"Caída libre de una pelota desde H = {H} m respecto del suelo")
+        \end{minted}     
+    
+    Empleando la función \texttt{annotate} de \text{matplotlib}, se inserta una flecha roja en el instante de impacto, junto a una etiqueta que indica el "Momento de impacto". Esta es acción es llamada con el código siguiente:
+        \begin{minted}{python}
+plt.plot(tiempo, posiciones)
+plt.annotate('Momento de impacto', 
+            xy=(tiempo[-1], 0), 
+            xytext=(tiempo[-1]-1, H*(2/5)),
+            arrowprops=dict(facecolor='red', shrink=0.05))
+        \end{minted}
+
+    Podemos observar el gráfico obtenido en la figura (\ref{fig:altura-vs-tiempo}).
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{img/guide-1/altura-vs-tiempo.png}
+        \caption{Gráfico Altura vs Tiempo, con flecha roja indicando el momento de impacto}
+        \label{fig:altura-vs-tiempo}
+    \end{figure}
+    
+\section{Conclusión}
+
+    En esta actividad utilizamos las ecuaciones del Movimiento Rectilíneo Uniformemente Acelerado (MRUA) para modelar y simular la caída libre de una pelota mediante programación en \texttt{Python}. Se trabajó con matrices de tiempo, las cuales fueron generadas con la función \texttt{linspace} de \texttt{numpy}, donde el final de este array fue el tiempo de impacto $tf=\sqrt{\frac{2H}{g}}$. Se empleó un ciclo \texttt{for} para calcular las velocidades y posiciones en intervalos regulares. Además, se exploró el uso de la librería \texttt{matplotlib} para visualizar los resultados a través de gráficos, esto en el uso de la función \texttt{annotate}, \cite{matplotlib}.
+
+\end{document}

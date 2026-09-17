@@ -1,0 +1,101 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Resolución de la Ecuación de Bessel de Primer Tipo y Orden Cero}
+\label{ch:bessel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 27 de noviembre de 2024
+
+\medskip
+
+La ecuación diferencial de Bessel de primer tipo y orden cero está dada por:
+\begin{equation} \label{eq-b:bessel}
+    x^2 \frac{d^2J_0}{dx^2} + x \frac{dJ_0}{dx} + x^2 J_0 = 0.
+\end{equation}
+Este capítulo aborda la resolución numérica de esta ecuación mediante el método de Runge-Kutta de orden 4 y la verificación de su solución integral:
+\begin{equation*}
+    J_0(x) = \frac{1}{\pi} \int_0^\pi \cos(x \sin\phi) \, d\phi.
+\end{equation*}
+
+\section{Resolución Numérica}
+Comenzamos reescribiendo la ecuación diferencial \eqref{eq-b:bessel} como un sistema de ecuaciones de primer orden: 
+\begin{equation*}
+     y_1 = J_0, \quad y_2 = \frac{dJ_0}{dx}, \quad \frac{dy_1}{dx} = y_2, \quad\frac{dy_2}{dx} = -\frac{1}{x} y_2 - y_1 \quad.
+\end{equation*}
+Definimos en \texttt{python} una función que represente a este sistema:
+\begin{minted}{python}
+def edo_bessel(y, x):
+    y1, y2 = y
+    dy1dx = y2
+    dy2dx = -y2 / x - y1
+    return np.array([dy1dx, dy2dx])
+\end{minted}
+
+Definimos el intervalo donde se resolvió el sistema, $0 < x \leq 20$ con condiciones iniciales $J_0(0) = 1$, $J_0'(0) = 0$, evaluadas en $x = \epsilon = 10^{-6}$:
+
+\begin{minted}{python}
+x_min, x_max = 1e-6, 20
+pasos = 1000
+x_intervalo = np.linspace(x_min, x_max, pasos)
+condiciones_iniciales = np.array([1, 0])  
+\end{minted}
+
+Resolvemos numéricamente el sistema utilizando el método de Runge-Kutta de orden 4, importado la función \texttt{RungeKutta4} desde el modulo \texttt{EcuacionesDiferencialesOrdinarias.py.}. Se presenta la gráfica de esta solución en la figura \ref{fig:bessel-solucion-rk4}.
+
+\begin{minted}{python}
+y_rk4 = RungeKutta4(edo_bessel, r0=condiciones_iniciales, t=x_intervalo)
+J0_rk4 = y_rk4[:, 0]
+\end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-4/bessel-sol-num.png}
+    \caption{Solucion de Runge-Kutta.}
+    \label{fig:bessel-solucion-rk4}
+\end{figure}
+ 
+\section{Solución Integral}
+La solución integral se calculó mediante la regla trapezoidal, discretizando $\phi$ en $1000$ puntos uniformes en $[0, \pi]$. Esto fue calculado con la siguiente función en \texttt{python}:
+
+\begin{minted}{python}
+def J0_integral(x):
+    phi = np.linspace(0, np.pi, 1000)  # Discretización de phi
+    dphi = phi[1] - phi[0]
+    integral = np.trapz(np.cos(x[:, None] * np.sin(phi)), dx=dphi, axis=1)
+    return integral / np.pi
+\end{minted}
+
+Se presenta la gráfica de esta solución en la figura \ref{fig:bessel-solucion-int}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-4/bessel-sol-int.png}
+    \caption{Soluciones de la solución integral.}
+    \label{fig:bessel-solucion-int}
+\end{figure}
+
+\section{Error Relativo}
+El error relativo entre las soluciones numérica e integral se calculara como:
+\begin{equation*}
+    \text{Error Relativo} = \frac{|J_0^{\text{RK}}(x) - J_0^{\text{Int}}(x)|}{|J_0^{\text{Int}}(x)|}.
+\end{equation*}
+
+Se muestra la gráfica del error relativo en la figura \ref{fig:bessel-error}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-4/bessel-error.png}
+    \caption{Error relativo entre las soluciones numérica e integral.}
+    \label{fig:bessel-error}
+\end{figure}
+
+\section{Conclusiones}
+
+La resolución numérica de la ecuación de Bessel mediante el método de Runge-Kutta de cuarto orden y la verificación integral muestran una excelente concordancia en el intervalo $0 < x \leq 20$. La baja magnitud del error relativo confirma la validez de ambas soluciones y destaca la precisión del método numérico frente a la solución integral calculada con la regla trapezoidal.
+
+Este trabajo permitió profundizar en la implementación de métodos numéricos como Runge-Kutta y el uso de técnicas integrales para verificar soluciones de ecuaciones diferenciales.
+
+
+\end{document}

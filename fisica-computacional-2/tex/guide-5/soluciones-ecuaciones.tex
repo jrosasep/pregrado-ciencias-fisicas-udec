@@ -1,0 +1,82 @@
+
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Solución de Ecuaciones}
+\label{ch:soluciones-ecuaciones}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hfill \textbf{Fecha de la actividad:} 27 de noviembre de 2024
+
+\medskip
+En esta sección, determinaremos numéricamente las soluciones de las siguientes ecuaciones:  
+\begin{enumerate}
+    \item \textbf{Ecuación 1}: $x^3 - 21x^2 + 120x - 100 = 0$
+    \item \textbf{Ecuación 2}: $x = 2^{-x}$
+    \item \textbf{Ecuación 3}: $\tan x = \frac{1}{x}$
+\end{enumerate}
+Para ello, implementaremos el método de Newton-Raphson, un procedimiento iterativo diseñado para encontrar las raíces de una función $f(x)$. A partir de un valor inicial o semilla $x_0$, la fórmula de recurrencia está dada por:  
+\begin{equation}
+x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)},
+\end{equation}
+donde $f'(x)$ es la derivada de $f(x)$. 
+
+\textbf{Nota}: No estudiaremos la multiplicidad de las soluciones.
+\section{Definimos funciones y sus derivadas para cada ecuación}
+\begin{enumerate}
+    \item \textbf{Ecuación 1}: $x^3 - 21x^2 + 120x - 100 = 0$.
+    \begin{equation*}
+        f(x)=x^3 - 21x^2 + 120x - 100
+    \end{equation*}
+    \begin{equation*}
+        f'(x)=3x^2 - 42x + 120
+    \end{equation*}
+    
+    \item \textbf{Ecuación 2}: $x = 2^{-x}$. Igualando a 0.
+    \begin{equation*}
+        g(x)=x-2^{-x}
+    \end{equation*}
+    \begin{equation*}
+        g'(x)=1+\ln(x)\cdot2^{-x}
+    \end{equation*}
+    
+    \item \textbf{Ecuación 3}: $\tan x = \frac{1}{x}$. Igualando a 0.
+    \begin{equation*}
+        h(x)=\tan x - \frac{1}{x}
+    \end{equation*}
+    \begin{equation*}
+        h'(x)=\sec^2 x + \frac{1}{x^2}
+    \end{equation*}
+    
+\end{enumerate}
+
+\section{Implementación del método de Newton-Raphson}
+
+Se implementa el método de Newton-Raphson, utilizando la siguiente función programada en \texttt{Python}.
+
+\begin{minted}{python}
+def newton_raphson(f, df, x0, tolerancia=1e-6, iteracion_max=1000):
+    x = x0
+    iteraciones = 0
+    while abs(f(x)) > tolerancia and iteraciones < iteracion_max:
+        h = f(x) / df(x)
+        x = x - h
+        iteraciones += 1
+    if abs(f(x)) <= tolerancia:
+        return x
+    else:
+        return None
+\end{minted}
+
+Finalmente, se obtienen las soluciones a cada ecuación:
+\begin{enumerate}
+    \item \textbf{Soluciones ecuación 1}: $x_0 = 1 , \, x_1 = 10$
+    \item \textbf{Soluciones ecuación 2}: $x_0 \approx 0.64$
+    \item \textbf{Soluciones ecuación 3}: $x_0 \approx 0.86 , \, x_1 \approx 3.42$
+\end{enumerate}
+
+\section{Conclusión}
+
+En este capítulo, utilizamos el método de Newton-Raphson para encontrar numéricamente las soluciones de las ecuaciones planteadas en el problema.
+
+\end{document}

@@ -1,0 +1,52 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Cálculo de los ceros de los polinomios de Legendre}
+\label{ch:metodos-iterativos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 28 de noviembre de 2024
+
+\medskip
+
+\section{Definición de los polinomios de Legendre}
+Los polinomios de Legendre \(P_n(x)\) son soluciones a la ecuación diferencial de Legendre, ampliamente utilizadas en problemas físicos. Su expresión general está dada por:
+\begin{equation}
+    P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} \left( x^2 - 1 \right)^n.
+\end{equation}
+
+En este problema, trabajamos con los polinomios de grado \(n = 2, 3, 4\) y buscamos sus ceros en el rango \(|x| < 1\).
+
+\section{Cálculo de los ceros}
+Los ceros de los polinomios se determinaron usando la función de Python:
+\texttt{numpy.polynomial.legendre.legroots}. Los resultados son los siguientes:
+
+\begin{itemize}
+    \item Para \(P_2(x)\):
+    \begin{equation}
+        \text{Ceros: } x = -0.5774, \, 0.5774.
+    \end{equation}
+    
+    \item Para \(P_3(x)\):
+    \begin{equation}
+        \text{Ceros: } x = -0.7746, \, 0, \, 0.7746.
+    \end{equation}
+
+    \item Para \(P_4(x)\):
+    \begin{equation}
+        \text{Ceros: } x = -0.8611, \, -0.3399, \, 0.3399, \, 0.8611.
+    \end{equation}
+\end{itemize}
+
+\section{Derivada numérica}
+Se calculó la derivada de los polinomios mediante un esquema de diferencias centradas:
+\begin{equation}
+    f'(x) \approx \frac{f(x + h) - f(x - h)}{2h},
+\end{equation}
+donde \(h = 10^{-5}\). Esto permite obtener una aproximación eficiente de las derivadas.
+
+\section{Conclusión}
+Los resultados obtenidos coinciden con los valores esperados y validados mediante \texttt{numpy.polynomial.legendre.legroots}. Este análisis demuestra la utilidad de los polinomios de Legendre en aplicaciones físicas, y la derivada numérica valida las soluciones calculadas.
+
+\end{document}

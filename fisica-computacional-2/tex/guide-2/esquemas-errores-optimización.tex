@@ -1,0 +1,343 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Cálculo Numérico de Derivadas: Esquemas, Errores y Optimización}
+\label{ch:esquemas-errores-optimización}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 20 de noviembre de 2024
+
+\medskip
+
+En este apartado se emplearán expansiones en series de Taylor de una función $f(x)$ para derivar tres esquemas de cálculo de la primera derivada numérica. Los esquemas considerados son los siguientes:
+
+\begin{itemize}
+    \item \textbf{Diferencia adelantada:} $f'(x) \approx \frac{f(x+h) - f(x)}{h}$.
+    \item \textbf{Diferencia retrasada:} $f'(x) \approx \frac{f(x) - f(x-h)}{h}$.
+    \item \textbf{Diferencia centrada:} $f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}$.
+\end{itemize}
+
+Adicionalmente, se llevaron a cabo las siguientes tareas:
+\begin{enumerate}
+    \item Determinar el orden del error de truncamiento en cada uno de los esquemas anteriores.
+    \item Analizar cuál de estos esquemas es más conveniente para estimar la derivada numérica.
+    \item Considerando el error de redondeo de la máquina, calcular el valor óptimo de $h$ que minimiza el error en cada esquema y comparar los resultados obtenidos.
+\end{enumerate}
+
+Sea $h \in \mathbb{R} : 0 < h < 1$.
+
+\section{Derivada adelantada}
+
+Expandiendo $f(x+h)$ en series de Taylor:
+
+\begin{equation}\label{eq:1-adelantada}
+f(x+h) = f(x) + h f'(x) + \frac{h^2}{2!} f''(x) + \frac{h^3}{3!} f'''(x) + \cdots
+\end{equation}
+
+Restando en (\ref{eq:1-adelantada}) el polinomio $\left[ f(x) + \frac{h^2}{2!} f''(x) + \frac{h^3}{3!} f'''(x) + \cdots \right]$, se obtiene:
+
+\begin{equation*}
+f(x+h) - \left[ f(x) + \frac{h^2}{2!} f''(x) + \frac{h^3}{3!} f'''(x) + \cdots \right] = h f'(x)
+\end{equation*}
+
+Se reordenan términos:
+
+\begin{equation*}
+h f'(x) = f(x+h) - f(x) - \left[\frac{h^2}{2!} f''(x) + \frac{h^3}{3!} f'''(x) + \cdots \right]
+\end{equation*}
+
+Dividimos la ecuación por $h$ y despejamos $f'(x)$, obtenemos:
+
+\begin{equation}\label{eq:2-adelantada}
+f'(x) = \frac{f(x+h) - f(x)}{h} - \left[\frac{h}{2!} f''(x) + \frac{h^2}{3!} f'''(x) + \cdots \right]
+\end{equation}
+
+Así, se obtiene una forma para la \textbf{derivada adelantada} de $f(x)$ en términos de $f(x)$ y $f(x+h)$.
+
+\section{Derivada retrasada}
+
+Expandiendo $f(x-h)$ en series de Taylor:
+
+\begin{equation}\label{eq:1-retrasada}
+f(x-h) = f(x) - h f'(x) + \frac{h^2}{2!} f''(x) - \frac{h^3}{3!} f'''(x) + \cdots
+\end{equation}
+
+Restando en (\ref{eq:1-retrasada}) el polinomio $\left[ f(x) + \frac{h^2}{2!} f''(x) - \frac{h^3}{3!} f'''(x) + \cdots \right]$, se obtiene:
+
+\begin{equation*}
+f(x-h) - \left[ f(x) - \frac{h^2}{2!} f''(x) - \frac{h^3}{3!} f'''(x) + \cdots \right] = - h f'(x)
+\end{equation*}
+
+Multiplicando la ecuación por $-1$ y reordenando términos:
+
+\begin{equation*}
+h f'(x) = f(x) - f(x-h) + \left[\frac{h^2}{2!} f''(x) - \frac{h^3}{3!} f'''(x) + \cdots \right]
+\end{equation*}
+
+Dividiendo la ecuación por $h$ y despejamos $f'(x)$, obtenemos:
+
+\begin{equation}\label{eq:2-retrasada}
+f'(x) = \frac{f(x) - f(x-h)}{h} + \left[\frac{h}{2!} f''(x) - \frac{h^2}{3!} f'''(x) + \cdots \right]
+\end{equation}
+
+Así, obtenemos una forma para la \textbf{derivada retrasada} de $f(x)$ en términos de $f(x)$ y $f(x-h)$.
+
+\section{Derivada centrada}
+
+Consideremos las expansiones en series de Taylor de $f(x+h)$ y $f(x-h)$, obtenidas en las ecuaciones (\ref{eq:1-adelantada}) y (\ref{eq:1-retrasada}), respectivamente.
+
+Restando las ecuaciones (\ref{eq:1-adelantada}) y (\ref{eq:1-retrasada}) en ese orden, obtenemos:
+
+\begin{equation*}
+f(x+h) - f(x-h) = 2h f'(x) + 2\frac{h^3}{3!} f'''(x) + 2\frac{h^5}{5!}f^{(5)}(x) + \cdots
+\end{equation*}
+
+Dividiendo la ecuación por $2h$ y despejamos $f'(x)$, reordenamos terminos y obtenemos:
+
+\begin{equation}\label{eq:centrada}
+f'(x) = \frac{f(x+h) - f(x-h)}{2h} - \left[ \frac{h^2}{3!} f'''(x) + \frac{h^4}{5!}f^{(5)}(x) + \cdots \right]
+\end{equation}
+
+Así, obtenemos una forma para la \textbf{derivada centrada} de $f(x)$ en términos de $f(x+h)$ y $f(x-h)$.
+
+\section{Orden del error de truncamiento en los esquemas numéricos}
+
+Para el esquema de la \textbf{derivada adelantada} de $f(x)$. Notamos en la ecuación (\ref{eq:2-adelantada}) que el error de truncamiento será del orden $O(h)$. Luego:
+
+\begin{equation}
+f'(x) \approx \frac{f(x+h) - f(x)}{h} + \frac{h}{2!} f''(\xi)
+\end{equation}
+
+Para el esquema de la \textbf{derivada retrasada} de $f(x)$. Notamos en la ecuación (\ref{eq:2-retrasada}) que el error de truncamiento, nuevamente, será del orden $O(h)$. Luego:
+
+\begin{equation}
+f'(x) \approx \frac{f(x) - f(x-h)}{h} + \frac{h}{2!} f''(\xi)
+\end{equation}
+
+Para el esquema de la \textbf{derivada centrada} de $f(x)$. Notamos en la ecuación (\ref{eq:centrada}) que el error de truncamiento esta vez será del orden $O(h^2)$. Luego:
+
+\begin{equation}
+f'(x) \approx \frac{f(x+h) - f(x-h)}{2h} - \frac{h^2}{3!} f'''(\xi)
+\end{equation}
+
+\subsection{¿Cuál de estos esquemas es más conveniente para estimar la derivada numérica?}
+
+Como el esquema de la derivada centrada de $f(x)$ presenta un error de truncamiento $O(h^2)$, con $0<h<1$, es más conveniente el uso de este respecto a los otros para estimar la derivada numérica. Dado que el error en el esquema centrado disminuye más rápidamente a medida que $h$ se reduce, resulta más preciso para valores pequeños de $h$.
+
+\section{Cálculo de \textit{h} óptimo para el esquema de la derivada retrasada}
+
+Consideramos $\hat{a} = a(1 + \varepsilon)$, donde $\hat{a}$ representa el valor de $a$ registrado por el computador, afectado por un error de redondeo $\varepsilon$, el cual puede depender de $a$. Para el esquema de la derivada retrasada, usamos la aproximación:
+
+\begin{equation} \label{eq-optimo:retrasada}
+f'(x) \approx \frac{f(x) - f(x-h)}{h} + \frac{h}{2!}f''(\xi),
+\end{equation}
+
+donde los valores de \(f(x-h)\) y \(f(x)\) se redondean como:
+
+\begin{equation} \label{eq-optimo:computador}
+\hat{f}(x-h) = f(x-h)(1 + \varepsilon_2), \quad \text{y} \quad \hat{f}(x) = f(x)(1 + \varepsilon_1).
+\end{equation}
+
+Sustituyendo estos valores en (\ref{eq-optimo:retrasada}), obtenemos:
+\begin{equation}
+f'(x) - \frac{\hat{f}(x) - \hat{f}(x-h)}{h} = \frac{h}{2!} f''(\xi)
+\end{equation}
+
+Expandiendo y simplificando:
+
+\begin{equation*}
+f'(x) - \frac{f(x)(1 + \varepsilon_1) - f(x-h)(1 + \varepsilon_2)}{h} = \frac{h}{2!} f''(\xi)
+\end{equation*}
+
+\begin{equation*}
+f'(x) - \frac{f(x) - f(x-h)}{h} = \frac{h}{2!} f''(\xi) + \frac{f(x)\varepsilon_1 - f(x-h)\varepsilon_2}{h}
+\end{equation*}
+
+Aplicando la desigualdad triangular:
+
+\begin{equation*}
+\left|f'(x) - \frac{f(x) - f(x-h)}{h}\right| \leq \frac{h}{2} \left|f''(\xi)\right| + \frac{|\varepsilon_1|}{h} \left|f(x)\right| + \frac{|\varepsilon_2|}{h} \left|f(x-h)\right|
+\end{equation*}
+
+Podemos asumir que:
+
+\begin{enumerate}
+    \item Existe un valor $\varepsilon^*$ tal que $\varepsilon^* \gg  \left|\varepsilon_1 \right|$ y $\varepsilon^* \gg \left| \varepsilon_2\right|$.
+    \item Si $h \ll 1$, entonces $\xi \approx x \quad \wedge \quad \left|f(x-h)\right| \approx \left|f(x)\right|$.
+\end{enumerate}
+
+Entonces:
+
+\begin{equation*}
+\left|f'(x) - \frac{f(x) - f(x-h)}{h}\right| \leq \frac{h}{2} \left|f''(x)\right| + \frac{2 \varepsilon^*}{h}\left|f(x)\right|
+\end{equation*}
+
+De aquí, el \textbf{error absoluto} (analítico) es:
+
+\begin{equation}    \label{eq-optimo:absoluto}
+E_{\text{abs}} \leq \frac{2\varepsilon^*}{h} \left|f(x)\right| + \frac{h}{2} \left|f''(x)\right|
+\end{equation}
+
+El error absoluto \textbf{derivado} es:
+
+\begin{equation} \label{eq-optimo:absoluto-prima}
+E'_{\text{abs}} \leq -\frac{2\varepsilon^*}{h^2} \left|f(x)\right| + \frac{1}{2} \left|f''(x)\right|
+\end{equation}
+
+Por otro lado, el \textbf{valor óptimo} de $h$ se obtiene a partir de $E'_{\text{abs}} = 0$.
+
+\begin{equation*}
+-\frac{2\varepsilon^*}{h^2} \left|f(x)\right| + \frac{1}{2} \left|f''(x)\right| = 0
+\end{equation*}
+
+Despejamos $h$:
+
+\begin{equation}
+h = \sqrt{\frac{4\varepsilon^* \left|f(x)\right|}{\left|f''(x)\right|}}
+\end{equation}
+Se obtiene el valor optimo de $h$ para el esquema de la  derivada retrasada.
+
+\section{\textit{h} óptimo para el esquema de la derivada adelantada}
+
+Ya sabemos que el esquema de la derivada adelantada es:
+
+\begin{equation} \label{eq-optimo:adelantada}
+f'(x) \approx \frac{f(x+h) - f(x)}{h} + \frac{h}{2} f''(\xi)
+\end{equation}
+
+Donde el termino $\frac{h}{2} f''(\xi)$ es el error de truncamiento que depende de la segunda derivada de  $f(x)$. 
+Para considerar los errores de redondeo de la máquina, utilizamos las siguientes expresiones:
+
+\begin{equation} \label{eq-optimo:computador-adelantada}
+\hat{f}(x+h) = f(x+h)(1 + \varepsilon_2), \quad \text{y} \quad \hat{f}(x) = f(x)(1 + \varepsilon_1).
+\end{equation}
+
+Consideramos los errores de redondeo de la maquina (\ref{eq-optimo:computador-adelantada}) en el esquema de la derivada adelantada (\ref{eq-optimo:adelantada}), y expandimos términos:
+
+\begin{align*}
+    f'(x) & = \frac{\hat{f}(x+h) - \hat{f}(x) }{h} + \frac{h}{2}f''(\xi) \\
+     & = \frac{f(x+h)(1 + \varepsilon_2) - f(x)(1 + \varepsilon_1) }{h} + \frac{h}{2}f''(\xi) \\
+     & = \frac{f(x+h) - f(x)}{h} + \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x) }{h} + \frac{h}{2}f''(\xi)
+\end{align*}
+
+Restamos $\frac{f(x+h) - f(x)}{h}$ en ambos miembros de la ecuación, obtenemos:
+
+\begin{equation*}
+     f'(x) - \frac{f(x+h) - f(x)}{h}  = \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x) }{h} + \frac{h}{2}f''(\xi)
+\end{equation*}
+
+Aplicando desigualdad triangular:
+\begin{equation*}
+         \left| f'(x) - \frac{f(x+h) - f(x)}{h} \right| \leq \left| \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x) }{h} \right| + \left| \frac{h}{2}f''(\xi) \right|
+\end{equation*}
+
+Podemos asumir que:
+
+\begin{enumerate}
+    \item Existe un valor $\varepsilon^*$ tal que $\varepsilon^* \gg  \left|\varepsilon_1 \right|$ y $\varepsilon^* \gg \left| \varepsilon_2\right|$.
+    \item Si $h \ll 1$, entonces $\xi \approx x \quad \wedge \quad \left|f(x+h)\right| \approx \left|f(x)\right|$.
+\end{enumerate}
+
+Luego, tenemos para el \textbf{error absoluto}:
+
+\begin{align*}     
+     E_{\text{abs}} & \leq \frac{ \varepsilon_2}{h} \left| f(x+h) \right| + \frac{\varepsilon_1}{h} \left|f(x) \right|  + \frac{h}{2} \left|  f''(\xi) \right| \\
+     & \leq \frac{ \varepsilon^*}{h} \left| f(x) \right| + \frac{\varepsilon^*}{h} \left|f(x) \right|  + \frac{h}{2} \left|  f''(\xi) \right| \\
+     & = \frac{ 2\varepsilon^*}{h} \left| f(x) \right| + \frac{h}{2} \left|  f''(\xi) \right| \\
+\end{align*}
+
+Así, deducimos el \textbf{error absoluto} del esquema de derivada adelantada.
+
+\begin{equation*}
+     E_{\text{abs}} \leq \frac{ 2\varepsilon^*}{h} \left| f(x) \right| + \frac{h}{2} \left|  f''(\xi) \right|
+\end{equation*} 
+
+Derivamos respecto a $h$ el error absoluto $E_{\text{abs}}$.
+
+\begin{align*}     
+     E'_{\text{abs}} & \leq -\frac{ \varepsilon^*}{h^2} \left| f(x) \right| + \frac{1}{2} \left|  f''(\xi) \right| \\
+\end{align*}
+
+Para encontrar el valor optimo de $h$, resolvemos la ecuación $E'_{\text{abs}} = 0$ para optimizar el error, obtenemos la siguiente ecuación:
+
+\begin{align*}
+     0 & = - \frac{ \varepsilon^*}{h^2} \left| f(x) \right| + \frac{1}{2} \left|  f''(\xi) \right|
+\end{align*}
+
+Despejando \(h\), encontramos el valor óptimo:
+
+\begin{equation} \label{eq-optimo:h_adelantada}
+    h = \sqrt{\frac{4\varepsilon^* \left|f(x)\right|}{\left|f''(x)\right|}}
+\end{equation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{\textit{h} óptimo para el esquema de la derivada centrada}
+
+Conocemos el esquema de la derivada centrada:
+
+\begin{equation}\label{eq-optimo:centrada}
+f'(x) \approx \frac{f(x+h) - f(x-h)}{2h} - \frac{h^2}{3!} f'''(\xi)
+\end{equation}
+
+Donde el termino $\frac{h^2}{3!} f'''(\xi)$ es el error de truncamiento que depende de la tercera derivada de  $f(x)$. 
+Para considerar los errores de redondeo de la máquina, utilizamos las siguientes expresiones:
+
+\begin{equation} \label{eq-optimo:computador-centrada}
+\hat{f}(x+h) = f(x+h)(1 + \varepsilon_2), \quad \text{y} \quad \hat{f}(x-h) = f(x-h)(1 + \varepsilon_1).
+\end{equation}
+
+Consideramos los errores de redondeo de la maquina (\ref{eq-optimo:computador-centrada}) en el esquema de la derivada centrada (\ref{eq-optimo:centrada}), y expandimos términos:
+
+\begin{align*}
+    f'(x) & = \frac{\hat{f}(x+h) - \hat{f}(x-h) }{2h} + \frac{h^2}{3!} f'''(\xi) \\
+     & = \frac{f(x+h)(1 + \varepsilon_2) - f(x-h)(1 + \varepsilon_1) }{2h} + \frac{h^2}{3!} f'''(\xi) \\
+     & = \frac{f(x+h) - f(x)}{2h} + \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x) }{2h} + \frac{h^2}{3!} f'''(\xi)
+\end{align*}
+
+Restamos $\frac{f(x+h) - f(x-h)}{2h}$ en ambos miembros de la ecuación, obtenemos:
+
+\begin{equation*}
+     f'(x) - \frac{f(x+h) - f(x-h)}{2h}  = \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x-h) }{2h} +\frac{h^2}{3!} f'''(\xi)
+\end{equation*}
+
+Aplicando desigualdad triangular, y asumiendo que:
+\begin{enumerate}
+    \item Existe un valor $\varepsilon^*$ tal que $\varepsilon^* \gg  \left|\varepsilon_1 \right|$ y $\varepsilon^* \gg \left| \varepsilon_2\right|$.
+    \item Si $h \ll 1$, entonces $\xi \approx x \quad \wedge \quad \left|f(x+h)\right| \approx \left|f(x)\right|\quad \wedge \quad \left|f(x-h)\right| \approx \left|f(x)\right|$.
+\end{enumerate}
+Se tiene el siguiente desarrollo:
+\begin{align*}
+         \left| f'(x) - \frac{f(x+h) - f(x-h)}{2h} \right| & \leq \left| \frac{ \varepsilon_2f(x+h) - \varepsilon_1f(x-h) }{2h} \right| + \left| \frac{h^2}{3!} f'''(\xi) \right| \\
+         & \leq \left| \frac{ \varepsilon_2f(x+h)}{2h} \right| +  \left| \frac{\varepsilon_1f(x-h) }{2h} \right| + \left| \frac{h^2}{6} f'''(\xi) \right| \\
+         & =  \frac{ \varepsilon_2}{2h} \left| f(x+h) \right| +  \frac{\varepsilon_1}{2h}  \left|f(x-h)\right|  + \frac{h^2}{6} \left| f'''(\xi) \right| \\
+              & \leq  \frac{ \varepsilon^*}{2h} \left| f(x) \right| +  \frac{\varepsilon^*}{2h}  \left|f(x)\right|  + \frac{h^2}{6} \left| f'''(\xi) \right| \\
+         & = \frac{\varepsilon^*}{h} \left| f(x) \right| + \frac{h^2}{6} \left| f'''(\xi) \right|
+\end{align*}
+
+Notamos que el \textbf{error absoluto} estara dado por:
+\begin{equation}
+E_{\text{abs}} \leq \frac{h^2}{6} \lvert f'''(\xi) \rvert + \frac{\varepsilon^*}{h} \lvert f(x) \rvert.
+\end{equation}
+
+Para el valor optimo de $h$, nuevamente derivamos el error absoluto respecto a $h$ y resolvemos $E'_{\text{abs}} = 0$:
+\begin{equation}
+-\frac{ \varepsilon^*}{h^2} \lvert f(x) \rvert + \frac{h}{3} \lvert f'''(x) \rvert = 0.
+\end{equation}
+
+Resolviendo para $h$, obtenemos:
+\begin{equation}
+h = \left( \frac{3\varepsilon^* \lvert f(x) \rvert}{\lvert f'''(x) \rvert} \right)^{1/3}.
+\end{equation}
+
+\section{Comparación de resultados}
+
+Se observa que el valor óptimo de $h$ es el mismo para los esquemas de derivada adelantada y retrasada, pero difiere del obtenido para el esquema de derivada centrada. En todos los casos, el valor óptimo de $h$ se expresa como una raíz: cuadrada para los esquemas adelantado y retrasado, y cúbica para el esquema centrado. El argumento de la raíz incluye un factor proporcional a $\varepsilon^*$ y la relación entre los valores absolutos de $f(x)$ y sus derivadas: $f''(x)$ en el caso de la raíz cuadrada y $f'''(x)$ en el caso de la raíz cúbica.
+
+\section{Conclusión}
+
+El desarrollo de la actividad permite aprender a calcular derivadas numéricas mediante tres esquemas (adelantado, retrasado y centrado), analizar sus errores de truncamiento y redondeo, y determinar el valor óptimo de $h$ para minimizar el error total. Además, fomenta el uso de técnicas matemáticas como series de Taylor y análisis de la concavidad para evaluar y optimizar estos métodos, destacando la precisión superior del esquema centrado.
+
+\end{document}

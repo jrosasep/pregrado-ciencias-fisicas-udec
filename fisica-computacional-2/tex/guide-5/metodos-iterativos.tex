@@ -1,0 +1,35 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Métodos Iterativos para la Búsqueda de Ceros}
+\label{ch:metodos-iterativos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 28 de noviembre de 2024
+
+\medskip
+
+El problema consiste en encontrar una solución de la ecuación \( f(x^*) = 0 \) usando métodos iterativos basados en una expansión en series de Taylor de \( f(x) \). Este capítulo aborda la derivación de un método iterativo con corrección de segundo orden y su comparación con el método de Newton-Raphson.
+
+\section{Derivación del Método Iterativo}
+A partir de la expansión en series de Taylor de \( f(x) \) y la solución de la ecuación cuadrática resultante, obtenemos el método iterativo:
+\begin{equation*}
+    x_{n+1} = x_n - \frac{2f(x_n)}{f'(x_n)} \pm \frac{\sqrt{(f'(x_n))^2 - 2f(x_n)f''(x_n)}}{f'(x_n)}.
+\end{equation*}
+El signo \( \pm \) se elige de manera que el denominador sea positivo y de mayor magnitud, lo que evita oscilaciones y asegura la estabilidad del método.
+
+\section{Equivalencia con el Método de Newton-Raphson}
+El método de Newton-Raphson regular se define como:
+\begin{equation*}
+    x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}.
+\end{equation*}
+El método iterativo derivado en la sección anterior es una extensión del método de Newton-Raphson al considerar la segunda derivada \( f''(x_n) \), lo que mejora la precisión en la aproximación de la raíz.
+
+\section{Convergencia Cúbica}
+El método iterativo convergerá cúbicamente a la raíz \( x^* \) si la raíz tiene multiplicidad simple, es decir, si \( f'(x^*) \neq 0 \). Esto significa que el error disminuye de forma proporcional al cubo del error anterior, lo que hace que el método sea más eficiente que el método de Newton-Raphson, que tiene convergencia cuadrática.
+
+\section{Conclusiones}
+El método derivado en este capítulo es más eficiente que el método de Newton-Raphson bajo ciertas condiciones, especialmente cuando \( f''(x_n) \) es pequeño en comparación con \( f'(x_n) \). Este método tiene la ventaja de converger más rápido en algunos casos, especialmente cuando la función \( f(x) \) tiene una segunda derivada significativa.
+
+\end{document}

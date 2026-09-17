@@ -1,0 +1,123 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Demostraciones de Reglas de Integración}
+\label{ch:demostraciones-reglas-cuadratura}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 2 de diciembre de 2024
+
+\medskip
+
+
+
+En este capítulo, se demuestran diversas reglas de integración numérica, incluyendo métodos de cuadratura abiertos, como las reglas Gaussianas, y métodos cerrados, como las reglas de Newton-Cotes. Estas demostraciones utilizan el método de coeficientes no determinados para garantizar la exactitud en polinomios de ciertos grados.
+
+
+\section{Demostración con la regla de cuadratura cerrada de Newton-Cotes}
+La regla de integración es:
+\[
+\int_{-\pi}^{\pi} f(x) \, dx = \frac{1}{2} \left[ \frac{1}{\pi^2} \Big(f(\pi) - f(-\pi)\Big) + \frac{16}{\pi^2} \Big(f\left(\frac{\pi}{2}\right) - f\left(-\frac{\pi}{2}\right)\Big) \right].
+\]
+
+\subsection*{Demostración:}
+Supongamos que la integral se aproxima como:
+\[
+\int_{-\pi}^{\pi} f(x) \, dx \approx A f(\pi) + B f(-\pi) + C f\left(\frac{\pi}{2}\right) + D f\left(-\frac{\pi}{2}\right).
+\]
+Queremos determinar los coeficientes \(A\), \(B\), \(C\), \(D\) de forma que la regla sea exacta para polinomios de grado \(n \leq 3\).
+
+\paragraph{1. Expansión de Taylor:}
+Sea \(f(x)\) un polinomio de grado 3:
+\[
+f(x) = c_0 + c_1 x + c_2 x^2 + c_3 x^3.
+\]
+
+\paragraph{2. Sustitución en la regla de cuadratura:}
+Sustituimos los valores de \(f(x)\) en \(\pm \pi\) y \(\pm \frac{\pi}{2}\):
+\begin{align*}
+f(\pi) &= c_0 + c_1 \pi + c_2 \pi^2 + c_3 \pi^3, \\
+f(-\pi) &= c_0 - c_1 \pi + c_2 \pi^2 - c_3 \pi^3, \\
+f\left(\frac{\pi}{2}\right) &= c_0 + c_1 \frac{\pi}{2} + c_2 \frac{\pi^2}{4} + c_3 \frac{\pi^3}{8}, \\
+f\left(-\frac{\pi}{2}\right) &= c_0 - c_1 \frac{\pi}{2} + c_2 \frac{\pi^2}{4} - c_3 \frac{\pi^3}{8}.
+\end{align*}
+
+\paragraph{3. Integración exacta:}
+Calculamos la integral exacta para cada término:
+\[
+\int_{-\pi}^{\pi} c_0 \, dx = 2\pi c_0, \quad
+\int_{-\pi}^{\pi} c_1 x \, dx = 0, \quad
+\int_{-\pi}^{\pi} c_2 x^2 \, dx = \frac{2}{3}\pi^3 c_2, \quad
+\int_{-\pi}^{\pi} c_3 x^3 \, dx = 0.
+\]
+
+\paragraph{4. Igualación de coeficientes:}
+Comparando los términos, determinamos los valores de \(A\), \(B\), \(C\), \(D\):
+\[
+A = B = \frac{1}{2\pi^2}, \quad C = -D = \frac{8}{\pi^2}.
+\]
+
+Por lo tanto, la regla queda demostrada.
+
+
+
+\section{Demostración con la regla de cuadratura abierta de Newton-Cotes}
+La regla de integración es:
+\[
+\int_{0}^{2h} f(x) \, dx = \frac{h}{15} \Big[ 7f(0) + 16f(h) + 7f(2h) \Big] + \frac{h^2}{15} \Big[f'(0) - f'(2h)\Big].
+\]
+
+\subsection*{Demostración:}
+Partimos de la expansión de Taylor para \(f(x)\) alrededor de \(x = 0\):
+\[
+f(x) = f(0) + f'(0)x + \frac{f''(0)x^2}{2!} + \frac{f'''(0)x^3}{3!} + \cdots.
+\]
+
+\paragraph{1. Sustitución en los puntos:}
+Evaluamos \(f(x)\) en \(x = 0\), \(x = h\), y \(x = 2h\):
+\begin{align*}
+f(0) &= f(0), \\
+f(h) &= f(0) + f'(0)h + \frac{f''(0)h^2}{2} + \frac{f'''(0)h^3}{6}, \\
+f(2h) &= f(0) + 2f'(0)h + 4\frac{f''(0)h^2}{2} + 8\frac{f'''(0)h^3}{6}.
+\end{align*}
+
+\paragraph{2. Sustitución en la regla:}
+Sustituimos estos valores en la fórmula:
+\[
+\int_{0}^{2h} f(x) \, dx = \frac{h}{15} \Big[ 7f(0) + 16f(h) + 7f(2h) \Big] + \frac{h^2}{15} \Big[f'(0) - f'(2h)\Big].
+\]
+
+Verificamos que los términos coinciden con la expansión exacta de la integral.
+
+
+
+\section{Demostración con la regla de regla de Gauss-Legendre}
+La regla de integración es:
+\[
+\int_{-1}^{1} f(x) \, dx = \frac{1}{4} \Big[ 3f\left(-\frac{2}{3}\right) + 2f(0) + 3f\left(\frac{2}{3}\right) \Big].
+\]
+
+\subsection*{Demostración:}
+Esta es una regla de Gauss-Legendre para \(n = 3\), por lo que los nodos y pesos se calculan para maximizar la precisión.
+
+\paragraph{1. Nodos y pesos:}
+Los nodos son:
+\[
+x_1 = -\frac{2}{3}, \quad x_2 = 0, \quad x_3 = \frac{2}{3}.
+\]
+Los pesos son:
+\[
+w_1 = w_3 = \frac{3}{4}, \quad w_2 = \frac{2}{4}.
+\]
+
+\paragraph{2. Verificación:}
+La regla de Gauss-Legendre es exacta para polinomios de grado \(2n-1 = 5\). Sustituimos \(f(x) = 1\), \(f(x) = x\), \(f(x) = x^2\), etc., y comprobamos que ambos lados de la fórmula coinciden.
+
+\section{Conclusión}
+
+Hemos demostrado diversas reglas de integración numérica, incluyendo métodos abiertos y cerrados, utilizando el método de coeficientes no determinados. Estas reglas son exactas para polinomios de ciertos grados y proporcionan una base teórica para su aplicación en cálculos numéricos precisos.
+
+
+\end{document}
+

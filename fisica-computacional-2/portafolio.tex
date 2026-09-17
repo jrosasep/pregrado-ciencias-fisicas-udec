@@ -1,0 +1,149 @@
+% Formato de portafolio
+% Documento adaptado de https://github.com/PlasmaPhysicsUdeC/FondecyTeX por Roberto Navarro <roberto.navarro@udec.cl>
+
+% Este documento es modular, es decir, esta separado en varios
+% archivos para facilitar su uso. Ver uso del paquete `subfiles`:
+% https://www.overleaf.com/learn/latex/Multi-file_LaTeX_projects
+
+\documentclass[twoside]{report}
+\usepackage[table]{xcolor}
+\usepackage[paper=letterpaper,left=3cm,right=3cm,top=3cm,bottom=2cm,headheight=24.1638pt, includefoot]{geometry}
+%\usepackage[margin=1in,headheight=24.1638pt]{geometry}
+%\usepackage[bookmarks=false]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks]{hyperref}
+\hypersetup{
+    citecolor=cyan!80!black,
+    urlcolor=cyan
+}
+\usepackage{hhline}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\setenumerate{itemsep=-3pt,topsep=3pt}
+\setdescription{itemsep=-3pt,topsep=3pt,leftmargin=!,labelwidth=4.5cm}
+\usepackage{pgfgantt}
+\usepackage{tikz}
+\usepackage{graphicx}
+\graphicspath{{./img/} {./tex/img/} {../img/} }
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\spanishdecimal{.}
+
+% % bibliografia: descomente estas dos lineas para usar estilo numerico, e.g. [1].
+% \usepackage[square,numbers,sort&compress]{natbib}
+% \bibliographystyle{apsrev4-1}
+
+% bibliografia: descomente estas dos lineas para usar estilo autor-año, e.g. (Navarro, 2022).
+\usepackage[authoryear]{natbib}
+\bibliographystyle{aipauth4-1}
+
+
+% Para incluir codigos python.
+% Necesita opcion -shell-escape para compilar
+\usepackage[cachedir=/tmp/minted-caches]{minted}
+
+% Estilo para todo tipo de codigo
+\setminted{breaklines, xleftmargin=\parindent, numbersep=5pt, bgcolor=lightgray!40, fontsize=\small}
+
+% Estilo solo para python
+\setminted[python]{linenos, texcomments, mathescape, texcomments}
+
+% subfiles permite que el documento sea modular
+\usepackage{subfiles}
+
+%%% Comente/Descomente las siguientes lineas para cambiar la fuente del texto
+% \usepackage{DejaVuSans}
+% \renewcommand*\familydefault{\sfdefault}
+% \usepackage{sansmath}
+% \sansmath
+
+% \numberwithin{equation}{chapter}
+
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot{}
+\fancyfoot[RE,RO]{\thepage}
+\fancyfoot[LO,LE]{\textcolor[RGB]{127,127,127}{Portafolio - Física Computacional II (2024)}}
+
+\fancyhead[LE,RO]{}
+\definecolor{tcc}{RGB}{217,217,217} % Table cell color
+
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\setlength{\arrayrulewidth}{0.5pt}
+\renewcommand{\arraystretch}{2}
+
+% \renewcommand{\thesection}{\alph{section})}
+% \renewcommand{\thesubsection}{\alph{section}.\arabic{subsection}}
+
+\begin{document}
+
+% ASEGÚRESE DE COLOCAR SUS DATOS EN LA PORTADA
+\subfile{tex/portada}
+
+
+\tableofcontents
+
+
+%%% con \subfile se incluyen archivos externos
+\subfile{tex/introduccion}
+\subfile{tex/presentacion-estudiante}
+
+\part*{Evidencias de aprendizaje}  % cuerpo del portafolio
+\addcontentsline{toc}{part}{Evidencias de aprendizaje}
+\markboth{Evidencias de aprendizaje}{Evidencias de aprendizaje}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Agregue su trabajo a partir de acá
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Guia 0
+\subfile{tex/guide-0/derivada-estimacion} %0pt
+\subfile{tex/guide-0/diferenciacion} %0pt
+\subfile{tex/guide-0/integracion} %0pt
+%Guia 1
+\subfile{tex/guide-1/caida-libre} %1pts
+\subfile{tex/guide-1/numeros-catalan}  %2pts
+\subfile{tex/guide-1/potencial-electrostatico}  %1pt
+\subfile{tex/guide-1/orbita-satelite}  %2pts
+
+%Guia 2
+\subfile{tex/guide-2/taylor-diferenciacion} %1pt
+\subfile{tex/guide-2/derivacion-numerica} %1pt
+\subfile{tex/guide-2/esquemas-errores-optimización} %2pts
+\subfile{tex/guide-2/derivacion-ruido} %2pts
+
+%Guia 3
+\subfile{tex/guide-3/pesos-grado2} %1pts
+\subfile{tex/guide-3/pesos-grado3} %2pts
+\subfile{tex/guide-3/demostraciones-reglas-cuadratura} %2pts
+\subfile{tex/guide-3/implementacion-regla-trapezoidal} %1pts
+%Guia 4
+\subfile{tex/guide-4/kepler-salto-rana} %2pts
+\subfile{tex/guide-4/edo-euler} %1pt
+\subfile{tex/guide-4/rk4-error} %2pts
+\subfile{tex/guide-4/bessel} %3pts 
+
+%Guia 5
+\subfile{tex/guide-5/hermite} %1pt
+\subfile{tex/guide-5/metodos-iterativos} %2pts
+\subfile{tex/guide-5/soluciones-ecuaciones} %1pt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Conclusiones y referencias
+\subfile{tex/conclusion-global}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Puede usar el capítulo de apéndice para agregar sus códigos completos si lo desea
+\appendix
+
+% lista de referencias guardadas en referencias.bib
+\bibliography{referencias}
+
+\end{document}

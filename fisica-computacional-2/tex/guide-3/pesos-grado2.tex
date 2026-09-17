@@ -1,0 +1,130 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Deducción de los pesos de una regla exacta para polinomios de grado 2}
+\label{ch:pesos-grado2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 20 de octubre de 2024
+
+\medskip
+
+    En este capítulo, analizaremos el proceso de deducción de los pesos $w_i$ de una regla de cuadratura que es exacta para polinomios de hasta grado 2. Para ello, consideraremos que se desea aproximar una integral utilizando una combinación lineal de los valores de la función en ciertos puntos específicos. El problema plantea que esta regla debe ser exacta para polinomios de grado 2.
+
+\section{Planteamiento del Problema}
+
+    Suponga que se quiere aproximar la siguiente integral como:
+        \begin{equation}
+        \label{eq:integral-aproximacion}
+            \int_{-1}^{1} dx \, f(x) \sin\left(\frac{\pi x}{2}\right) = w_{-1} \cdot f(-1) + w_0 \cdot f(0) + w_1 \cdot f(1)
+        \end{equation}
+
+    Nuestro objetivo es determinar los valores de los pesos $w_{-1}$, $w_0$, y $w_1$ bajo la suposición de que esta regla es exacta para polinomios de hasta grado 2.
+
+\section{Análisis y Condiciones de Exactitud}
+
+    Para asegurar que la regla es exacta para polinomios de hasta grado 2, la integral será exacta para las siguientes funciones:
+
+        \begin{itemize}
+            \item \( f(x) = 1 \)
+            \item \( f(x) = x \)
+            \item \( f(x) = x^2 \)
+        \end{itemize}
+
+    La exactitud de la regla implica que para cada uno de estos casos la igualdad planteada en la ecuación \eqref{eq:integral-aproximacion} debe cumplirse.
+
+\section{Cálculo de los Pesos para cada Caso}
+
+    Para cada función mencionada, plantearemos la ecuación correspondiente y resolveremos los valores de los pesos $w_i$.
+
+\paragraph{Caso \( f(x) = 1 \):}
+
+    Sustituyendo \( f(x) = 1 \) en la ecuación de la integral, tenemos:
+        \begin{equation}
+            \int_{-1}^{1} dx \, \sin\left(\frac{\pi x}{2}\right) = w_{-1} + w_0 + w_1
+        \end{equation}
+    Evaluando esta integral se llega a la ecuación:
+        \begin{equation}
+            \label{P1_reemplazo_1}
+            0 = w_{-1} + w_0 + w_1
+        \end{equation}
+        
+\paragraph{Caso \( f(x) = x \):}
+
+    Sustituyendo \( f(x) = x \), obtenemos:
+        \begin{equation}
+            \int_{-1}^{1} dx \, x \sin\left(\frac{\pi x}{2}\right) = -w_{-1} + w_1
+        \end{equation}
+    Al resolver la integral, obtenemos:
+        \begin{equation}
+            \label{P1_reemplazo_2}
+            \frac{8}{\pi^2} = -w_{-1} + w_1
+        \end{equation}
+        
+\paragraph{Caso \( f(x) = x^2 \):}
+
+    Finalmente, para \( f(x) = x^2 \):
+        \begin{equation}
+            \int_{-1}^{1} dx \, x^2 \sin\left(\frac{\pi x}{2}\right) = w_{-1} + w_1
+        \end{equation}
+    Resolviendo la integral, se llega a la ecuación:
+        \begin{equation}
+            \label{P1_reemplazo_3}
+            0 = w_{-1} + w_1
+        \end{equation}
+
+\section{Resolución del Sistema de Ecuaciones}
+
+    A partir de las ecuaciones obtenidas (\ref{P1_reemplazo_1}), (\ref{P1_reemplazo_2}) y (\ref{P1_reemplazo_3}), podemos construir un sistema de ecuaciones para resolver los valores de $w_{-1}$, $w_0$, y $w_1$.
+    
+        \begin{equation}
+            \left\{
+            \begin{array}{l}
+                0 = w_{-1} + w_0 + w_1 \\
+                \frac{8}{\pi^2} = -w_{-1} + w_1 \\
+                0 = w_{-1} + w_1
+            \end{array}
+            \right.
+        \end{equation}
+
+    Procedemos a resolver este sistema para encontrar los pesos. Restando \( w_{-1} \) de ambos lados en la ecuación (\ref{P1_reemplazo_3}), se obtiene:  
+        \begin{equation}
+            \label{P1_ec:1}
+            w_1 = -w_{-1}
+        \end{equation}
+    
+    Sustituyendo la ecuación (\ref{P1_ec:1}) en (\ref{P1_reemplazo_2}), tenemos:
+        \begin{equation}
+            \label{P1_ec:2}
+            \frac{8}{\pi^2} = 2w_1
+        \end{equation}
+    
+    Dividiendo entre 2 en ambos lados de la ecuación (\ref{P1_ec:2}), deducimos:
+        \begin{equation}
+            \label{P1_ec:3} %socoso
+            w_1 = \frac{4}{\pi^2}
+        \end{equation}
+    
+    Por lo tanto, de la ecuación (\ref{P1_ec:1}) también se deduce:
+        \begin{equation}
+            \label{P1_ec:4} %cosoco
+            w_{-1} = -\frac{4}{\pi^2}
+        \end{equation}
+    
+    Finalmente, sustituyendo los valores de \( w_{-1} \) y \( w_1 \) obtenidos en las ecuaciones (\ref{P1_ec:4}) y (\ref{P1_ec:3}) en la ecuación (\ref{P1_reemplazo_1}), encontramos: 
+        \begin{equation}
+            \label{P1_ec:5}
+            w_0 = 0
+        \end{equation}
+    
+    Por lo tanto, los valores de los pesos \( w_i \) en la ecuación (\ref{eq:integral-aproximacion}) son:
+    \[
+    w_{-1} = -\frac{4}{\pi^2}, \quad w_0 = 0, \quad w_1 = \frac{4}{\pi^2}.
+    \]
+
+\section{Conclusión}
+
+    Hemos deducido los valores de los pesos $w_{-1}$, $w_0$, y $w_1$ bajo las condiciones de exactitud para polinomios de hasta grado 2. Estos pesos permiten aproximar la integral planteada con una regla de cuadratura adecuada para funciones polinómicas de segundo grado.
+
+\end{document}

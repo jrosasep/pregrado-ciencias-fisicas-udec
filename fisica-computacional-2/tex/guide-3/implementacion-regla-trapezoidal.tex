@@ -1,0 +1,122 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Implementación de la Regla Trapezoidal para Datos Tabulados}
+\label{ch:implementacion-regla-trapezoidal}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 2 de diciembre de 2024
+
+\medskip
+
+
+La regla trapezoidal es un método numérico común para calcular la integral de una función conocida en un conjunto discreto de puntos. Este método aproxima la curva de la función mediante segmentos lineales entre los puntos tabulados y calcula el área bajo estas líneas.
+
+La fórmula general para integrar en un intervalo \([a, b]\), donde se tienen valores tabulados \(f(x_0), f(x_1), \dots, f(x_n)\), es:
+
+\[
+\int_a^b f(x) \, dx \approx \frac{h}{2} \left( f(x_0) + 2 \sum_{i=1}^{n-1} f(x_i) + f(x_n) \right),
+\]
+
+donde \(h = \frac{b-a}{n}\) es el ancho de los subintervalos, y \(n\) es el número de subintervalos.
+
+En este capítulo, se implementará este método para integrar datos tabulados generados a partir de una función arbitraria y se ilustrará su aplicación mediante un ejemplo práctico.
+
+\section{Implementación en Python}
+
+La función \texttt{regla\_trapezoidal} implementa la regla trapezoidal para aproximar la integral de una función cuyos valores son conocidos únicamente en un conjunto discreto de puntos tabulados. A continuación, se describe cómo esta función utiliza la regla trapezoidal para calcular la integral:
+
+\subsection*{Definición de la función}
+
+La función está definida como:
+\begin{minted}{python}
+def regla_trapezoidal(x, y):
+    """
+    Calcula la integral aproximada usando la regla trapezoidal para datos tabulados.
+    
+    Parámetros:
+        x (array): Valores de las coordenadas x (deben estar ordenados).
+        y (array): Valores de las coordenadas y correspondientes a x.
+
+    Retorna:
+        float: Valor aproximado de la integral.
+    """
+\end{minted}
+
+\subsection*{Asociación con la regla trapezoidal}
+
+La regla trapezoidal para datos tabulados divide el intervalo total en subintervalos definidos por los puntos en el arreglo \texttt{x}. Para cada subintervalo \([x_{i-1}, x_i]\), calcula el área del trapecio correspondiente, que se expresa como:
+\[
+\text{Área del trapecio} = \frac{h}{2} \left( f(x_{i-1}) + f(x_i) \right),
+\]
+donde \(h = x_i - x_{i-1}\) es el ancho del subintervalo.
+
+La función itera sobre todos los subintervalos en los datos tabulados para acumular el área total. Esto se implementa como:
+\begin{minted}{python}
+for i in range(1, n):
+    h = x[i] - x[i-1]
+    integral += (y[i-1] + y[i]) * h / 2
+\end{minted}
+
+\subsection*{Validación de los datos}
+
+La función también verifica que los arreglos de entrada \texttt{x} e \texttt{y} sean válidos:
+\begin{itemize}
+    \item Deben tener la misma longitud.
+    \item Deben contener al menos dos puntos, ya que la regla trapezoidal requiere al menos un subintervalo.
+\end{itemize}
+Esto se verifica al inicio de la función:
+\begin{minted}{python}
+if n < 2 or len(y) != n:
+    raise ValueError("x e y deben tener el mismo número de puntos y al menos 2 valores.")
+\end{minted}
+
+\subsection*{Resultado}
+
+Finalmente, la función retorna el valor de la integral aproximada como la suma de las áreas de todos los trapecios:
+\begin{minted}{python}
+return integral
+\end{minted}
+
+\section{Ejemplo de uso}
+
+En esta sección, se utiliza la función \texttt{regla\_trapezoidal} previamente explicada para calcular la integral aproximada de un conjunto de datos tabulados. Supongamos que los valores de \texttt{x} y \texttt{y} son los siguientes:
+
+\begin{itemize}
+    \item \texttt{x = [0, 1, 2, 3]}, correspondientes a los puntos en el eje \(x\).
+    \item \texttt{y = [1, 2, 0, 3]}, correspondientes a los valores de la función evaluada en dichos puntos.
+\end{itemize}
+
+La rutina se implementa y evalúa como sigue:
+
+\begin{minted}{python}
+# Datos tabulados
+x = np.array([0, 1, 2, 3])
+y = np.array([1, 2, 0, 3])
+
+# Calcular la integral aproximada usando la regla trapezoidal
+resultado = regla_trapezoidal(x, y)
+
+# Mostrar el resultado
+print(f"Resultado de la integral: {resultado}")
+\end{minted}
+
+\subsection*{Cálculo paso a paso}
+
+La función divide el intervalo \([0, 3]\) en subintervalos definidos por los puntos \(x = [0, 1, 2, 3]\). Para cada subintervalo, calcula el área de los trapecios:
+\[
+\text{Integral} \approx \frac{1}{2}(1+2)(1) + \frac{1}{2}(2+0)(1) + \frac{1}{2}(0+3)(1).
+\]
+La suma de estas áreas es:
+\[
+\text{Integral} \approx 1.5 + 1 + 1.5 = 4.0
+\]
+
+\section{Conclusión}
+
+La implementación de la regla trapezoidal demuestra ser una herramienta útil para integrar datos tabulados. En el ejemplo presentado, calculamos la integral aproximada de una función tabulada en puntos discretos, obteniendo un resultado de \(4.0\). Esta metodología es eficiente y versátil para problemas en los que la función no se conoce de manera analítica, pero se dispone de datos experimentales o simulados.  
+
+
+\end{document}
+

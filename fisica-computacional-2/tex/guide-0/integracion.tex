@@ -1,0 +1,80 @@
+
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Métodos Numéricos de Integración}
+\label{ch:integracion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hfill \textbf{Fecha de la actividad:} 28 de noviembre de 2024
+
+\medskip
+
+En este capitulo, queremos aproximar numéricamente la integral:
+\begin{equation}
+\int_{-1}^1 f(x) \sin\left(\frac{\pi x}{2}\right) dx = w_{-1}f(-1) + w_0f(0) + w_1f(1).
+\end{equation}
+Donde la regla es exacta para polinomios de hasta grado 2.
+
+\section{Determinación de los Pesos}
+
+Para encontrar los pesos $w_i$, evaluamos la regla para polinomios de grado 0, 1 y 2.
+
+\begin{itemize}
+    \item \textbf{Polinomio de grado 0}: $f(x) = 1$
+        \begin{equation}
+        \int_{-1}^1 \sin\left(\frac{\pi x}{2}\right) dx = w_{-1} + w_0 + w_1.
+        \end{equation}
+    
+    \item \textbf{Polinomio de grado 1}: $f(x) = x$ .
+    La función $x \sin\left(\frac{\pi x}{2}\right)$ es impar, por lo que la integral es cero:
+        \begin{equation}
+        \int_{-1}^1 x \sin\left(\frac{\pi x}{2}\right) dx = -w_{-1} + w_1 = 0 \implies w_{-1} = w_1.
+        \end{equation}
+
+    \item \textbf{Polinomio de grado 2}: $f(x) = x^2$.
+    La regla se aplica como:
+        \begin{equation}
+        \int_{-1}^1 x^2 \sin\left(\frac{\pi x}{2}\right) dx = w_{-1} + w_0 + w_1.
+        \end{equation}
+
+\end{itemize}
+
+Al resolver el sistema de ecuaciones, obtenemos:
+\begin{equation}
+w_{-1} = -\frac{1}{2}, \quad w_0 = 1, \quad w_1 = -\frac{1}{2}.
+\end{equation}
+
+\section{Aproximación de la Integral Dada}
+La integral a calcular es:
+\begin{equation}
+\int_{-1}^1 x^2 \sin^2\left(\frac{\pi x}{2}\right) dx.
+\end{equation}
+Utilizando los pesos obtenidos, la aproximación es:
+\begin{align}
+f(-1) &= (-1)^2 = 1, \\
+f(0) &= 0^2 = 0, \\
+f(1) &= 1^2 = 1.
+\end{align}
+Entonces:
+\begin{equation}
+w_{-1}f(-1) + w_0f(0) + w_1f(1) = -\frac{1}{2}(1) + 1(0) -\frac{1}{2}(1) = -1.
+\end{equation}
+
+El valor exacto de la integral es:
+\begin{equation}
+\int_{-1}^1 x^2 \sin^2\left(\frac{\pi x}{2}\right) dx = \frac{1}{3} + \frac{2}{\pi^2} \approx 0.53598.
+\end{equation}
+
+\section{Análisis de Error}
+El error absoluto es:
+\begin{equation}
+| -1 - 0.53598 | \approx 1.53598.
+\end{equation}
+El error es significativo, ya que la regla es exacta solo para polinomios de grado 2. La función dada contiene términos no polinómicos ($\sin^2$), lo que introduce errores debido a la limitada precisión del método.
+
+\section{Conclusión}
+La regla de cuadratura utilizada es exacta para polinomios de grado 2, pero presenta un error significativo al aproximar funciones más complejas, como aquellas con términos trigonométricos. Para problemas de mayor complejidad, es necesario emplear métodos de integración más avanzados o de mayor orden.
+
+\end{document}

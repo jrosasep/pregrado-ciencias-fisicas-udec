@@ -1,0 +1,257 @@
+
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Cálculo y análisis de los números de Catalán}
+\label{ch:numeros-catalan}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 16 de noviembre de 2024
+
+\medskip
+
+Este capítulo aborda las propiedades fundamentales de los números de Catalán, definidos como: 
+
+\begin{equation}\label{eq:catalan}
+C_n = \frac{(2n)!}{(n+1)!n!}, \quad n \geq 0.
+\end{equation}
+
+Se demuestra que esta definición puede expresarse recursivamente como: 
+
+\begin{equation}
+C_0 = 1, \quad C_{n+1} = \frac{4n+2}{n+2} C_n.
+\end{equation}
+
+Además, se utiliza \texttt{Python} para:  
+\begin{itemize}
+    \item Graficar todos los números de Catalán que satisfacen $C_n < M$, con $M > 10^{15}$, empleando precisión simple (32 bits).
+    \item Comparar los resultados obtenidos mediante la definición exacta y la relación recursiva.
+    \item Verificar gráficamente el comportamiento asintótico de la serie para $n \gg 1$.
+\end{itemize}
+
+Se incluye un análisis visual que destaca la relación entre los valores exactos y su aproximación, resaltando las propiedades de esta importante secuencia combinatoria.
+
+
+\section{Definición y forma de recurrencia}
+
+Se puede demostrar que la definición (\ref{eq:catalan}) es equivalente a la recurrencia:
+
+\begin{equation}
+C_0 = 1, \quad C_{n+1} = \frac{4n + 2}{n + 2} C_n
+\end{equation}
+
+\subsection*{Demostración}
+
+\begin{enumerate}
+    \item Observemos que, según la definición (\ref{eq:catalan}), para $n = 0$ se tiene:
+    
+    \begin{align*}
+        C_0 & = \frac{(2 \cdot 0)!}{(0 + 1)! \cdot 0!} \\
+            & = \frac{(0)!}{1! \cdot 0!} \\
+            & = \frac{1}{1 \cdot 1} \\
+            & = 1.
+    \end{align*}
+    
+    Por lo tanto, queda demostrado que $C_0 = 1$.
+\item La recurrencia $C_{n+1} = \frac{4n + 2}{n + 2} C_n$ se demuestra mediante el principio de inducción matemática. Procedemos de la siguiente manera:
+
+\begin{itemize}
+    \item \textbf{Hipótesis inductiva:} Suponemos que la fórmula es válida para un entero no negativo $k$, es decir, que $C_k = \frac{(2k)!}{(k+1)! \, k!}$.
+    \item \textbf{Tesis inductiva:} Queremos demostrar que $C_{k+1} = \frac{4k + 2}{k + 2} C_k$.
+\end{itemize}
+
+A partir de la definición de los números de Catalán, evaluamos $C_{k+1}$:
+
+\begin{align}
+    C_{k+1} & = \frac{(2(k+1))!}{((k+1)+1)! \, (k+1)!} \\
+    & = \frac{(2k+2)!}{(k+2)! \, (k+1)!},
+\end{align}
+donde simplemente hemos expandido $2(k+1)$ como $2k+2$ y $(k+1)+1$ como $k+2$ en los factoriales. A continuación, separamos el factorial $(2k+2)!$ utilizando la propiedad de los factoriales $(n+1)! = (n+1) \cdot n!$:
+
+\begin{align}
+    C_{k+1} & = \frac{(2k)! \, (2k+1) \, (2k+2)}{(k+1)! \, (k+2)!} \\
+    & = \frac{(2k)! \, (2k+1) \, (2k+2)}{(k+1)! \, (k+2) \, k! \, (k+1)},
+\end{align}
+donde el término $(k+2)!$ fue descompuesto como $(k+2) \cdot (k+1)!$. Luego, reorganizamos los términos agrupando los factores comunes:
+
+\begin{align}
+    C_{k+1} & = \frac{(2k)! \, (2k+1) \, 2 \, (k+1)}{(k+1)! \, (k+2) \, k! \, (k+1)}.
+\end{align}
+Aquí, se utilizó $2k+2 = 2 \cdot (k+1)$ para simplificar el último factor. Al cancelar $(k+1)$ en el numerador y denominador, el resultado queda como:
+
+\begin{align}
+    C_{k+1} & = \frac{(2k)! \, (4k+2)}{(k+1)! \, (k+2) \, k!}.
+\end{align}
+Luego, identificamos que el primer término $\frac{(2k)!}{(k+1)! \, k!}$ corresponde a $C_k$, lo que permite expresar la ecuación como:
+
+\begin{align}
+    C_{k+1} & = \frac{(2k)!}{(k+1)! \, k!} \cdot \frac{4k+2}{k+2} \\
+    & = C_k \cdot \frac{4k+2}{k+2}.
+\end{align}
+
+Por lo tanto, hemos demostrado que:
+
+\begin{equation}\label{eq:catalan_recursividad}
+    C_{n+1} = \frac{4n+2}{n+2} C_n ,\quad  \forall n \in \mathbb{N}_0.
+\end{equation}
+
+\end{enumerate}
+
+De esta forma, se valida que los números de Catalán pueden expresarse de manera equivalente mediante la relación de recurrencia. Cabe notar que, al evaluar $n = 0$, se obtiene directamente que $C_0 = 1$, lo cual cierra la demostración de la base inductiva.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Gráfica y comparación}
+
+Para calcular los números de Catalán y graficarlos utilizaremos \texttt{Python}, empleando las bibliotecas \texttt{numpy} y \texttt{matplotlib.pyplot}, para calcular hasta $C_n < M$, con una cota $M$ dada por el usuario. 
+
+Primero, definimos una función para calcular el operador factorial.
+   
+\begin{minted}{python}
+def fact(n):
+    fact=1
+    for n in list(range(0,int(n+1),1)):
+        if n==0 or n==1:
+            fact*=1
+        elif n>1:
+            fact*= n
+    return fact
+\end{minted}
+
+Definimos un par de funciones para calcular el n-esimo numero de Catalán, asegurándonos de usar precisión \textbf{simple} con la función \texttt{float32} de \texttt{numpy}, por:
+\begin{itemize}
+    \item \textbf{Definición} (\ref{eq:catalan}):
+        \begin{minted}{python}
+def catalan_def(n):
+    catalan_n = np.float32 ( fact(2*n)/( fact(n+1)* fact(n) ) )
+    return catalan_n
+        \end{minted}    
+    \item \textbf{Recursividad} (\ref{eq:catalan_recursividad}):
+    
+    \begin{minted}{python}
+def catalan_rec(n):
+    catalan_0 = 1
+    for n in list( range( 0, n, 1) ):
+        catalan_rec = np.float32( catalan_0 * ( 4*n + 2 ) / ( n + 2 ) )
+        catalan_0 = catalan_rec
+    return catalan_0
+    \end{minted}
+    
+\end{itemize}
+Empleando la función \texttt{input} se programa \texttt{M} para que sea una cota ingresada por el usuario. La función \texttt{float} interpreta el valor ingresado por el usuario como un float, si y solo si la sintaxis es correcta.
+\begin{minted}{python} 
+M = float(input("Ingrese el valor de M: "))
+\end{minted}
+
+Establecemos las siguientes listas vacías para almacenar los resultados:
+\begin{itemize}
+    \item \texttt{n\_values}: contendrá los números naturales 
+    \item \texttt{list\_catalan\_def}: almacenará los valores calculados por definición.
+    \item \texttt{list\_catalan\_rec}: guardará los valores obtenidos mediante recurrencia.
+\end{itemize}
+El código es el siguiente:
+\begin{minted}{python}
+n_values = []
+list_catalan_def = []
+list_catalan_rec = []
+\end{minted}
+
+Se define una variable \texttt{n = 0} para iniciar un ciclo \texttt{while}, donde se calculan los números de Catalán $C_n $ mediante la definición (\ref{eq:catalan}) y la recurrencia (\ref{eq:catalan_recursividad}). En cada iteración, los valores calculados y el índice $n$ se almacenan en listas respectivas. El ciclo finaliza cuando $ M \geq C_n $.
+  
+\begin{minted}{python}
+# Cálculo iterativo de los números de Catalán
+n = 0
+while True:
+    C_def = catalan_def(n)  # Número de Catalán por definición
+    C_rec = catalan_rec(n)  # Número de Catalán por recurrencia
+
+    # Condición para detener el ciclo si se supera la cota M
+    if C_def >= M or C_rec >= M:
+        break
+
+    # Almacenamos los valores calculados y el índice actual
+    list_catalan_def.append(C_def)
+    list_catalan_rec.append(C_rec)
+    n_values.append(n)
+    
+    # Incrementamos el índice
+    n += 1
+\end{minted}
+Para visualizar los números de Catalán que cumplen $M \geq C_n$, se generó un gráfico empleando \texttt{matplotlib.pyplot}. En este se comparan los resultados obtenidos mediante las expresiones (\ref{eq:catalan}) y (\ref{eq:catalan_recursividad}). Además, se incluye una línea horizontal roja que representa la cota $M$. El eje $x$ corresponde a los primeros $n \in \mathbb{N}_0$, mientras que el eje $y$ muestra los valores de $C_n$ calculados bajo dicha restricción.
+
+\begin{minted}{python}
+
+# Gráfico de los números de Catalán calculados por ambos métodos
+plt.plot(n_values, list_catalan_def, 'x', label='Por definición (1)', color='blue')
+plt.plot(n_values, list_catalan_rec, '.', label='Por recurrencia (2)', color='orange')
+
+# Línea horizontal que representa la cota M
+plt.axhline(y=M, color='red', linestyle='--', label=f'Cota M = {M}')
+
+\end{minted}
+
+Para el valor $M=10^{16}$, podemos observar el gráfico obtenido desde el codigo que hemos programado en la figura (\ref{fig:numeros-catalan}).
+    
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.8\linewidth]{img/guide-1/numeros-catalan.png}
+        \caption{Gráfico Números de Catalán bajo la cota $M = 10^{16}$}
+        \label{fig:numeros-catalan}
+    \end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Comportamiento asintótico}
+
+Para $n \gg 1$, los números de Catalán tienen un comportamiento asintótico de la forma:
+
+\begin{equation}\label{eq:approx}
+C_n \approx \frac{4^n}{n^{3/2} \sqrt{\pi}}
+\end{equation}
+
+A continuación, comprobaremos gráficamente este comportamiento asintótico. Para ello, implementando \texttt{Python}, definimos una función que calcula la aproximación al \(n\)-ésimo número de Catalán según la ecuación~(\ref{eq:approx}). Se utiliza precisión \textbf{simple} mediante la función \texttt{float32} del paquete \texttt{numpy}.
+\begin{minted}{python}
+def catalan_def(n):
+    catalan_n = np.float32 ( fact(2*n)/( fact(n+1)* fact(n) ) )
+    return catalan_n
+\end{minted}
+Se define un rango de valores enteros, que representa los primeros 99 números naturales, y se almacena en la variable \texttt{n\_values}. Estos valores se manejan utilizando precisión \textbf{simple} (\texttt{float32}) .
+\begin{minted}{python}
+n_values = np.arange(1, 100, dtype=np.float32)
+\end{minted}
+
+Los números de Catalán (\texttt{Cn}) y su aproximación asintótica (\texttt{Cn\_aprox}) se calculan para cada valor en \texttt{n\_values} utilizando comprensiones de listas. Los resultados se almacenan como arreglos de \texttt{NumPy}.  
+\begin{minted}{python}
+Cn = np.array([catalan_def(i) for i in n_values])
+Cn_aprox = np.array([catalan_aprox(i) for i in n_values])
+\end{minted}
+
+Es importante notar que, al usar precisión simple en las funciones \texttt{catalan\_def} y \texttt{catalan\_aprox}, se observan las siguientes limitaciones:  
+\begin{itemize}
+    \item Con \texttt{catalan\_def}, es posible calcular únicamente los primeros \(n = 68\) números de Catalán de forma explícita (excluyendo \(n = 0\)).
+
+    \item Con \texttt{catalan\_aprox}, se pueden determinar los primeros $n = 62$ números de Catalán mediante la aproximación, excluyendo $n=0$.  
+\end{itemize}
+Los valores restantes en los arreglos \texttt{Cn} y \texttt{Cn\_aprox} serán representados como \texttt{inf}, lo que en \texttt{Python} indica infinito \cite{geeksforgeeks_infinity}.
+
+Al generar un gráfico para comparar las curvas de los valores $C_n$ calculados por definición (\ref{ch:numeros-catalan}) y por la aproximación asintótica (\ref{eq:approx}), se obtiene la siguiente representación gráfica:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-1/numeros-catalan-aprox.png}
+    \caption{Comparación gráfica entre $C_n$ y su aproximación asintótica.}
+\end{figure}
+
+Si se realiza un acercamiento ("zoom") entre las curvas, se puede observar con mayor claridad el comportamiento asintótico de la aproximación. Se aprecia esto en la figura \ref{fig:asintotic}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-1/numeros-catalan-aprox-asintotic.png}
+    \caption{Detalle gráfico del comportamiento asintótico entre $C_n$ y su aproximación.}
+    \label{fig:asintotic}
+\end{figure}
+\section{Conclusión}
+
+El estudio de los números de Catalán permitió validar su definición y recurrencia, explorar su comportamiento asintótico y analizar gráficamente sus propiedades, destacando su relevancia como una secuencia combinatoria fundamental mediante métodos numéricos y computacionales.
+
+\end{document}

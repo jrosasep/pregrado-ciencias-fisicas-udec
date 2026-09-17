@@ -1,0 +1,211 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Derivación Numérica en Datos Discretos con Ruido}
+\label{ch:derivacion-ruido}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 23 de noviembre de 2024
+
+\medskip
+
+En este capítulo, analizaremos las limitaciones de un esquema de derivada centrada aplicado a una función $f$, en la que solo se dispone de un conjunto finito de pares ordenados $(x_i, f_i)$. Implementaremos un esquema numérico de derivación centrada para datos discretos y evaluaremos cómo el ruido afecta los resultados.
+
+Utilizaremos una función generada en \texttt{Python} que simula una señal sinusoidal con un ruido uniforme de magnitud $10^{-2}$. Posteriormente, exploraremos estrategias para mitigar el impacto del ruido en el cálculo de la derivada, mejorando así la precisión de las estimaciones.
+
+
+\section{Análisis del esquema de deriva centrada de \textit{f(x)} para pares ordenados dados}
+
+\begin{itemize}
+    \item Se nos proporciona un número finito $n \in \mathbb{N}$ de valores $x_i \in X \subseteq \mathbb{R}$, con $0 \leq i \leq n$. Estos valores están ordenados de manera creciente desde $x_0$ hasta $x_n$ y presentan una separación equidistante entre cada par de elementos consecutivos, es decir, cada $x_i$ equidista de su sucesor y de su antecesor.
+
+        \begin{equation*}
+            X = \{ x_0, \, x_1, \, \dotso , x_{n-1} \, , x_n\}
+        \end{equation*}
+     
+    \item Consideramos una función $f$ definida en el conjunto $X$, al menos derivable en $X \setminus \{x_0, \, x_n\}$. Se nos proporcionan valores $f_i$, tales que $\forall \, x_i \in X, \, \exists \, f_i = f(x_i) \in F \subseteq \mathbb{R}$. Por lo tanto, el conjunto $F$ contiene el mismo número finito $n$ de valores $f_i$ correspondientes a los $x_i$.
+
+        \begin{equation*}
+            F = \{ f_0, \, f_1, \, \dotso , f_{n-1} \, , f_n\}
+        \end{equation*}
+        
+    \item Consideramos el producto cartesiano de $X$ y $F$, 
+
+        \begin{equation*}
+            X\times F = \{ (x_0, \,f_0), \, (x_1, \,f_1), \, \dotso , (x_{n-1}, \, f_{n-1}) \, , (x_n, \, f_n)\}
+        \end{equation*}
+        
+     donde $X \times F$ contiene a los $n$ pares ordenados $(x_i, \, f_i)$.
+     
+    \item Analizamos $h$ el esquema de la derivada centrada para $f(x)$. Este esquema usualmente se expresa de la siguiente manera:
+
+        \begin{equation}    \label{eq-dr:esquema-centrado}
+            f'(x_i) \approx \frac{f(x_i + h) - f(x_i - h)}{2h}.
+        \end{equation}
+
+    Consideramos $h$ como la distancia entre dos valores consecutivos en el conjunto $X$. Por la equidistancia entre dos valores consecutivos cualesquiera en $X$, podemos representar $h$ de dos maneras:
+    
+        \begin{equation}    \label{eq-dr:h-1}
+            h = x_{i+1} - x_i
+        \end{equation}
+        
+        \begin{equation}    \label{eq-dr:h-2}
+            h = x_i - x_{i-1}
+        \end{equation}           
+
+    Dependiendo de la forma de representar $h$ que se escoga, notaremos que:
+        \begin{enumerate}
+            \item Representando $h$ como en \eqref{eq-dr:h-1}, en $x_i + h$ se tiene $x_i + h = x_i + (x_{i+1} - x_i) = x_{i+1}$, por lo tanto
+            
+            \begin{equation}    \label{eq-dr:x_i+1}
+                x_i + h = x_{i+1} \, \, \, .
+            \end{equation}
+            
+            \item Representando $h$ como en \eqref{eq-dr:h-2}, en $x_i - h$ se tiene $x_i - h = x_i - (x_i - x_{i-1}) = x_{i-1}$, por lo tanto
+            
+            \begin{equation}    \label{eq-dr:x_i-1}
+                x_i - h = x_{i-1} \, \, \, .
+            \end{equation}
+        \end{enumerate}
+
+    Reemplazando \eqref{eq-dr:x_i+1} y \eqref{eq-dr:x_i-1} en \eqref{eq-dr:esquema-centrado}, se obtiene
+    
+        \begin{equation}    \label{eq-dr:esquema-centrado-2}
+            f'(x_i) \approx \frac{f(x_{i+1}) - f(x_{i-1})}{2h} \, .
+        \end{equation}
+
+    \item Para estimar la derivada de $f$, dado que solo se conocen los pares de valores $(x_i, \, f_i) \in X \times F$, utilizamos el esquema de derivada centrada definido en \eqref{eq-dr:esquema-centrado-2}. Dado que $f_i = f(x_i)$, el esquema en este contexto puede expresarse de la siguiente forma:
+
+        \begin{equation}    \label{eq-dr:esquema-centrado-3}
+            f'(x_i) \approx \frac{f_{i+1} - f_{i-1}}{2h}
+        \end{equation}
+
+    \item Notamos que para los pares $(x_0, \,f_0)$ y $(x_n, \,f_n)$ no es posible aplicar el esquema \eqref{eq-dr:esquema-centrado-3}. 
+
+    \begin{itemize}
+        \item Si $(x_i, \, f_i)= (x_0, \, f_0)$, se tendrá en \eqref{eq-dr:esquema-centrado-3} que $f'(x_0) \approx \frac{f_{1} - f_{-1}}{2h}$, pero  $f_{-1} \notin F$, por lo tanto no podemos estimar $f'(x_0)$ con este esquema.
+        
+        \item Si $(x_i, \, f_i)= (x_n, \, f_n)$, se tendrá en \eqref{eq-dr:esquema-centrado-3} que $f'(x_n) \approx \frac{f_{n+1} - f_{n-1}}{2h}$, pero  $f_{n+1} \notin F$, por lo tanto no podemos estimar $f'(x_n)$ con este esquema.
+
+    \end{itemize}
+
+\item Determinamos las cotas máximas y mínimas de $f_{i+1}$ y $f_{i-1}$ en el esquema de derivada centrada \eqref{eq-dr:esquema-centrado-3}, basándonos en las siguientes estimaciones:
+\begin{enumerate}
+    \item Para $f'(x_1)$, observamos que $f'(x_1) \approx \frac{f_2 - f_0}{2h}$. Por lo tanto, los valores mínimos que pueden asumir $f_{i+1}$ y $f_{i-1}$ son $f_2$ y $f_0$, respectivamente.
+    \item Para $f'(x_{n-1})$, observamos que $f'(x_{n-1}) \approx \frac{f_n - f_{n-2}}{2h}$. En este caso, los valores máximos que pueden asumir $f_{i+1}$ y $f_{i-1}$ son $f_n$ y $f_{n-2}$, respectivamente.
+\end{enumerate}
+Estas consideraciones son fundamentales para comprender el programa que calculará la derivada centrada de $f$, suponiendo que solo se disponen de datos discretos.
+
+\end{itemize}
+
+\section{Programa para calcular la derivada centrada de \textit{f(x)} con pares ordenados dados}
+
+A continuación, se presenta una función programada en \texttt{Python} que estima la derivada de una función $f$, cuyos valores $(x_i, \, f_i)$ son conocidos y discretos, donde los valores consecutivos en $x_i$ están uniformemente espaciados. 
+
+La función utiliza el esquema de derivada centrada \eqref{eq-dr:esquema-centrado-3}, como se explicó en la sección anterior. El código es el siguiente:
+
+\begin{minted}{python}
+def derivada_centrada(x, f):
+    h = x[1] - x[0]
+    df = (f[2:] - f[:-2]) / (2 * h)
+    return df
+\end{minted}
+
+\par La función cuenta con dos parámetros:
+\begin{itemize}
+    \item \texttt{x}: Un \texttt{array} de valores que representan los $x_i \in X$, uniformemente espaciados.
+    \item \texttt{f}: Un \texttt{array} de valores que representan los $f_i \in F$.
+\end{itemize}
+
+\par En primer lugar, la función calcula el paso $h$, el cual es constante entre dos valores consecutivos en el array \texttt{x}.
+
+\par A continuación, se utiliza el esquema de derivada centrada \eqref{eq-dr:esquema-centrado-3} para calcular $f'(x_i)$ en los pares de valores desde $(x_1, \, f_1)$ hasta $(x_{n-1}, \, f_{n-1})$, considerando las siguientes características de $f_{i+1}$ y $f_{i-1}$:
+\begin{enumerate}
+    \item \texttt{f[2:]}: Representa $f_{i+1}$, con valor mínimo $f_2$ y valor máximo $f_n$.
+    \item \texttt{f[:-2]}: Representa $f_{i-1}$, con valor mínimo $f_0$ y valor máximo $f_{n-2}$.
+\end{enumerate}
+
+\par Finalmente, la función retorna un \texttt{array} con los valores de las derivadas aproximadas calculados.
+
+\section{Generación de datos}
+
+Se genera en \texttt{Python} una serie de datos de la siguiente manera:
+
+\begin{minted}{python}
+from numpy import pi, linspace, sin, random
+gen = random.default_rng()
+x = linspace(0, 2*pi, 256)
+f = sin(x) + gen.uniform(low=-1e-2, high=1e-2, size=x.size)
+\end{minted}
+
+En este caso, $f$ presenta una tendencia sinusoidal con la forma de $\sin(x)$, a la cual se le agrega un ruido uniforme aleatorio de magnitud $10^{-2}$.
+
+Utilizando \texttt{matplotlib.pyplot}, se grafica la función generada con el ruido aleatorio, obteniendo el gráfico presentado en la Figura \ref{fig-dr:funcion}, generado en parte mediante el siguiente código:
+
+\begin{minted}{python}
+plt.plot(x, f, label="f(x) con ruido", color="blue")
+\end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-ruido/funcion-ruido.png}
+    \caption{Función con tendencia sinusoidal de la forma $\sin(x)$, con ruido uniforme aleatorio de magnitud $10^{-2}$ agregado.}
+    \label{fig-dr:funcion}
+\end{figure}
+
+Antes de graficar la derivada centrada de la función generada, es importante considerar lo siguiente: 
+
+El programa utilizado para calcular las derivadas retorna un \texttt{array} con los valores desde $f'(x_1)$ hasta $f'(x_{n-1})$. Dado que el esquema centrado no permite calcular $f'(x_0)$ ni $f'(x_n)$, el \texttt{array x} contiene dos elementos más que el \texttt{array} de derivadas retornado por la función \texttt{derivada\_centrada}. 
+
+Para graficar correctamente la derivada centrada de la función generada, es necesario definir un nuevo \texttt{array} para \texttt{x}, excluyendo los valores $x_0$ y $x_n$. Esto se logra con el siguiente código:
+
+\begin{minted}{python}
+x_df = x[1:-1]
+\end{minted}
+
+Una vez definido este nuevo \texttt{array}, se grafica la derivada centrada de la función generada. El gráfico resultante se muestra en la Figura \ref{fig-dr:derivada}, generado en parte mediante el siguiente código:
+
+\begin{minted}{python}
+plt.plot(x_df, df_dx, label="Derivada centrada de f(x)", color="red")
+\end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-ruido/derivada-ruido.png}
+    \caption{Derivada centrada de la función $f(x)$ generada con tendencia sinusoidal de la forma $\sin(x)$, con ruido uniforme aleatorio de magnitud $10^{-2}$ agregado.}
+    \label{fig-dr:derivada}
+\end{figure}
+
+\section{Observaciones}
+
+\subsection*{Resultados Observados}
+
+\begin{itemize}
+    \item El ruido presente en $f(x)$ se amplifica significativamente al aplicar el esquema de derivada centrada. Este es un efecto común en los métodos de diferenciación numérica, ya que pequeñas perturbaciones en los datos originales se reflejan como grandes oscilaciones en el cálculo de las pendientes.
+    
+    \item A pesar del ruido, se aprecia que la tendencia general de la derivada sigue una forma similar a $\cos(x)$, que corresponde a la derivada analítica de $\sin(x)$.
+\end{itemize}
+
+\subsection{Mitigación del Ruido}
+
+Para mitigar los efectos del ruido en el cálculo de la derivada, se proponen las siguientes estrategias:
+
+\begin{enumerate}
+    \item \textbf{Filtrado previo de los datos:} Suavizar los valores de $f(x)$ antes de calcular la derivada. Un filtro gaussiano es una opción adecuada para este propósito:
+\begin{minted}{python}
+from scipy.ndimage import gaussian_filter1d
+f_suavizado = gaussian_filter1d(f, sigma=2)
+df_dx = derivada_centrada(x, f_suavizado)
+\end{minted}
+    \item \textbf{Uso de pasos mayores $h$:} Incrementar el espaciado entre los puntos en los datos discretos reduce la sensibilidad al ruido. No obstante, esto también disminuye la resolución de los cálculos.
+\end{enumerate}
+
+\section{Conclusión}
+
+En esta actividad, se analizaron las limitaciones de un esquema de diferencias centradas aplicado a un conjunto de valores discretos $(x_i, \, f_i)$ de una función $f$. Se programó en \texttt{Python} una función que calcula la derivada centrada de una función, partiendo únicamente de un conjunto de valores discretos. 
+
+Además, se implementó un esquema de diferencias centradas para estimar la derivada numérica de datos discretos que incluyen ruido. Se observó que el ruido amplifica los errores en la derivada calculada; sin embargo, estrategias como el filtrado previo de los datos o ajustes en el paso pueden mejorar significativamente los resultados obtenidos.
+
+
+\end{document}

@@ -1,0 +1,55 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Métodos de Diferenciación Numérica: Derivada Adelantada y Error Absoluto}
+\label{ch:diferenciacion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 25 de noviembre de 2024
+
+\medskip
+
+En este capítulo, se analiza el esquema de diferencias adelantadas de tres puntos para aproximar la derivada de una función $f(x)$.
+
+\section{Orden del Error de Truncamiento}
+El esquema de diferencias adelantadas de tres puntos es:
+\begin{equation}    \label{eq-dif:esq}
+f'_{\text{num}}(x) = \frac{-3f(x) + 4f(x+h) - f(x+2h)}{2h}.
+\end{equation}
+Para determinar el orden del error de truncamiento entre este esquema y $f'(x)$, vamos a expandir $f(x+h)$ y $f(x+2h)$ en series de Taylor alrededor de $x$ hasta el quinto término.
+
+Usamos las siguientes expansiones en series de Taylor:
+\begin{equation}    \label{eq-dif:exp1}
+f(x+h) = f(x) + f'(x)h + \frac{f''(x)}{2}h^2 + \frac{f^{(3)}(x)}{6}h^3 + \frac{f^{(4)}(x)}{24}h^4 + O(h^5),
+\end{equation}
+\begin{equation}    \label{eq-dif:exp2}
+f(x+2h) = f(x) + 2f'(x)h + \frac{2^2 f''(x)}{2}h^2 + \frac{2^3 f^{(3)}(x)}{6}h^3 + \frac{2^4 f^{(4)}(x)}{24}h^4 + O(h^5).
+\end{equation}
+
+Sustituyendo estas expansiones \eqref{eq-dif:exp1} y \eqref{eq-dif:exp2} en el esquema de la derivada numérica \eqref{eq-dif:esq}, obtenemos:
+
+\begin{equation*}
+f'_{\text{num}}(x) = \frac{-3f(x) + 4\left( f(x) + f'(x)h + \frac{f''(x)}{2}h^2 + O(h^3) \right) - \left( f(x) + 2f'(x)h + 2f''(x)h^2 + O(h^3) \right)}{2h}.
+\end{equation*}
+
+Simplificando los términos, finalmente obtenemos:
+
+\begin{equation}
+f'_{\text{num}}(x) = f'(x) + O(h^3).
+\end{equation}
+
+Por lo tanto, el \textbf{orden del error de truncamiento} entre la derivada analítica $f'(x)$ y el esquema de derivada numérica \eqref{eq-dif:esq} es de $O(h^3)$.
+
+\section{Estimación del Error Absoluto}
+El error absoluto $E_{\text{abs}}$ entre la derivada exacta $f'(x)$ y la derivada numérica $f'_{\text{num}}(x)$ es dado por:
+\begin{equation}
+    E_{\text{abs}} = |f'(x) - f'_{\text{num}}(x)| \sim O(h^3) + \epsilon_{\text{redondeo}}.
+\end{equation}
+
+El error de redondeo $\epsilon_{\text{redondeo}}$ se refiere a la imprecisión que ocurre debido a las limitaciones de la representación numérica de los números en la computadora.
+
+\section{Conclusiones}
+El esquema de diferencias adelantadas de tres puntos proporciona una aproximación de orden $O(h^3)$ para la derivada de una función. Sin embargo, los errores de redondeo $\epsilon_{\text{redondeo}}$ deben ser considerados cuando se utiliza este método con \textbf{valores pequeños} de $h$.
+
+\end{document}

@@ -1,0 +1,251 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Análisis del Problema de Kepler y Solución Numérica con el Método del Salto de la Rana}
+\label{ch:kepler-salto-rana}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 24 de noviembre de 2024
+
+\medskip
+
+En este capitulo, analisaremos las trayectorias de un cometeta bajo la acción gravitacional del Sol. La ecuación de movimiento estará gobernada por la ley de gravitación universal. Normalizaremos esta ecuación y las condiciones iniciales. Implementando métodos numéricos para resolver la ecuación diferencial. Variaremos las condiciones iniciales y observaremos diferentes tipos de trayectorias para el cometa. Finalmente, nos concentremos en la trayectoria eliptica, calcularemos sus propiedades como elipse y verificaremos si en ella se cumplen las leyes de Kepler.
+
+\section{Normalización de la ecuación}
+
+La ecuación de movimiento para un cometa bajo la acción gravitacional del Sol está dada por:
+\begin{equation}
+    \vec{r}''(t) = -\frac{GM}{|\vec{r}|^3} \vec{r}, 
+    \label{eq-km:kepler-motion}
+\end{equation}
+donde $\vec{r}$ es el vector posición del cometa, $G$ es la constante gravitacional y $M$ es la masa del Sol.
+
+Las condiciones iniciales son:
+
+\begin{equation}    \label{eq-km:condicion-inicial}
+    \vec{r}(0) = r_0 \hat{x}, \quad \vec{r}'(0) = v_0 \hat{y}.
+\end{equation}
+
+A continuación se efectúa un \textbf{análisis dimensional} a cada variable en la ecuación \eqref{eq-km:kepler-motion}:
+
+\begin{gather*}
+    \left[t\right] = T , \quad
+    \left[G\right] = \frac{L^3}{M \cdot T^2} , \quad
+    \left[M\right] = M , \quad
+    \left[\vec{r}\right] = L, \quad
+    \left[ \vec{r}'' \right] = \frac{L}{T^2}
+\end{gather*}
+
+Notamos que \eqref{eq-km:kepler-motion} tiene \textbf{n} $= 5$ variables, donde cada una de las cuales puede expresarse en función de \textbf{k} $= 3$ magnitudes fundamentales: 
+    \begin{itemize}
+        \item longitud (L)
+        \item tiempo (T)
+        \item masa (M)
+    \end{itemize}
+
+Según el \textbf{Teorema de Pi}, la ecuación \eqref{eq-km:kepler-motion} puede reescribirse de forma equivalente como una ecuación que involucra \textbf{n - k} $= 2$ variables \textbf{normalizadas}, construidas a partir de las variables originales. Por lo tanto, introducimos las siguientes definiciones para las variables normalizadas de tiempo ($T$) y posición ($\vec{R}$):
+
+\begin{equation}\label{eq-km:normalizaciones}
+    T = t \sqrt{\frac{GM}{r_0^3}}, \quad \vec{R} = \frac{\vec{r}_i}{r_0} 
+\end{equation}
+
+Despejando $t$ y $\vec{r}$ a partir de sus respectivas expresiones en \eqref{eq-km:normalizaciones}, se obtiene:
+
+\begin{equation} \label{eq-km:normalizaciones-despeje-2}
+    t = T \sqrt{\frac{r_0^3}{G M}}, \quad \vec{r} = \vec{R} r_0
+\end{equation}
+
+A continuación, se realiza un cambio de variable en \eqref{eq-km:kepler-motion}, sustituyendo en dicha ecuación los valores de $t$ y $\vec{r}$ dados en \eqref{eq-km:normalizaciones-despeje-2}. Considerando $\vec{r}'' = \frac{d^2\vec{r}}{dt^2}$, tenemos que:
+
+\begin{equation*}
+    \frac{d^2(\vec{R} r_0)}{d\left(T \sqrt{\frac{r_0^3}{G M}}\right)^2} = -\frac{GM}{|\vec{R} r_0|^3} \vec{R} r_0
+\end{equation*}
+
+Luego de desarrollar y simplificar términos, se obtiene la normalización de la ecuación \eqref{eq-km:kepler-motion}:
+
+\begin{equation}    \label{eq-km:kepler-motion-normalizado}
+    \frac{d^2 \vec{R}}{dT^2} = -\frac{\vec{R}}{|\vec{R}|^3}
+\end{equation}
+
+Para \textbf{normalizar las condiciones iniciales}, se sustituyen en \eqref{eq-km:condicion-inicial} los valores de $t$ y $\vec{r}$ en \eqref{eq-km:normalizaciones-despeje-2}.
+\begin{equation*}
+    \vec{R}(0) r_0= r_0 \hat{x}, \quad \frac{d \vec{R}(0)r_0}{d\left(T \sqrt{\frac{r_0^3}{G M}}\right)} = v_0 \hat{y}.
+\end{equation*}
+Desarrollando estas ecuaciones, se obtienen las condiciones iniciales normalizadas:
+\begin{equation}    \label{eq-km:condicion-inicial-normalizada}
+    \vec{R}(0) = \hat{x}, \quad \frac{d \vec{R}(0)}{dT} = \tilde{v}_0\hat{y}.
+\end{equation}
+
+Donde $\tilde{v}_0 = v_0 \sqrt{\frac{r_0}{G M}}$ .
+
+\section{Resolución numérica mediante el método del salto de la rana}
+
+Empleamos el método del \textbf{salto de la rana} (\textit{leapfrog}) para resolver  numéricamente el problema de Kepler normalizado \eqref{eq-km:kepler-motion-normalizado}, y verificaremos la conservación de la energía y el momento angular en la solución del sistema . 
+
+Para esto implementaremos un programa en \texttt{Python}, en el cual importamos las siguientes librerías:
+\begin{itemize}
+    \item \texttt{numpy}:  Para cálculos matemáticos eficientes.
+    \item \texttt{matplotlib.pyplot}: Para graficar las trayectorias, energía total y momento angular.
+    \item \texttt{EcuacionesDiferencialesOrdinarias}: Este módulo contiene la implementación del método del \textit{salto de la rana}, utilizado para resolver ecuaciones diferenciales acopladas. \cite{EcuacionesDiferencialesOrdinarias.} 
+\end{itemize}
+
+Definimos una función en \texttt{a\_kepler\_normalizado} que represente la aceleración normalizada del cuerpo, sabemos que esta es dada por la ecuación \eqref{eq-km:kepler-motion-normalizado}.  Esto de la forma:
+
+\begin{minted}{python}
+def a_kepler_normalizado(r, t):
+    norm_r3 = np.linalg.norm(r) ** 3
+    return -r / norm_r3
+\end{minted}
+
+Se establecen las condiciones iniciales normalizadas la de posición y velocidad para diferentes valores de $\tilde{v}_0$, según lo demostrado en \eqref{eq-km:condicion-inicial-normalizada}. Los tiempos se definen en un rango $[0, t_{\text{max}}]$ con un paso $\Delta t$ pequeño. Esto de forma:
+
+\begin{minted}{python}
+v0_tildes = [0.5, 1.0, 1.5] 
+t_max = 20  
+dt = 0.01   
+t = np.arange(0, t_max, dt)
+
+for v0_tilde in v0_tildes:
+    # Condiciones iniciales normalizadas
+    r0 = np.array([1.0, 0.0])  # Inicialmente en el eje x
+    v0 = np.array([0.0, v0_tilde])  # Velocidad inicial en dirección y
+\end{minted}
+
+Utilizamos el método del \textit{salto de la rana}, implementado en la función \texttt{SaltoRana}, para resolver las ecuaciones acopladas de posición y velocidad. La posición y velocidad se calculan iterativamente.
+
+\begin{minted}{python}
+ r, v = SaltoRana(a_kepler_normalizado, r0, v0, t)
+
+ \end{minted}
+
+ Después de obtener las soluciones, verificamos la validez de la simulación numérica calculando en cada instante la Energía total y el Momento angular del sistema, esto según las ecuaciones:
+\begin{itemize}
+    \item \textbf{Energía total:}
+    \begin{equation*}
+        E = \frac{1}{2}\|\vec{V}\|^2 - \frac{1}{\|\vec{R}\|}
+    \end{equation*}
+    que incluye la energía cinética y potencial gravitacional.
+    
+    \item El \textbf{Momento angular:}
+    \begin{equation*}
+        L = \vec{R} \times \vec{V},
+    \end{equation*}
+    que es el producto cruz entre posición y velocidad.
+\end{itemize}
+
+Programamos esto de forma:
+\begin{minted}{python}
+    energia = 0.5 * np.sum(v**2, axis=1) - 1.0 / np.linalg.norm(r, axis=1)
+    momento_angular = np.cross(r, v)
+\end{minted}
+
+Finalmente generamos tres gráficos:
+        \begin{enumerate}
+            \item Trayectoria (normalizada) en el plano $(x, y)$ (Figura \ref{fig-km:trayectoria}).
+            \item Conservación de la energía total a lo largo del tiempo (Figura \ref{fig-kp:energia}).
+            \item Conservación del momento angular a lo largo del tiempo (Figura \ref{fig-kp:momento}).
+        \end{enumerate}
+        Cada gráfico permite visualizar el impacto de distintos valores de $\tilde{v}_0$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{img//guide-4//kepler/kepler-trayectoria.png}
+    \caption{Trayectoria del cometa (normalizada)}
+    \label{fig-km:trayectoria}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{img//guide-4//kepler/keepler-energia.png}
+    \caption{Conservación de la energía}
+    \label{fig-kp:energia}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{img//guide-4//kepler/keepler-momento.png}
+    \caption{Conservación del momento angular}
+    \label{fig-kp:momento}
+\end{figure}
+
+\section{Implementación numérica}
+A partir de los resultados obtenidos con el método del salto de la rana, se procede a:
+\begin{itemize}
+    \item Extraer $\vec{R}(t)$ y $\vec{V}(t)$ en intervalos de tiempo discretos.
+    \item Determinar $R_{\text{max}}$ y $r_{\text{min}}$ directamente del conjunto de datos.
+    \item Calcular los parámetros orbitales ($a$, $b$, $e$).
+    \item Comparar las propiedades de la órbita obtenida con las leyes de Kepler.
+\end{itemize}
+
+\begin{minted}{python}
+def calcular_parametros_orbitales(r):
+
+    distancias = np.linalg.norm(r, axis=1)
+    r_max = np.max(distancias)  # Distancia máxima
+    r_min = np.min(distancias)  # Distancia mínima
+
+    a = (r_max + r_min) / 2
+    e = (r_max - r_min) / (r_max + r_min)
+
+    b = a * np.sqrt(1 - e**2)
+
+    return a, b, e
+
+\end{minted}
+
+\section{Análisis de la trayectoria elíptica}
+
+En el gráfico \ref{fig-km:trayectoria}, vemos que para una velocidad inicial normalizada $\tilde{v} \cong 0.5$ el cometa tiene una trayectoria elíptica cerrada. Implementamos \texttt{python} para calcular los siguientes parámetros de esta trayectoria elíptica:
+
+\begin{itemize}
+    \item \textbf{Semieje mayor ($a$)}: El semieje mayor se calcula como el promedio de la distancia máxima ($r_{\text{max}}$) y mínima ($r_{\text{min}}$):
+        \begin{equation}    
+            a = \frac{R_{\text{max}} + R_{\text{min}}}{2}.
+        \end{equation}
+        Al calcular se obtuvo un semieje mayor $a=0.5718$.
+    \item \textbf{Semieje menor ($b$)}: El semieje menor está relacionado con el semieje mayor y la excentricidad ($e$) mediante:
+        \begin{equation}
+           b = a \sqrt{1 - e^2}. 
+        \end{equation}
+        Al calcular se obtuvo un semieje menor $b= 0.3789$.
+    \item \textbf{Excentricidad ($e$)}: La excentricidad se define como:
+        \begin{equation}
+            e = \frac{R_{\text{max}} - R_{\text{min}}}{R_{\text{max}} + R_{\text{min}}}.
+        \end{equation}
+        Al calcular se obtuvo una excentricidad $e=0.7490$
+\end{itemize}
+
+
+\section{Verificación de las leyes de Kepler}
+
+Se verifican las tres leyes de Kepler \cite{kepler_laws} utilizando los resultados obtenidos a partir de la simulación numérica. 
+
+\begin{itemize}
+    \item \textbf{Primera ley de Kepler}: Para verificar esta ley, se comparan las posiciones $(x, y)$ calculadas numéricamente con la ecuación de una elipse:
+    \begin{equation}
+        \frac{x^2}{a^2} + \frac{y^2}{b^2} = 1,
+    \end{equation}
+    Al terminar la verificación se concluye que la primera ley no se cumple.
+
+    \item \textbf{Segunda ley de Kepler}: Establece que el radio vector que une el cuerpo al centro de masas barre áreas iguales en intervalos de tiempo iguales. 
+
+    Numéricamente, se calcula el área barrida en un intervalo de tiempo $\Delta t$ como:
+    \begin{equation}
+        \Delta A = \frac{1}{2} |\vec{r}(t) \times \vec{v}(t)| \Delta t,
+    \end{equation}
+    donde $\vec{R}(t)$ es la posición y $\vec{V}(t)$ la velocidad del cometa. Al terminar la verificación se concluye que la segunda ley si se cumple.
+
+    \item \textbf{Tercera ley de Kepler}: Establece que el cuadrado del periodo orbital $T$ es proporcional al cubo del semieje mayor $a$:
+    \begin{equation}    
+        T^2 \propto a^3.
+    \end{equation}
+    El periodo orbital $T = 1.26$ se determina como el tiempo necesario para completar una revolución, y el semieje mayor fue calculado, obteniendo $a=0.5718$. Se calcula la relación $\frac{T^2}{a^3}$ y se obtiene un valor constante de $8.4934$. Por lo tanto se cumple la tercera ley de Kepler.
+\end{itemize}
+
+\section{Conclusión}
+
+La normalización de la ecuación de movimiento del cometa, junto con las condiciones iniciales, nos proporciona un sistema más manejable desde el punto de vista numérico y conceptual. La ecuación resultante, que depende únicamente de parámetros adimensionales, es universal y aplicable a cualquier problema similar mediante un simple reescalado. Esto sienta las bases para su resolución numérica y para el análisis detallado de las trayectorias orbitales y su comparación con las leyes de Kepler.
+
+
+\end{document}

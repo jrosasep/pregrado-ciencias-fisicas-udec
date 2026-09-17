@@ -1,0 +1,65 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Estimación de la Derivada y Error Absoluto}
+\label{ch:derivada-estimacion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 26 de noviembre de 2024
+
+\medskip
+
+En este capítulo, se desarrolla un esquema de diferenciación numérica para estimar la primera derivada de una función $f(x)$ dada una serie de puntos $(x_i, f_i, f'_i)$, con $f_i = f(x_i)$ y $f'_i$ representando la derivada analítica. El esquema numérico utilizado es el siguiente:
+\begin{equation}    \label{eq-de:esquema}
+f'(x) = \frac{f(x-3h) - 27f(x-h) + 27f(x+h) - f(x+3h)}{48h} + \frac{9}{5!} f^{(5)}(\xi)h^4.
+\end{equation}
+
+\section{Script de la estimación numérica la primera derivada de \textit{f} }
+
+Implementando \texttt{python} sobre el esquema de diferencias finitas \eqref{eq-de:esquema} de orden $O(h^4)$. Se define una función \texttt{numerical\_derivative} con parámetros: \texttt{x} y \texttt{f}, ambos de tipo \texttt{array}. Estos parámetros representan datos $(x_i,\, f_i)$. Se calcula $h$ como la diferencia entre los puntos $x_1 - x_0$. Por limitaciones del esquema, se advierte que este solo puede aplicarse correctamente en el calculo de $f'_{i,\text{num}}$ para los $x_i$ desde $x_3$ hasta $x_{n-4}$. La función retorna un par iterable con los $x_i$ donde se calculo $f'_{i,\text{num}}$.
+
+\begin{verbatim}
+def numerical_derivative(x, f):
+    h = x[1] - x[0]
+
+    valid_indices = range(3, len(x) - 3)
+    x_rec = x[valid_indices]  
+    deriv = [(f[i - 3] - 27 * f[i - 1] + 27 * f[i + 1] - f[i + 3]) / (48 * h) for i in valid_indices]
+    return np.array(x_rec), np.array(deriv)    
+\end{verbatim}
+
+\section{Gráficas de Comparación y Error Absoluto}
+
+A continuación, se presentan las gráficas comparando la derivada exacta $f'(x)$, la estimación numérica $f'_{\text{num}}(x)$, y el error absoluto para dos casos de prueba.
+
+Se define una función \texttt{analyze\_data} con parámetros: \texttt{x}, \texttt{f}, \texttt{df}, todos de tipo \texttt{array}. Estos parámetros representan datos $(x_i,\, f_i, \, f'_i)$. Se llama a la función \texttt{numerical\_derivative} para calcular la estimación de $f'_{i,\text{num}}$ para los $i\in \mathbb{N} : 3<i<n-3$. Se ajustan las listas que guardan los datos de $x_i$, $f_i$ y $f'_i$ de modo que coincidan con los valores estimados de $f'_i$ calculados. El \textbf{error absoluto} entre la derivada exacta y la estimada se calcula como:
+\begin{equation*}
+E_{\text{abs}} = |f'(x) - f'_{\text{num}}(x)|.
+\end{equation*}
+Se generan gráficas:
+\begin{itemize}
+    \item Función original,
+    \item Comparación de derivadas analítica vs numérica,
+    \item Error absoluto de la función dada por la función original.
+\end{itemize} 
+
+Probando el script en casos donde se entregan los valores de las tres series, dados en el problema, se obtienen las siguientes gráficas:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-0/derivada-estimacion/sinusoidal.png}
+    \caption{Función original, comparación de la derivada exacta, la estimación numérica y el error absoluto para una función sinusoidal.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-0/derivada-estimacion/legendre.png}
+    \caption{Función original, comparación de la derivada exacta, la estimación numérica y el error absoluto para las funciones de Legendre.}
+\end{figure}
+
+\section{Conclusión}
+
+Se implementó un esquema numérico de diferenciación basado en diferencias finitas de orden $O(h^4)$ para estimar la primera derivada de $f(x)$ a partir de datos discretos. El método, restringido al intervalo desde $x_3$ hasta $x_{n-4}$, mostró alta precisión al compararse con derivadas analíticas. Las gráficas de prueba ilustraron una excelente concordancia entre las derivadas exactas y numéricas, con errores absolutos mínimos, validando la eficacia del esquema para aplicaciones en análisis numérico con datos equiespaciados.
+
+
+\end{document}

@@ -1,0 +1,124 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Potencial electrostático de dos cargas puntuales sobre el Plano}
+\label{ch:potencial-electrostatico}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 29 de octubre de 2024
+
+\medskip
+
+En este capítulo, utilizando las librerias \texttt{Numpy} y \texttt{Matplotlib} de \texttt{Python}, graficaremos el \textbf{potencial electrostático} generado por dos cargas puntuales $q_1$ y $q_2$ separadas por una distancia fija $a$ en el plano $(x, y)$. Utilizaremos la ecuación del potencial debido a una carga puntual en un punto del plano:
+
+        \begin{equation}
+            \label{eq:potencial-carga}
+            V = k \frac{q}{r}
+        \end{equation}
+        
+Donde $ k = \frac{1}{4\pi \epsilon_0} = 8.99 \times 10^9 \, \text{N·m}^2/\text{C}^2$ es la constante de Coulomb, $q$ es la carga que genera el campo eléctrico, $r$ es la distancia entre la carga y el punto en consideración. \cite{Potencial-en-el-Plano}
+  
+  Tomaremos para las cargas $q_1$ y $q_2$ las siguientes consideraciones:
+        \begin{itemize}
+            \item Ambas cargas son positivas.
+            \item Ambas cargas son negativas.
+            \item Una carga es positiva y la otra negativa.
+        \end{itemize}
+
+\section{Planteamiento de las cargas en el Plano}
+    Para simplificar los cálculos que realizará el computador en la simulación, ubicaremos las cargas $q_1$ y $q_2$ sobre uno de los ejes del plano $(x, y)$, en este caso el eje de las abscisas. De este modo, ambas cargas estarán situadas a una distancia equidistante del origen, y la distancia de separación entre ellas será $a$, donde $a > 0$. Así, $q_1$ se posicionará en el punto $ \left( -\frac{a}{2}, 0 \right) $ y $q_2$ en $ \left( \frac{a}{2}, 0 \right)$.
+
+\section{Cálculo del Potencial Electrostático en el Plano}
+
+    En primer lugar, definimos los parámetros fundamentales para la simulación. La separación entre las cargas es $a = 2 \, \text{m}$, mientras que el valor absoluto de la magnitud de cada carga es $ | q_1 | = | q_2 | = 1 \times 10^{-9} \, \text{C} $. Además, consideramos la constante de Coulomb $k = 8.99 \times 10^9 \, \text{N·m}^2/\text{C}^2$. Estos parámetros se implementan en \texttt{Python} de la siguiente manera:
+        \begin{minted}{python}
+a = 2   
+q1 = 1e-9 
+q2 = 1e-9 
+k = 8.99e9
+        \end{minted}
+
+    Las posiciones de las cargas puntuales $q_1$ y $q_2$ se definen como los pares ordenados $(x_0, y_0)$, situados simétricamente respecto al origen. Estas posiciones se asignan en \texttt{Python} de la siguiente manera:
+        \begin{minted}{python}
+pos_q1 = (-a/2, 0)  
+pos_q2 = (a/2, 0) 
+        \end{minted}
+
+    A continuación, definimos una función para calcular el potencial electrostático generado por una carga puntual $q_0$ en una posición dada $\text{pos} = (x_0, y_0)$. El potencial en un punto $(x, y)$ se calcula según la fórmula:
+\begin{equation*}
+    V = \frac{k \cdot q_0}{r}
+\end{equation*}
+    donde $r$ es la distancia entre la carga y el punto de interés. La implementación en \texttt{Python} es la siguiente:
+        \begin{minted}{python}
+def potencial(x, y, q, pos):
+    r = np.sqrt((x - pos[0])**2 + (y - pos[1])**2)
+    return k * q / r
+        \end{minted}
+
+    Los puntos $(x, y)$ donde se calculará el potencial pertenecen al intervalo $I = \left[ x_i, x_f \right] \times \left[ y_i, y_f \right]$. Para simular esta región, utilizamos la función \texttt{linspace} para generar dos conjuntos de 400 puntos equidistantes entre $-5$ y $5$ en ambos ejes:
+        \begin{minted}{python}
+x = np.linspace(-5, 5, 400)
+y = np.linspace(-5, 5, 400)
+        \end{minted}
+
+Luego, empleamos la función \texttt{meshgrid} (\cite{meshgrid}) para generar una cuadrícula que representa el subconjunto $I$ del plano $(x, y)$, permitiendo calcular el potencial en cada punto:   
+        \begin{minted}{python}
+X, Y = np.meshgrid(x, y)
+        \end{minted}
+
+    Con las posiciones de las cargas definidas y la cuadrícula generada, calculamos el potencial electrostático debido a cada carga $q_1$ y $q_2$ por separado. Posteriormente, aplicamos el principio de superposición para obtener el potencial total en cada punto del plano $I$. Para ello, utilizamos la función \texttt{potencial} definida anteriormente, y creamos la siguiente función para sumar los potenciales:
+        \begin{minted}{python}
+def calcular_potencial_total(q1, q2):
+    V1 = potencial(X, Y, q1, pos_q1)   
+    V2 = potencial(X, Y, q2, pos_q2)   
+    return V1 + V2
+        \end{minted}
+
+\section{Gráficos del Potencial}
+
+    A continuación, mostramos los gráficos del potencial para los tres casos descritos:
+        \begin{itemize}
+            \item Ambas cargas son positivas.
+                        \begin{minted}{python}
+V = calcular_potencial_total(q1, q2)
+axes[0].contourf(X, Y, V, levels=50, cmap="coolwarm")
+                        \end{minted}
+            \item Ambas cargas son negativas.
+                    \begin{minted}{python}
+V = calcular_potencial_total(-q1, -q2)
+axes[1].contourf(X, Y, V, levels=50, cmap="coolwarm")      
+                    \end{minted}
+            \item Una carga es positiva y la otra negativa.
+                \begin{minted}{python}
+V = calcular_potencial_total(q1, -q2)
+axes[2].contourf(X, Y, V, levels=50, cmap="coolwarm")                  
+                \end{minted}
+        \end{itemize}
+
+\section{Interpretación de los Resultados}
+
+En la figura (\ref{fig:potencial}), se presenta el gráfico del potencial electrostático en los tres casos estudiados. A partir de estos resultados, se identifican las siguientes configuraciones relevantes: 
+
+\begin{itemize}
+    \item \textbf{Ambas cargas son positivas}: Esta configuración genera un campo repulsivo, donde el potencial es positivo en toda la región circundante.
+
+    \item \textbf{Ambas cargas son negativas}: El campo resultante es similar al del caso anterior, pero el potencial es negativo en todo el espacio considerado.
+
+    \item \textbf{Una carga positiva y una negativa}: En esta situación se forma un dipolo eléctrico. El potencial cambia de signo en diferentes regiones del espacio, reflejando la naturaleza atractiva entre las dos cargas opuestas.
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\linewidth]{img/guide-1/potencial-electrostatico.png}
+    \caption{Distribución del potencial electrostático para las tres configuraciones de cargas: ambas positivas, ambas negativas y configuración dipolar.}
+    \label{fig:potencial}
+\end{figure}
+
+\section{Conclusión}
+
+En esta actividad se realizó la simulación y visualización del potencial electrostático generado por dos cargas puntuales para diferentes combinaciones de signos. La ecuación utilizada para calcular el potencial fue la expresión clásica del potencial de Coulomb, y la visualización gráfica se llevó a cabo mediante la librería \texttt{matplotlib} en \texttt{Python}. 
+
+Los resultados obtenidos permiten analizar cómo la distribución espacial del potencial varía de forma significativa dependiendo del signo de las cargas. En particular, se observó una simetría característica cuando ambas cargas tienen el mismo signo, y una mayor complejidad en la configuración dipolar, donde el potencial cambia de signo en distintas regiones del espacio.
+
+\end{document}

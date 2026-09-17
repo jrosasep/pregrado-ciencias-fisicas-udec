@@ -1,0 +1,227 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Órbita de un satélite alrededor de la Tierra}
+\label{ch:orbita-satelite}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 28 de octubre de 2024
+
+\medskip
+
+    En este capítulo, estudiaremos la órbita circular de un satélite lanzado alrededor de la Tierra. El objetivo es determinar la altura del satélite en función de su periodo $T$. Se demostrará la fórmula para la altura $h$ sobre la superficie terrestre y, además, se generará una tabla y un gráfico utilizando \texttt{Python}. Por último, se comparará la altura de un satélite geosincrónico con periodos de 24 horas y un día sideral de 23.93 horas.
+
+\section{Demostración de la fórmula para la altura \textit{h}}
+
+    Se tiene un satélite de masa $m$ orbitando circularmente sobre la Tierra de masa $M$ a una altura $h$ respecto la superficie de esta, la distancia de separación entre los centros de masa de los cuerpos es $R + h$, donde $R$ el radio de la Tierra. Por la Ley de gravitación universal, se deduce la fuerza gravitatoria que ejerce la Tierra sobre el satélite:
+        \begin{equation}
+            \label{eq:ley_de_gravitacion}
+            F_g = G\frac{m M}{(R+h)^2}
+        \end{equation}
+    Sabemos por la segunda ley de Newton que $F=ma$. En este caso, se tiene que $F_g = a_g m$, luego tenemos en (\ref{eq:ley_de_gravitacion}) que:
+        \begin{equation*}
+            a_g m = G\frac{m M}{(R+h)^2}
+        \end{equation*}
+    Simplificamos la ecuación dividiendo por la masa $m$ del satélite, obtenemos:
+        \begin{equation}
+            \label{eq:aceleración-g}
+            a_g = G\frac{M}{(R+h)^2}
+        \end{equation}
+  Dado que estamos considerando el caso de un satélite en órbita circular alrededor de un objeto masivo, en este caso la Tierra, podemos abordar la situación utilizando los principios del Movimiento Circular Uniforme (MCU). Luego, tendremos que $a_g$ sera la aceleración centripeta del satelite, la cual satisface la ecuación:
+        \begin{equation*}
+            a_g = \omega ^2 r
+        \end{equation*}
+    donde $\omega$ es la velocidad angular del satélite y $r$ es un radio, que en este caso se interpreta como el centro de masa de la tierra el orgen de la circunferencia por la que orbita el satelite, por lo tanto $r:=R+h$. Por otra parte, sabemos que la velocidad angular $\omega$ se relaciona con el periodo de la forma:
+        \begin{equation*}
+            \omega = \frac{2 \pi}{T}
+        \end{equation*} 
+    Así, la aceleración $a_g$ del satélite quedara dada por:
+        \begin{equation}
+            \label{eq:aceleración-g2}
+            a_g = \left(\frac{2 \pi}{T}\right)^2(R+h) 
+            %= \frac{4\pi^2}{T^2}(R+h)
+        \end{equation}
+    Reemplazando (\ref{eq:aceleración-g2}) en (\ref{eq:aceleración-g}), se obtiene:
+        \begin{equation}
+            \label{eq:ecucacion-1}
+            \left(\frac{2 \pi}{T}\right)^2(R+h) = \frac{GM}{(R+h)^2}
+        \end{equation}
+    Multiplicamos la ecuación (\ref{eq:ecucacion-1}) por $\left( \frac{T}{2\pi}\right)^2$, se obtiene:
+        \begin{equation} \label{eq:ecuacion-2}
+            (R+h) = \frac{GM}{(R+h)^2}\left( \frac{T}{2\pi}\right)^2
+        \end{equation}
+    Multiplicamos la ecuación (\ref{eq:ecuacion-2}) por $(R+h)^2$, se obtiene:    
+        \begin{equation}   \label{eq:ecucacion-3}
+            (R+h)^3 = \frac{GMT^2}{4\pi^2}
+        \end{equation}
+    Elevamos la ecuación (\ref{eq:ecucacion-3}) por $\frac{1}{3}$, obtenemos:
+        \begin{equation}   \label{eq:ecucacion-4}
+            R+h = \left( \frac{GMT^2}{4\pi^2} \right)^{1/3}
+        \end{equation}
+    Restamos $R$ en la ecuación (\ref{eq:ecucacion-4}). Luego, queda demostrado que:
+        \begin{equation}   \label{eq:ecucacion-final}
+            h = \left( \frac{GMT^2}{4\pi^2} \right)^{1/3} - R
+        \end{equation}
+
+donde se tendran las constantes:
+\begin{itemize}
+    \item \(G = 6.67430 \times 10^{-11} \, \text{m}^3 \, \text{kg}^{-1} \, \text{s}^{-2}\) es la constante gravitacional,
+    \item \(M = 5.97 \times 10^{24} \, \text{kg}\) es la masa de la Tierra,
+    \item \(R = 6371 \, \text{km}\) es el radio de la Tierra.
+\end{itemize}
+
+\section{Implementación en Python: Tabla de Periodo vs Altura}\label{sec:Calculo de h}
+
+A continuación, generaremos una tabla que muestra la altura \(h\) del satélite para diferentes valores del periodo \(T\), variando en múltiplos de 15 minutos. El siguiente código en \texttt{Python} utiliza las bibliotecas \texttt{numpy} para manejar arreglos y \texttt{Jinja2} para generar automáticamente un archivo en \LaTeX.
+
+Definimos tres variables para las contantes presentes en la ecuación (\ref{eq:ecucacion-final}), donde \texttt{G} es la constante gravitacional (m$^3$kg$^{-1}s^{-2}$), \texttt{M} la masa de la tierra (kg) y \texttt{R} el radio de la Tierra (m).
+\begin{minted}{python}
+G = 6.67430e-11
+M = 5.97e24
+R = 6371e3
+\end{minted}
+Definimos una función \texttt{height\_h} para calcular la altura del satélite en función del periodo orbital, según la ecuación (\ref{eq:ecucacion-final}). Esta función toma como entrada el periodo $T$ (en segundos) y devuelve la altura $h$ (en metros) restando el radio de la Tierra al radio orbital total calculado:
+
+\begin{minted}{python}
+def height_h(T):
+    return (G * M * T**2 / (4 * np.pi**2))**(1/3) - R
+\end{minted}
+
+Generamos una lista de 24 valores para el periodo $(T)$, en múltiplos de 15 minutos (en segundos) hasta 6 horas, usando la función \texttt{arange} de \texttt{numpy}.
+
+\begin{minted}{python}
+T_values = np.arange(15 * 60, 6 * 3600 + 1, 15 * 60)
+\end{minted}
+
+De manera análoga, generamos una lista que contiene los valores de la altura del satélite $(h)$ para cada uno de los periodos $(T)$. Para ello, empleamos una comprensión de listas en Python, iterando con un ciclo \texttt{for} sobre los elementos de \texttt{T\_values} y aplicando la función \texttt{height\_h} a cada uno:
+
+\begin{minted}{python}
+h_values = [height_h(T) for T in T_values]
+\end{minted}
+
+Se preparan los datos para LaTeX combinando \texttt{T\_values} y \texttt{h\_values} con \texttt{zip}, y generando una lista de diccionarios con las claves \texttt{"T"} y \texttt{"h"}.\texttt{data}.
+\begin{minted}{python}
+data = [{"T": T, "h": h} for T, h in zip(T_values, h_values)]
+\end{minted}
+
+\section{Gráfico de Altura vs Periodo}
+
+El siguiente gráfico muestra la altura del satélite $(h)$ en función del periodo $(T)$ utilizando la biblioteca \texttt{matplotlib}.
+
+\begin{minted}{python}
+plt.plot(T_values, h_values, label="Altitud $h(T)$")
+plt.xlabel("Periodo $T$ (s)")
+plt.ylabel("Altitud $h$ (m)")
+plt.title("Altitud $h$ en función del Periodo $T$")
+\end{minted}
+Podemos guardar este gráfico en formato \texttt{pdf} con la linea siguiente:
+\begin{minted}{python}
+plt.savefig("grafico_altitud.pdf")
+\end{minted}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{img//guide-1/grafico_altitud.pdf}
+    \caption{Gráfico de Altura vs Periodo}
+\end{figure}
+
+\section{Automatización de Tablas y Gráficos en \LaTeX\ Mediante \texttt{python} y \texttt{jinja2}}
+
+Empleando la librería \texttt{Jinja2}, generaremos un archivo \LaTeX\ dinámico que incluya una tabla con pares ordenados de los períodos $(T)$ en segundos y alturas $(h)$ en metros calculados en la sección \ref{sec:Calculo de h}, ademas se incluye el gráfico de Altura vs Periodo obtenido en la seccion anterior. A continuación, explicamos los pasos principales de la implementación.
+
+Primero, definimos una plantilla en \texttt{Jinja2} almacenada en la variable \texttt{Texto}. Esta plantilla contiene la estructura básica de un documento en \LaTeX, con secciones y una tabla que se llena dinámicamente utilizando bucles de \texttt{Jinja2}:
+
+\begin{minted}{python}
+Texto = r"""
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\begin{document}
+
+\section*{Tabla de Altitudes para Diferentes Períodos}
+
+\begin{table}[h!]
+    \centering
+        \begin{tabular}{@{}cc@{}}
+            \toprule
+                \textbf{Periodo $T$ (s)} & \textbf{Altitud $h$ (m)} \\ \midrule
+                    {% for row in data %}
+                    {{ row.T }} & {{ row.h | round(2)}} \\
+                    {% endfor %}
+            \bottomrule
+    \end{tabular}
+\end{table}
+
+\section*{Gráfico de Altitud $h$ en Función de $T$}
+
+\includegraphics[width=\textwidth]{grafico_altitud.pdf}
+
+\end{document}
+"""
+\end{minted}
+
+En la plantilla anterior:
+\begin{itemize}
+    \item El bloque \texttt{{\% for row in data \%}} itera sobre los datos provistos, generando una fila en la tabla por cada entrada.
+    \item \texttt{{ row.T }} y \texttt{{ row.h }} son valores dinámicos insertados en la tabla, con \texttt{row.h} redondeado a dos decimales mediante el filtro \texttt{round(2)}.
+    \item Se incluye una sección donde se espera un gráfico \texttt{grafico\_altitud.pdf}.
+\end{itemize}
+Posteriormente, utilizamos \texttt{Jinja2} para renderizar la plantilla, reemplazando los marcadores con los datos proporcionados:
+
+\begin{minted}{python}
+latex_template = jinja2.Template(Texto)
+latex_output = latex_template.render(data=data)
+\end{minted}
+
+En el código anterior:
+\begin{itemize}
+    \item \texttt{latex\_template} es una instancia de la plantilla \texttt{Jinja2}.
+    \item \texttt{latex\_output} contiene el código \LaTeX\ generado tras reemplazar los marcadores de la plantilla con los valores de \texttt{data}.
+\end{itemize}
+
+Finalmente, guardamos el documento generado en un archivo \texttt{.tex}:
+
+\begin{minted}{python}
+with open("tabla_altitudes.tex", "w") as f:
+    f.write(latex_output)
+\end{minted}
+
+Este último bloque abre un archivo llamado \texttt{tabla\_altitudes.tex} en modo escritura y guarda en él el código \LaTeX\ generado. El archivo resultante está listo para ser compilado con herramientas como \texttt{pdflatex}.
+
+\section{Comparación entre día solar y día sideral}
+
+Un día sideral tiene \(T_{\text{sideral}} = 23.93 \, \text{horas} = 86148 \, \text{segundos}\), mientras que un día solar tiene \(T_{\text{solar}} = 24 \, \text{horas} = 86400 \, \text{segundos}\). Calculamos ambas alturas :
+    \begin{equation}  
+        h_{\text{sideral}} = \left( \frac{GMT_{\text{sideral}}^2}{4\pi^2} \right)^{1/3} - R
+    \end{equation}
+     \begin{equation}  
+        h_{\text{solar}} = \left( \frac{GMT_{\text{solar}}^2}{4\pi^2} \right)^{1/3} - R
+    \end{equation} 
+La diferencia estara dada por:
+\begin{equation}
+    \Delta h = | h_{\text{solar}} - h_\text{sideral} |
+\end{equation}
+
+Llevando este calculo a \texttt{python}, tenemos:
+\begin{minted}{python}
+# Definimos los periodos sideral y solar:
+T_sideral = 86148  # segundos
+T_solar = 86400  # segundos
+
+# Calculamos la altura sideral y solar:
+h_sideral = height_h(T_sideral)
+h_solar = height_h(T_solar)
+
+# Calculamos la diferencia:
+diferencia = abs(h_solar - h_sideral)
+print(f"Diferencia de altitud: {diferencia:.2f} metros")
+\end{minted}
+
+El efectuar dicho calculo, se obtiene $\Delta h = 82165.50 \, \text{m}$. Este resultado muestra que la diferencia en altitud entre ambas definiciones es del orden de decenas de kilómetros, por lo que aunque $\Delta T := |T_{\text{solar}} -T_{\text{sideral}}| < 0$, se observa que $\Delta h$ es grande.
+
+\section{Conclusión}
+
+En esta actividad, derivamos la fórmula para calcular la altura de un satélite en órbita circular en función de su período. Utilizamos \texttt{Python} y la biblioteca \texttt{jinja2} para generar dinámicamente un documento en \LaTeX\ que incluye una tabla y un gráfico que relacionan la altura con el período. Además, comparamos las altitudes correspondientes a un día solar y un día sideral, encontrando que la diferencia es significativa, del orden de decenas de kilómetros. Este resultado subraya la importancia de considerar esta discrepancia en aplicaciones donde la precisión es crucial, como en la navegación satelital.
+
+\end{document}

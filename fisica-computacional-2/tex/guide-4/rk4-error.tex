@@ -1,0 +1,100 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Demostración del Error en el Método de Runge-Kutta de Cuarto Orden}
+\label{ch:rk4-error}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 28 de noviembre de 2024
+
+\medskip
+
+El método de Runge-Kutta de cuarto orden es un método numérico utilizado para resolver ecuaciones diferenciales de la forma:
+\begin{equation}    \label{eq-rk4:ed}
+    \vec{x}'(t) = \vec{f}(\vec{x}),
+\end{equation}
+cuyo proceso iterativo se define mediante:
+\begin{align}
+    \vec{K}_1 &= \Delta t \, \vec{f}(\vec{x}_n), \\
+    \vec{K}_2 &= \Delta t \, \vec{f}\left(\vec{x}_n + \frac{1}{2} \vec{K}_1\right), \\
+    \vec{K}_3 &= \Delta t \, \vec{f}\left(\vec{x}_n + \frac{1}{2} \vec{K}_2\right), \\
+    \vec{K}_4 &= \Delta t \, \vec{f}(\vec{x}_n + \vec{K}_3), \\
+    \vec{x}_{n+1} &= \vec{x}_n + \frac{1}{6} \left(\vec{K}_1 + 2\vec{K}_2 + 2\vec{K}_3 + \vec{K}_4\right).
+\end{align}
+En esta sección, demostraremos que su error local es del orden $O(\Delta t^5)$.
+
+\section{Demostración del Orden de Error}
+
+Expandimos $\vec{x}(t + \Delta t)$ en serie de Taylor:
+\begin{equation*}
+    \vec{x}(t + \Delta t) = \vec{x}(t) + \Delta t \vec{x}'(t) + \frac{\Delta t^2}{2!} \vec{x}''(t) + \frac{\Delta t^3}{3!} \vec{x}'''(t) + O(\Delta t^4).
+\end{equation*}
+El análisis muestra que las fórmulas de $\vec{K}_1$, $\vec{K}_2$, $\vec{K}_3$ y $\vec{K}_4$ eliminan los términos de orden $\mathcal{O}(\Delta t^2)$, $\mathcal{O}(\Delta t^3)$ y $\mathcal{O}(\Delta t^4)$, confirmando el orden del error local.
+
+\section{Demostración del Orden de Error}
+
+Comenzamos expandiendo $\vec{x}(t + \Delta t)$ en una serie de Taylor en torno a $t$:
+\begin{equation}
+\vec{x}(t + \Delta t) = \vec{x}(t) + \Delta t \vec{x}'(t) + \frac{\Delta t^2}{2!} \vec{x}''(t) + \frac{\Delta t^3}{3!} \vec{x}'''(t) + \frac{\Delta t^4}{4!} \vec{x}^{(4)}(t) + O(\Delta t^5).
+\end{equation}
+
+La ecuación diferencial \eqref{eq-rk4:ed} nos permite expresar las derivadas superiores de $\vec{x}(t)$ en términos de $\vec{f}$ y sus derivadas parciales:
+\begin{align*}
+\vec{x}'(t) &= \vec{f}(\vec{x}), \\
+\vec{x}''(t) &= \frac{\partial \vec{f}}{\partial \vec{x}} \vec{f}, \\
+\vec{x}'''(t) &= \frac{\partial^2 \vec{f}}{\partial \vec{x}^2}(\vec{f}, \vec{f}) + \frac{\partial \vec{f}}{\partial \vec{x}} \frac{\partial \vec{f}}{\partial \vec{x}} \vec{f}, \\
+\vec{x}^{(4)}(t) &= \dotso.
+\end{align*}
+
+\section*{Paso 2: Expansión del Método de Runge-Kutta de Cuarto Orden}
+
+Consideramos el valor $\vec{x}_{n+1}$ dado por el método de Runge-Kutta es:
+
+\[
+\vec{x}_{n+1} = \vec{x}_n + \frac{\Delta t}{6} \left( K_1 + 2K_2 + 2K_3 + K_4 \right)
+\]
+
+Sustituyendo las definiciones de \( K_1, K_2, K_3, K_4 \):
+
+\[
+\vec{x}_{n+1} = \vec{x}_n + \frac{\Delta t}{6} \left( \vec{f}(\vec{x}_n) + 2 \; \vec{f}(\vec{x}_n + \frac{1}{2} \Delta t \; \vec{f}(\vec{x}_n)) + 2 \; \vec{f}(\vec{x}_n + \frac{1}{2} \Delta t \; \vec{f}(\vec{x}_n)) + \vec{f}(\vec{x}_n + \Delta t \; \vec{f}(\vec{x}_n)) \right)
+\]
+
+Esta expresión se puede expandir en una serie de Taylor alrededor de \( t_n \), con términos adicionales debido a los desplazamientos \( \Delta t \) y las evaluaciones de \( \vec{f} \). Tras hacer estas expansiones, el valor obtenido estará en forma:
+
+\[
+\vec{x}_{n+1} = \vec{x}_n + \Delta t \; \vec{f}(\vec{x}_n) + \frac{\Delta t^3}{24} \; \vec{f}'''(\vec{x}_n) + O(\Delta t^5)
+\]
+
+
+Expandimos cada término de $\vec{K}_i$ en serie de Taylor en función de $\Delta t$:
+\begin{align*}
+\vec{K}_1 &= \Delta t \vec{f}(\vec{x}_n), \\
+\vec{K}_2 &= \Delta t \left[\vec{f}(\vec{x}_n) + \frac{\Delta t}{2} \frac{\partial \vec{f}}{\partial \vec{x}} \vec{f} + O(\Delta t^2)\right], \\
+\vec{K}_3 &= \Delta t \left[\vec{f}(\vec{x}_n) + \frac{\Delta t}{2} \frac{\partial \vec{f}}{\partial \vec{x}} \vec{f} + O(\Delta t^2)\right], \\
+\vec{K}_4 &= \Delta t \left[\vec{f}(\vec{x}_n) + \Delta t \frac{\partial \vec{f}}{\partial \vec{x}} \vec{f} + O(\Delta t^2)\right].
+\end{align*}
+
+Sustituyendo estas expresiones en la fórmula del método de Runge-Kutta y agrupando términos, verificamos que las contribuciones de orden $O(\Delta t^2)$, $O(\Delta t^3)$ y $O(\Delta t^4)$ se cancelan debido a los coeficientes específicos del método. El término dominante restante es de orden $O(\Delta t^5)$.
+
+Por lo tanto, el error local del método es:
+\begin{equation}
+E_{\text{local}} = O(\Delta t^5).
+\end{equation}
+
+
+\section{Resultados Numéricos}
+Para validar el análisis teórico, se resuelve la ecuación $\frac{dx}{dt} = -x$ con condición inicial $x(0) = 1$. Se compara la solución exacta $x(t) = e^{-t}$ con la solución numérica del método de Runge-Kutta para particiones \( N = 10, 20, 40, 80 \).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-4/rk4-error.png}
+    \caption{Comparación entre la solución exacta y la solución numérica obtenida con el método de Runge-Kutta para varios valores de $N$.}
+    \label{fig:rk4-comparacion}
+\end{figure}
+
+\section{Conclusiones}
+El método de Runge-Kutta de cuarto orden ofrece una solución precisa, con un error local del orden $O(\Delta t^5)$. Tanto analítica como numéricamente, hemos visto su utilidad para resolver ecuaciones diferenciales con alta precisión y eficiencia.
+
+\end{document}

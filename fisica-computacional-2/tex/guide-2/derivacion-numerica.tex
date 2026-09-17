@@ -1,0 +1,254 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Derivación Numérica de Funciones Usando Diferencias Finitas}
+\label{ch:derivacion-numerica}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 21 de noviembre de 2024
+
+\medskip
+
+En este capítulo, implementaremos algoritmos en \texttt{Python} para calcular la primera derivada numérica de una función $f(x)$ utilizando los esquemas de diferencias \textbf{adelantadas}, \textbf{centradas} y \textbf{retrasadas}. Las funciones evaluadas incluyen $f(x) = \sin(x)$, $f(x) = e^x$, $f(x) = \ln(x)$ y $f(x) = x^2$. Posteriormente, analizaremos el desempeño de estos métodos mediante \textbf{gráficos} que comparan la derivada numérica con la derivada analítica, además de gráficos de error relativo, para evaluar la precisión de cada esquema.
+
+
+\section{Implementación de Python}
+Utilizando en \texttt{python} las bibliotecas \texttt{numpy} y \texttt{matplotlib.pyplot}.
+He desarrollado la función \texttt{Esquemas\_de\_diferencias}, que calcula y gráfica la derivada analítica y las derivadas numéricas mediante esquemas adelantado, retrasado y centrado. Los parámetros son:
+
+\begin{itemize}
+    \item \texttt{f} (function): Función a derivar numéricamente.
+    \item \texttt{df} (function): Derivada analítica de la función f.
+    \item \texttt{x\_vals} (array): Valores de $x$ para evaluar las derivadas.
+    \item \texttt{h} (float): Tamaño del paso para las diferencias finitas.
+\end{itemize}
+
+Las derivadas se calculan con las fórmulas:
+
+\begin{itemize}
+    \item \textbf{Diferencia adelantada:} $f'(x) \approx \frac{f(x+h) - f(x)}{h}$.
+    \item \textbf{Diferencia retrasada:} $f'(x) \approx \frac{f(x) - f(x-h)}{h}$.
+    \item \textbf{Diferencia centrada:} $f'(x) \approx \frac{f(x+h) - f(x-h)}{2h}$.
+\end{itemize}
+
+Definimos un rango de valores de $x$ y un paso $h$, de tal modo que no se tengan problemas al momento de hacer cálculos con la función $\ln(x)$, la cual esta definida para valores reales $x > 0$:
+
+\begin{minted}{python}
+x_values = np.linspace(0.5, 12, 200) 
+h = 0.1
+\end{minted}
+
+El cálculo de las derivadas numéricas y analítica itera sobre \texttt{x\_values}, almacenando los resultados en un \texttt{numpy.array}. Finalmente, el programa genera y retorna un gráfico que muestra la comparación entre la derivada analítica y los tres esquemas de derivadas numéricas aplicados a la función ingresada. A continuación se muestra el algoritmo:
+
+\begin{minted}{python}
+
+def Esquemas_de_diferencias(f,df, x_vals=x_values, h=h):
+
+    df_analitica = np.array([df(x) for x in x_vals])
+
+    df_adelantada = np.array([(f(x + h) - f(x)) / h for x in x_vals])
+    
+    df_retrasada = np.array([(f(x) - f(x - h)) / h for x in x_vals]) 
+
+    df_centrada = np.array([(f(x + h) - f(x - h)) / (2 * h) for x in x_vals])
+
+    plt.figure(figsize=(10, 6))
+
+    plt.plot(x_vals, df_analitica, color="orange", linewidth=2.5, linestyle="--", label="Derivada analítica")
+    plt.plot(x_vals, df_adelantada, color="green", label="Derivada adelantada") 
+    plt.plot(x_vals, df_retrasada, color="red", label="Derivada retrasada") 
+    plt.plot(x_vals, df_centrada, color="blue", label="Derivada centrada") 
+
+    plt.legend() 
+    plt.title(f"Comparación entre las Derivadas numéricas y analitica para la función {f.nombre}")
+    plt.xlabel("x")
+    plt.ylabel(f"{f.nombre}") 
+    plt.grid(True) 
+
+    plt.tight_layout()
+    return plt.show()
+
+\end{minted}
+
+\textbf{Nota}: Aunque el enunciado del problema no requiere explícitamente que el algoritmo calcule la derivada analítica para un conjunto de valores finitos, decidí implementarlo de esa manera para que pudiera resolver automáticamente las dos primeras partes del problema.
+
+
+Definimos en el código las funciones y sus derivadas analíticas que queremos utilizar para probar el algoritmo programado. Además, añadimos las variables \texttt{f.nombre}, las cuales permiten incluir en el gráfico el nombre de la función ingresada al algoritmo. De este modo, tenemos:
+
+\begin{itemize}
+    \item $f(x) = \sin(x)$ y $f'(x)=\cos(x)$,
+\begin{minted}{python}
+def f(x):   return np.sin(x) 
+f.nombre = r'$\sin(x)$'
+def df(x):  return np.cos(x)
+\end{minted}
+
+    \item $f(x) = e^x$ y $f'(x)= e^x$,
+\begin{minted}{python}
+def g(x):   return np.exp(x)
+g.nombre = r'$e^x$'
+def dg(x):  return np.exp(x)
+\end{minted}
+
+    \item $f(x) = \ln(x)$ y $f'(x)=\frac{1}{x}, \quad x > 0$, 
+ \begin{minted}{python}
+def ln(x):  return np.log(x)
+ln.nombre = r'$\ln(x)$'
+def dln(x): return 1/x
+\end{minted}
+
+    \item $f(x) = x^2$ y $f'(x)=2x$
+\begin{minted}{python}
+def g(x):   return np.exp(x)
+g.nombre = r'$e^x$'
+def dg(x):  return np.exp(x)
+\end{minted}
+
+\end{itemize}
+
+Finalmente, llamamos al algoritmo que hemos programado, \texttt{Esquemas\_de\_diferencias}, con cada función y su derivada analítica, donde \texttt{x\_vals} y \texttt{h} almacenan los valores que hemos definido anteriormente por defecto. Esto de la siguiente manera:
+
+\begin{minted}{python}
+Esquemas_de_diferencias(f, df, x_vals=x_values, h=h)
+Esquemas_de_diferencias(g, dg, x_vals=x_values, h=h) 
+Esquemas_de_diferencias(ln, dln, x_vals=x_values, h=h)  
+Esquemas_de_diferencias(j, dj, x_vals=x_values, h=h)
+\end{minted}
+
+\section{Comparación entre las Derivadas Numéricas y Analítica}
+
+Luego de llamar al algoritmo \texttt{Esquemas\_de\_diferencias}, como se mostró al final de la sección anterior, se obtienen los siguientes gráficos. Estos proporcionan una comparación visual entre la derivada numérica y la derivada analítica:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/función-sen(x).png}
+    \caption{Comparación entre las Derivadas numéricas y analítica para la función $\sin(x)$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/función-e^x.png}
+    \caption{Comparación entre las Derivadas numéricas y analítica para la función $e^x$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/función-ln(x).png}
+    \caption{Comparación entre las Derivadas numéricas y analítica para la función $\ln(x)$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/función-x^2.png}
+    \caption{Comparación entre las Derivadas numéricas y analítica para la función $x^2$}
+\end{figure}
+
+\subsection{Error Relativo}
+
+El error relativo entre las derivadas numéricas y analíticas se calcula como:
+
+\begin{equation} \label{eq:error_relativo}
+    \text{Error relativo} = \frac{|\text{Derivada numérica} - \text{Derivada analítica}|}{|\text{Derivada analítica}|}.
+\end{equation}
+
+A continuación se presenta un segundo algoritmo, \texttt{Error\_relativo}, el cual es una modificación del primero, \texttt{Esquemas\_de\_diferencias}. Este segundo algoritmo cuenta con los mismos parámetros que el primero. Ambos calculan de forma iterada las derivadas numéricas sobre \texttt{x\_values}, almacenando los resultados en un \texttt{numpy.array}. Las particularidades que lo diferencian del primero son, para una función $f(x)$ y su derivada analítica $f'(x)$ dadas, las siguientes:
+\begin{itemize}
+    \item se llevan a cabo los cálculos del \textbf{error relativo}, según la ecuación (\ref{eq:error_relativo}), con cada esquema de derivada numérica (atrasada, adelantada y centrada).
+    \item se genera un gráfico \textbf{error relativo vs x} en el cual se comparan los errores relativos por esquema de derivada numérica, 
+    \item se retorna el gráfico \textbf{error relativo vs x}
+\end{itemize}
+
+El algoritmo \texttt{Error\_relativo} lo he programado en \texttt{Python} del siguiente modo:
+
+\begin{minted}{python}
+
+def Error_relativo(f, df, x_vals=x_values, h=h):
+
+    df_analitica = np.array([df(x) for x in x_vals])
+    df_adelantada = np.array([(f(x + h) - f(x)) / h for x in x_vals])
+    df_retrasada = np.array([(f(x) - f(x - h)) / h for x in x_vals]) 
+    df_centrada = np.array([(f(x + h) - f(x - h)) / (2 * h) for x in x_vals])
+    
+    error_adelantada = np.abs(df_adelantada - df_analitica) / np.abs(df_analitica)
+    error_retrasada = np.abs(df_retrasada - df_analitica) / np.abs(df_analitica)
+    error_centrada = np.abs(df_centrada - df_analitica) / np.abs(df_analitica)
+    
+    plt.figure(figsize=(10, 6))
+    # Graficamos el error relativo para los tres esquemas.
+    plt.plot(x_vals, error_adelantada, color="green", label="Error derivada adelantada") 
+    plt.plot(x_vals, error_retrasada, color="red", label="Error derivada retrasada") 
+    plt.plot(x_vals, error_centrada, color="blue", label="Error derivada centrada") 
+    
+    plt.legend()
+    plt.title(f"Error relativo para la función {f.nombre}")
+    plt.xlabel("x")
+    plt.ylabel("Error relativo")
+    plt.grid(True)
+    plt.tight_layout()
+    return plt.show()
+\end{minted}
+
+Llamamos al algoritmo, \texttt{Error\_relativo}, con cada función y su derivada analítica, donde \texttt{x\_vals} y \texttt{h} almacenan los valores que hemos definido anteriormente por defecto.
+\begin{minted}{python}
+Error_relativo(f, df, x_vals=x_values, h=h) 
+Error_relativo(g, dg, x_vals=x_values, h=h)
+Error_relativo(ln, dln, x_vals=x_values, h=h)
+Error_relativo(j, dj, x_vals=x_values, h=h)  
+\end{minted}
+
+Finalmente, se han generado los siguientes gráficos. Estos proporcionan una comparación visual entre el error relativo por derivada numérica.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/error-sin(x).png}
+    \caption{Error relativo para la función $\sin(x)$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/error-e^x.png}
+    \caption{Error relativo para la función $e^x$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/error-ln(x).png}
+    \caption{Error relativo para la función $\ln(x)$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{img//guide-2//derivacion-numerica/error-x^2.png}
+    \caption{Error relativo para la función $x^2$}
+\end{figure}
+
+\section{Observaciones sobre los resultados}
+
+\subsection*{Precisión de los métodos}
+
+\begin{itemize}
+    \item La diferencia centrada presenta menor error relativo que las diferencias adelantada y retrasada, debido a que su error de truncamiento es de segundo orden, $O(h^2)$ .
+    \item La diferencia adelantada y la diferencia retrasada tienen errores de truncamiento de primero orden, $O(h)$, por lo que son de menor precisión que la centrada.
+\end{itemize}
+
+\subsection*{Funciones más difíciles de derivar numéricamente}
+\begin{itemize}
+    \item $ f(x) = \ln(x)$: En valores cercanos a $x = 0.1$, se observa un mayor error relativo, ya que la derivada crece rápidamente, amplificando errores de redondeo.
+    \item $ f(x) = \sin(x)$ y $ f(x) = e^x $: Son más fáciles de derivar, ya que las funciones son suaves y no presentan cambios abruptos.
+\end{itemize}
+
+\subsection*{Errores relativos y tipo de función}
+\begin{itemize}
+    \item Funciones como $ f(x) = x^2 $, con derivadas lineales, tienen errores más consistentes en todo el dominio.
+    \item Las funciones exponenciales y trigonométricas son más estables debido a la naturaleza bien condicionada de sus derivadas.
+\end{itemize}
+
+\section{Conclusión}
+
+En esta actividad, hemos implementado en \texttt{Python} algoritmos para el cálculo de derivadas numéricas y del error relativo, aplicados a un conjunto finito de valores. Además, se generaron gráficos comparativos que muestran las diferencias entre los esquemas de derivación numérica y la derivada analítica de una función dada. 
+
+Los resultados obtenidos en las gráficas fueron analizados, permitiendo discutir tanto la precisión de los métodos como la dificultad de derivar numéricamente las funciones evaluadas.
+
+
+\end{document}

@@ -1,0 +1,74 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Demostración de una Aproximación Numérica de \textit{f'(x)} usando Series de Taylor}
+\label{ch:taylor-diferenciacion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 4 de noviembre de 2024
+
+\medskip
+
+    En este capítulo, utilizaremos series de Taylor para derivar una aproximación numérica de segundo orden, $ O(h^2) $, para la primera derivada de una función $ f : \mathbb{R} \rightarrow \mathbb{R}$ que sea suficientemente suave alrededor de un punto $x$. Esta aproximación se expresará en términos de los valores $f(x)$, $ f(x + h) $ y $ f(x + 2h) $.
+    
+\section{Análisis}
+
+    Conocemos una aproximación numérica de segundo orden para la primera derivada \cite{wiki:diferencia_finita} en términos de $f(x)$, $f(x + h)$ y $f(x + 2h)$:
+\begin{equation}
+    \label{eq:aproximación}
+    f'(x) \approx \frac{4f(x + h) - f(x + 2h) - 3f(x)}{2h} \, \, .
+\end{equation}
+
+    Para demostrar la aproximación numérica de $f(x)$ en la ecuación (\ref{eq:aproximación}),  utilizamos las expansiones de Taylor de $f(x + h)$ y $f(x + 2h)$ alrededor de $x$. Sea $h\in \mathbb{R} : 0<h<1$.
+\begin{equation}
+    \label{eq:taylor0}
+    f(x + h) = f(x) + h f'(x) + \frac{h^2}{2} f''(x) + \frac{h^3}{6} f'''(x) + \, \ldots
+\end{equation}
+
+\begin{equation}
+    \label{eq:taylor1}
+    f(x + 2h) = f(x) + 2h f'(x) + \frac{(2h)^2}{2} f''(x) + \frac{(2h)^3}{6} f'''(x) + \, \ldots
+\end{equation}
+
+    Multiplicamos la ecuación (\ref{eq:taylor0}) por $4$ y la ecuación (\ref{eq:taylor1}) por $-1$:
+    
+\begin{equation}
+    \label{eq:taylor2}
+    4 f(x + h) = 4 f(x) + 4 h f'(x) + 4 \frac{h^2}{2} f''(x) + 4 \frac{h^3}{6} f'''(x) + \, \ldots
+\end{equation}
+
+\begin{equation}
+    \label{eq:taylor3}
+    - f(x + 2h) = - f(x) - 2h f'(x) - \frac{(2h)^2}{2} f''(x) - \frac{(2h)^3}{6} f'''(x) - \, \ldots
+\end{equation}
+
+    Sumamos las ecuaciones (\ref{eq:taylor2}) y (\ref{eq:taylor3}) miembro a miembro y desarrollando, obtenemos:
+\begin{equation*}
+    4 f(x + h) - f(x + 2h) = 3 f(x) +  2 h f'(x) - \frac{4h^3}{6} f'''(x) + \, \ldots
+\end{equation*}
+
+    Despejamos $f'(x)$:
+\begin{equation*}
+    f'(x) = \frac{4f(x + h) - f(x + 2h) - 3f(x)}{2h} + \frac{2h^2}{6} f'''(x) + \, \ldots
+\end{equation*}
+
+    Sea $\xi \in \mathbb{R} : x-h < \xi < x+h $. Se tiene:
+\begin{equation}
+    \label{eq:aprox_end}
+    f'(x) \approx  \frac{4f(x + h) - f(x + 2h) - 3f(x)}{2h} + \frac{2h^2}{6} f'''(\xi)
+\end{equation}
+
+    donde el término adicional $\frac{2h^2}{6} f'''(\xi)$ representa el error de truncamiento, de orden $O(h^2)$.
+
+    Así, observamos que la expresión (\ref{eq:aprox_end}) es una aproximación de segundo orden para \( f'(x) \). Finalmente, omitiendo el error de truncamiento, obtenemos la diferencia aproximada:
+
+\[
+f'(x) \approx \frac{-3f(x) + 4f(x + h) - f(x + 2h)}{2h}.
+\]
+
+\section{Conclusión}
+
+    En este capitulo, aprendí a demostrar una aproximación numérica de segundo orden para $f'(x)$ mediante series de Taylor, tomando los valores $f(x)$, $f(x+h)$ y $f(x+2h)$. Este proceso destacó la utilidad de las series de Taylor para mejorar la precisión en aproximaciones numéricas.
+    
+\end{document}

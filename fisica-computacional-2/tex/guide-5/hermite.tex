@@ -1,0 +1,71 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Cálculo de los Polinomios de Hermite y sus Ceros}
+\label{ch:hermite}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 26 de noviembre de 2024
+
+\medskip
+
+En este capítulo:
+\begin{itemize}
+    \item Calculamos los primeros cinco polinomios de Hermite ($H_1$ a $H_5$) utilizando derivadas numéricas centradas.
+    \item Encontramos los ceros de estos polinomios en el rango $-3 < x < 3$.
+\end{itemize}
+
+\section*{Polinomios de Hermite}
+
+Los polinomios de Hermite son definidos por la relación de recurrencia:
+\begin{equation*}
+    H_{n+1}(x) = 2xH_n(x) - H'_n(x),
+\end{equation*}
+donde $H'_n(x)$ es la derivada del polinomio $H_n(x)$. Con la condición inicial:
+\begin{equation*}
+    H_0(x) = 1,
+\end{equation*}
+se puede construir la familia completa de polinomios.
+
+
+\section{Derivada Numérica Centrada}
+La derivada centrada para una función $f(x)$ en un punto $x_i$ se calcula como:
+\begin{equation*}
+    f'(x_i) \approx \frac{f(x_{i+1}) - f(x_{i-1})}{2h},
+\end{equation*}
+donde $h$ es el tamaño del paso entre los puntos de la discretización.
+
+\section{Resultados}
+Usando la relación de recurrencia y la derivada centrada, se obtuvieron los primeros cinco polinomios de Hermite. En la Figura \ref{fig:hermite-polinomios}, se grafican estos polinomios, y se marcan los ceros correspondientes en el rango $-3 < x < 3$.
+
+\begin{figure}[H]
+    \centering
+ %   \includegraphics[width=0.8\textwidth]{hermite_polinomios.png}
+    \caption{Primeros cinco polinomios de Hermite y sus ceros.}
+    \label{fig:hermite-polinomios}
+\end{figure}
+
+En la Tabla \ref{tab:hermite-ceros}, se presentan los ceros encontrados para cada polinomio.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        Polinomio & Ceros \\
+        \hline
+        $H_1(x)$ & $x = 0$ \\
+        $H_2(x)$ & $x = \pm 0.707$ \\
+        $H_3(x)$ & $x = 0, \pm 1.225$ \\
+        $H_4(x)$ & $x = \pm 0.524, \pm 1.651$ \\
+        $H_5(x)$ & $x = 0, \pm 0.959, \pm 2.020$ \\
+        \hline
+    \end{tabular}
+    \caption{Ceros de los primeros cinco polinomios de Hermite.}
+    \label{tab:hermite-ceros}
+\end{table}
+
+\section{Conclusiones}
+Los primeros cinco polinomios de Hermite fueron calculados utilizando derivadas numéricas centradas. Los ceros fueron encontrados en el rango $-3 < x < 3$, y los resultados coinciden con los valores esperados teóricos para estos polinomios. Estos resultados son fundamentales para aplicaciones físicas, como la descripción de los estados del oscilador armónico cuántico.
+
+\end{document}

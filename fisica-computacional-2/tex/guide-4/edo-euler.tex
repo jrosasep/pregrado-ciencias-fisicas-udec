@@ -1,0 +1,91 @@
+\documentclass[../portafolio.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Ecuaciones Diferenciales Ordinarias: Solución Analítica y Método de Euler}
+\label{ch:edo-euler}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hfill \textbf{Fecha de la actividad:} 25 de noviembre de 2024
+
+\medskip
+
+En este capítulo se analiza un problema con valor inicial dado por la ecuación diferencial
+\begin{equation}    \label{eq-edo:valor_inicial}
+    y' = -3y\sin(t), \quad y(0) = \frac{1}{2},
+\end{equation}
+encontrando su solución analítica obtenida por el método de \textbf{separación de variables} y estimando una solución numérica aproximada mediante el \textbf{método de Euler}.
+
+Se compararan las soluciones obtenidas en términos de precisión, analizando las diferencias para diferentes particiones del intervalo $0 \leq t \leq 4\pi$, con $N = 2^8, 2^9, 2^{10}, 2^{11}$ subintervalos. Finalmente, se comentan las ventajas y limitaciones del método numérico para problemas de este tipo.
+
+\section{Solución Analítica}
+En la ecuación diferencial \eqref{eq-edo:valor_inicial} , considerando $y' = \frac{dy}{dt}$, y multiplicando la ecuación $\frac{dt}{y}$, notamos que se puede escribir en forma separable:
+\begin{equation*}
+    \frac{dy}{y} = -3\sin(t)\, dt.
+\end{equation*}
+Integrando sobre ambos miembros, obtenemos:
+\begin{equation}  \label{eq-edo:post-int}
+    \ln|y| = 3\cos(t) + C,
+\end{equation}
+donde $C$ es una constante de integración. Despejamos $y$ aplicando la exponencial sobre la ecuación \eqref{eq-edo:post-int}, obteniendo:
+
+\begin{equation} \label{eq-edo:sol1}
+    y(t) = e^{3\cos(t)}e^C.
+\end{equation}
+
+Aplicando la condición inicial $y(0) = \frac{1}{2}$, se encuentra que
+\begin{equation*}
+    \frac{1}{2} = e^3e^C 
+\end{equation*}
+Aplicando el logaritmo natural sobre la ecuación, y despeja $C$, se obtiene:
+\begin{equation} \label{eq-edo:C}
+    C = \ln\left(\frac{1}{2}\right) -3
+    \end{equation}
+    Reemplazando  \eqref{eq-edo:C} en \eqref{eq-edo:sol1}, y desarrollando, se obtiene la solución analitica de \eqref{eq-edo:valor_inicial}.
+\begin{equation*}
+    y(t) = \frac{1}{2e^3} e^{3\cos(t)}.
+\end{equation*}
+
+\section{Solución Numérica: Método de Euler}
+Se  para Resolvemos numéricamente la ecuación diferencial \eqref{eq-edo:valor_inicial}, implementando \texttt{python} y utilizando el modulo \texttt{EcuacionesDiferencialesOrdinarias} \cite{EcuacionesDiferencialesOrdinarias.}.
+La aproximación para $y(t)$ en este caso se calcula mediante:
+\begin{equation*}
+    y_{n+1} = y_n + \Delta t f(t_n, y_n),
+\end{equation*}
+donde 
+\begin{itemize}
+    \item $f(t, y) = -3y\sin(t)$,
+    \item $t_n = n\Delta t$
+    \item $\Delta t = (t_{\max} - t_{\min})/N$.
+\end{itemize}
+
+Se resuelve el problema para $N = 2^8, 2^9, 2^{10}, 2^{11}$, y se compara con la solución analítica.
+
+\begin{minted}{python}
+def f(y, t):
+    return -3 * y * np.sin(t)
+y0 = 1 / 2
+
+t_min, t_max = 0, 4 * np.pi
+
+N_values = [2**8, 2**9, 2**10, 2**11]
+
+for N in N_values:
+    t = np.linspace(t_min, t_max, N + 1)
+    y = Euler(f, r0=y0, t=t)
+\end{minted}
+
+\section{Resultados y Comparación}
+En la Figura \ref{fig:comparacion-soluciones} se muestran las soluciones obtenidas para cada valor de $N$, junto con la solución analítica. Se observa que conforme aumenta $N$, las soluciones numéricas convergen hacia la solución analítica, mostrando la dependencia del método de Euler en el tamaño del paso $\Delta t$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/guide-4/edo-euler.png}
+    \caption{Comparación entre la solución analítica y las soluciones numéricas para diferentes valores de $N$.}
+    \label{fig:comparacion-soluciones}
+\end{figure}
+
+\section{Conclusiones}
+En este capítulo se analizó la solución de una ecuación diferencial ordinaria mediante enfoques analítico y numérico. Se observó que, aunque el método de Euler es sencillo y efectivo, su precisión es limitada, especialmente con pasos grandes o intervalos largos. Se destaca la importancia de comparar las soluciones analíticas y numéricas para verificar la exactitud en problemas con valor inicial.
+
+\end{document}
