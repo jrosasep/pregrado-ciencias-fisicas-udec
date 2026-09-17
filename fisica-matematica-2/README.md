@@ -1,16 +1,9 @@
-# Física Matemática II (510319)
+# 510319—Física Matemática II
 
-Tareas del curso **Física Matemática II**, UdeC 2025-1.
-
-El material se centra en herramientas matemáticas utilizadas en física, especialmente series y transformadas de Fourier, ecuaciones diferenciales en derivadas parciales, funciones especiales y notación tensorial.
+Tareas del curso, UdeC 2025-1.
 
 ## Tareas
 
-- `tarea1/` — **Tarea 1: transformadas integrales**  
-  Series y transformadas de Fourier aplicadas a funciones a trozos y pulsos triangulares.
-
-- `tarea2/` — **Tarea 2: ecuaciones diferenciales y funciones de Legendre**  
-  Ecuación de onda en una cuerda fija, difusión de calor en geometría esférica y problemas de potencial resueltos mediante polinomios de Legendre.
-
-- `tarea3/` — **Tarea 3: funciones de Bessel y tensores cartesianos**  
-  Modos normales de una membrana circular, ecuaciones tipo Bessel y una derivación de conservación de energía cinética en notación tensorial.
+- `tarea1/` — **Transformadas integrales.** Series y transformadas de Fourier.
+- `tarea2/` — **EDP y funciones de Legendre.** Onda, difusión y potencial.
+- `tarea3/` — **Bessel y tensores cartesianos.** Membranas, cilindros y notación tensorial.

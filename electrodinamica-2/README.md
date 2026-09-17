@@ -1,19 +1,10 @@
-# Electrodinámica II (510425)
+# 510425—Electrodinámica II
 
-Tareas del curso **Electrodinámica II**, UdeC 2026.
-
-El material reúne desarrollos analíticos y complementos computacionales sobre electrodinámica clásica, incluyendo campos dependientes del tiempo, conservación del momento electromagnético y propagación retardada.
+Tareas del curso, UdeC 2026-1.
 
 ## Tareas
 
-- `tarea1/` — **Tarea 1**  
-  Desarrollo de una solución exacta y estudio de su límite cuasiestático.
-
-- `tarea2/` — **Tarea 2**  
-  Cuatro problemas de electrodinámica y una visualización interactiva asociada al tensor de tensiones de Maxwell.
-
-- `tarea3/` — **Tarea 3**  
-  Dos problemas y una visualización interactiva de la propagación causal del campo de un cable infinito.
-
-- `tarea4/` — **Tarea 4**  
-  El documento principal contiene los problemas 2 y 3; el problema 1 se conserva como programa interactivo en Python.
+- `tarea1/` — **Solución exacta y límite cuasiestático.**
+- `tarea2/` — **Tensor de tensiones de Maxwell.** Incluye visualización interactiva.
+- `tarea3/` — **Campos retardados.** Incluye visualización de propagación causal.
+- `tarea4/` — **Problemas finales.** Incluye un programa interactivo en Python.

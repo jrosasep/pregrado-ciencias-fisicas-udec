@@ -1,18 +1,16 @@
-# Laboratorio II (510352)
+# 510352—Laboratorio II
 
-Informes del curso **Laboratorio II**, UdeC 2025-2.
-
-El material reúne experiencias experimentales de mecánica, electricidad, óptica y termodinámica, junto con su tratamiento de datos, análisis de incertidumbres, figuras y scripts cuando corresponde.
+Informes del curso, UdeC 2025-2.
 
 ## Informes
 
-- `informe1-ondas-estacionarias/` — **Informe 1: ondas estacionarias**
-- `informe2-ley-de-ohm/` — **Informe 2: ley de Ohm**
-- `informe3-indice-refracción-ley-snell/` — **Informe 3: índice de refracción y ley de Snell**
-- `informe4-intercambio-energía-mecánica-en-sistema-cuerpo-resorte-oscilando/` — **Informe 4: intercambio de energía mecánica en un sistema cuerpo-resorte**
-- `informe5-calorimetria/` — **Informe 5: calorimetría**
-- `informe6-torque-momento-inercia/` — **Informe 6: torque y momento de inercia**
+- `informe1-ondas-estacionarias/` — **Ondas estacionarias.**
+- `informe2-ley-de-ohm/` — **Ley de Ohm.**
+- `informe3-indice-refracción-ley-snell/` — **Índice de refracción y ley de Snell.**
+- `informe4-intercambio-energía-mecánica-en-sistema-cuerpo-resorte-oscilando/` — **Intercambio de energía mecánica.**
+- `informe5-calorimetria/` — **Calorimetría.**
+- `informe6-torque-momento-inercia/` — **Torque y momento de inercia.**
 
 ## Colaboración
 
-Los informes fueron desarrollados junto a **Fabián Contreras**, **Javier Chandia**, **Mario Díaz** y **Martín Fierro**.
+Informes realizados junto a **Fabián Contreras**, **Javier Chandia**, **Mario Díaz** y **Martín Fierro**.

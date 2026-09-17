@@ -1,10 +1,7 @@
-# Relatividad General I (510475)
+# 510475—Relatividad General I
 
-Material de trabajo del curso **Relatividad General I**, UdeC 2026-2.
-
-Las soluciones se desarrollan en LaTeX como versiones maestras para revisar con detalle los cálculos, las convenciones y la interpretación física antes de incorporarlas al portafolio manuscrito del curso.
+Portafolio del curso, UdeC 2026-2.
 
 ## Portafolio
 
-- `portafolio/` — **Problemas y derivaciones del curso**  
-  Desarrollo de ejercicios sobre transformaciones de Lorentz, invariancia del intervalo, efecto Doppler relativista y otros problemas asignados durante el semestre.
+- `portafolio/` — **Problemas y derivaciones.** Lorentz, intervalo y efecto Doppler relativista.

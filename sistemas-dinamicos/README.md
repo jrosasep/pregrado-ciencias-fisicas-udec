@@ -1,14 +1,10 @@
-# Teoría de Sistemas Dinámicos e Introducción al Caos (510490)
+# 510490—Teoría de Sistemas Dinámicos e Introducción al Caos
 
-Material desarrollado durante el curso **Teoría de Sistemas Dinámicos e Introducción al Caos**, UdeC 2026-1.
-
-El material aborda mapas discretos, estabilidad, bifurcaciones, fractales y dinámica caótica mediante desarrollo analítico y visualización numérica.
+Certamen del curso, UdeC 2026-1.
 
 ## Certámenes
 
-- `certamen-1.pdf` — **Certamen 1**  
-  Desarrollo de problemas sobre mapas unidimensionales y bidimensionales, estabilidad, bifurcaciones, conjunto de Cantor y atractores caóticos.
-
-- `certamen-1.tex` — fuente LaTeX del desarrollo.
-- `figuras/` — figuras utilizadas en el certamen.
-- `figuras_certamen-1.py` — script utilizado para generar las visualizaciones.
+- `certamen-1.pdf` — **Certamen 1.** Mapas, estabilidad, bifurcaciones, fractales y caos.
+- `certamen-1.tex` — fuente LaTeX.
+- `figuras/` — figuras del certamen.
+- `figuras_certamen-1.py` — script de generación de figuras.

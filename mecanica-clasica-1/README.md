@@ -1,13 +1,8 @@
-# Mecánica Clásica I (510359)
+# 510359—Mecánica Clásica I
 
-Certámenes del curso **Mecánica Clásica I**, UdeC 2025-1.
-
-Los desarrollos abarcan formulaciones geométricas y analíticas de la mecánica clásica, desde coordenadas curvilíneas y fuerzas centrales hasta las formulaciones lagrangiana y hamiltoniana.
+Certámenes del curso, UdeC 2025-1.
 
 ## Certámenes
 
-- `certamen1/` — **Certamen 1**  
-  Coordenadas curvilíneas y dinámica orbital en potenciales centrales.
-
-- `certamen2/` — **Certamen 2**  
-  Formulación lagrangiana y hamiltoniana, constantes del movimiento y transformaciones canónicas.
+- `certamen1/` — **Coordenadas curvilíneas y fuerzas centrales.**
+- `certamen2/` — **Mecánica lagrangiana y hamiltoniana.**
