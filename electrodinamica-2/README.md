@@ -1,8 +1,19 @@
-# Electrodinámica II — tareas
+# Electrodinámica II (510425)
 
-Material consolidado de las Tareas 1–4. Cada carpeta contiene un único `.tex` y su PDF compilado. Los complementos interactivos se mantienen aparte.
+Tareas del curso **Electrodinámica II**, UdeC 2026.
 
-- `tarea1/`: solución exacta y límite cuasi-estático.
-- `tarea2/`: cuatro problemas y visualización `tarea2.html`.
-- `tarea3/`: dos problemas y visualización `tarea3.html`.
-- `tarea4/`: el PDF contiene únicamente los Problemas 2 y 3; el Problema 1 corresponde al programa interactivo `problema1.py`.
+El material reúne desarrollos analíticos y complementos computacionales sobre electrodinámica clásica, incluyendo campos dependientes del tiempo, conservación del momento electromagnético y propagación retardada.
+
+## Tareas
+
+- `tarea1/` — **Tarea 1**  
+  Desarrollo de una solución exacta y estudio de su límite cuasiestático.
+
+- `tarea2/` — **Tarea 2**  
+  Cuatro problemas de electrodinámica y una visualización interactiva asociada al tensor de tensiones de Maxwell.
+
+- `tarea3/` — **Tarea 3**  
+  Dos problemas y una visualización interactiva de la propagación causal del campo de un cable infinito.
+
+- `tarea4/` — **Tarea 4**  
+  El documento principal contiene los problemas 2 y 3; el problema 1 se conserva como programa interactivo en Python.

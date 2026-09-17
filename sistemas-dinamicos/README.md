@@ -1,16 +1,14 @@
-# Sistemas Dinámicos y Caos
+# Teoría de Sistemas Dinámicos e Introducción al Caos (510490)
 
-Material correspondiente al Certamen 1 de Sistemas Dinámicos y Caos, realizado el 8 de junio de 2026.
+Material desarrollado durante el curso **Teoría de Sistemas Dinámicos e Introducción al Caos**, UdeC 2026-1.
 
-## Contenido
+El material aborda mapas discretos, estabilidad, bifurcaciones, fractales y dinámica caótica mediante desarrollo analítico y visualización numérica.
 
-- `certamen-1.pdf` — copia de entrega más reciente localizada (`J.Rosas-Certamen1.pdf`, 20 páginas).
-- `certamen-1.tex` — fuente LaTeX disponible en el paquete `certamen1_final_entrega_fuentes.zip`.
-- `figuras/` — figuras SVG utilizadas por la fuente.
-- `figuras_certamen-1.py` — script disponible para regenerar las figuras.
+## Certámenes
 
-## Verificación de versiones
+- `certamen-1.pdf` — **Certamen 1**  
+  Desarrollo de problemas sobre mapas unidimensionales y bidimensionales, estabilidad, bifurcaciones, conjunto de Cantor y atractores caóticos.
 
-Se compararon las copias `certamen1_sistemas_dinamicos.pdf`, `certamen1_sistemas_dinamicos_integrado.pdf`, `certamen1 (2).pdf`, `certamen1_formato_tarea_svg_corregido.pdf`, `certamen1_formato_tarea_estetica.pdf`, `certamen1_final_entrega.pdf` y `J.Rosas-Certamen1.pdf`. La copia `J.Rosas-Certamen1.pdf` es la más reciente por fecha de creación y conserva los seis problemas y las figuras finales, por lo que se dejó como PDF principal.
-
-La fuente disponible más reciente es `certamen1_final.tex`, extraída del paquete de fuentes creado el mismo día. No apareció otra fuente LaTeX posterior que correspondiera al PDF de 20 páginas; por eso el README deja explícita esta diferencia de procedencia en vez de presentar ambos archivos como si fueran una pareja binaria exacta.
+- `certamen-1.tex` — fuente LaTeX del desarrollo.
+- `figuras/` — figuras utilizadas en el certamen.
+- `figuras_certamen-1.py` — script utilizado para generar las visualizaciones.

@@ -1,31 +1,16 @@
-# Física Matemática 2
+# Física Matemática II (510319)
 
-Colección de tareas del curso **Física Matemática 2** (Udec, 2025-1).  
-El foco del ramo está en técnicas matemáticas usadas en física:
-series y transformadas de Fourier, ecuaciones diferenciales en derivadas
-parciales, funciones especiales (Legendre, Bessel) y algo de notación
-tensorial.
+Tareas del curso **Física Matemática II**, UdeC 2025-1.
 
-Cada tarea está en su carpeta, con el desarrollo en LaTeX, el PDF y
-las figuras que usé en el informe.
+El material se centra en herramientas matemáticas utilizadas en física, especialmente series y transformadas de Fourier, ecuaciones diferenciales en derivadas parciales, funciones especiales y notación tensorial.
 
 ## Tareas
 
-- `tarea1/` – **Tarea 01 – Transformadas Integrales**  
-  Series y transformadas de Fourier aplicadas a funciones a trozos y pulsos
-  triangulares.
+- `tarea1/` — **Tarea 1: transformadas integrales**  
+  Series y transformadas de Fourier aplicadas a funciones a trozos y pulsos triangulares.
 
-- `tarea2/` – **Tarea 02 – Ecuaciones Diferenciales y Funciones de Legendre**  
-  Ecuación de onda en una cuerda fija, difusión de calor en geometría esférica
-  y un problema de potencial en una esfera usando polinomios de Legendre.
+- `tarea2/` — **Tarea 2: ecuaciones diferenciales y funciones de Legendre**  
+  Ecuación de onda en una cuerda fija, difusión de calor en geometría esférica y problemas de potencial resueltos mediante polinomios de Legendre.
 
-- `tarea3/` – **Tarea 03 – Funciones de Bessel y Tensores Cartesianos**  
-  Modos normales de una membrana circular, ecuaciones tipo Bessel en
-  un cilindro conductor y conservación de energía cinética en un fluido ideal
-  escrita en notación tensorial.
-
----
-
-La idea de este directorio es dejar un registro ordenado de los problemas
-resueltos en el curso y del uso combinado de **LaTeX** y **Python** para
-presentar los resultados.
+- `tarea3/` — **Tarea 3: funciones de Bessel y tensores cartesianos**  
+  Modos normales de una membrana circular, ecuaciones tipo Bessel y una derivación de conservación de energía cinética en notación tensorial.

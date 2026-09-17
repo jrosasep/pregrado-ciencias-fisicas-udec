@@ -1,25 +1,16 @@
-# Electrodinámica I — Tareas
+# Electrodinámica I (510358)
 
-Repositorio con las tareas del curso **Electrodinámica I** (UdeC, 2025-2).  
-Los desarrollos están escritos en LaTeX e incluyen scripts en Python para los
-gráficos de campo y potencial.
+Tareas del curso **Electrodinámica I**, UdeC 2025-2.
+
+Los trabajos desarrollan problemas de electrostática y magnetostática mediante métodos analíticos, representaciones gráficas y, cuando corresponde, scripts en Python para visualizar campos y potenciales.
 
 ## Tareas
 
-- `tarea1/` — **Tarea 1 — Plano finito y cavidad esférica**  
-  Campo eléctrico de una placa rectangular cargada y problema de cavidad
-  esférica en un conductor conectado a tierra, usando el método de las imágenes.
+- `tarea1/` — **Tarea 1: plano finito y cavidad esférica**  
+  Campo eléctrico de una placa rectangular cargada y cavidad esférica en un conductor conectado a tierra, utilizando el método de las imágenes.
 
-- `tarea2/` — **Tarea 2 — Disco cargado y desarrollo multipolar**  
-  Potencial y campo de un disco cargado, comparación con la solución por Laplace,
-  y expansión multipolar de un sistema de dos segmentos de carga.
+- `tarea2/` — **Tarea 2: disco cargado y desarrollo multipolar**  
+  Potencial y campo de un disco cargado, comparación con soluciones de la ecuación de Laplace y expansión multipolar de una distribución de carga.
 
-- `tarea3/` — **Tarea 3 — Esfera conductora en dieléctricos y esfera en rotación**  
-  Esfera conductora en la interfaz entre dos dieléctricos y esfera cargada en
-  rotación que genera un campo magnético dipolar.
-
----
-
-La idea es tener un registro ordenado de las tareas del ramo, con énfasis en el
-uso combinado de **LaTeX** y **Python** para resolver y visualizar problemas de
-electrodinámica clásica.
+- `tarea3/` — **Tarea 3: esfera conductora en dieléctricos y esfera en rotación**  
+  Problemas de condiciones de frontera en medios dieléctricos y campo magnético producido por una esfera cargada en rotación.
