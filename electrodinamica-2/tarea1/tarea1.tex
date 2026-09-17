@@ -1,0 +1,593 @@
+\documentclass{article}
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{bigints}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,babel}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=20mm, bottom=20mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black,pdfborder={0 0 0}]{hyperref}
+
+\numberwithin{equation}{section}
+\titleformat{\section}{\huge\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{2}
+\sloppy
+
+\definecolor{linkblue}{RGB}{50,30,200}
+\definecolor{SoftBlue}{RGB}{239,245,252}
+\definecolor{LineBlue}{RGB}{84,122,168}
+\definecolor{SoftAmber}{RGB}{252,246,233}
+\definecolor{LineAmber}{RGB}{178,126,54}
+\definecolor{SoftGray}{RGB}{245,246,248}
+\definecolor{LineGray}{RGB}{122,128,138}
+\definecolor{notegray}{RGB}{243,245,247}
+\definecolor{notered}{RGB}{139,30,30}
+\definecolor{udecblue}{RGB}{0,58,112}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{darkblue}{RGB}{20,55,110}
+\definecolor{boxbg}{RGB}{245,248,252}
+\definecolor{boxframe}{RGB}{60,85,120}
+
+\newtcolorbox{studybox}[1][]{enhanced,breakable,colback=SoftBlue,colframe=LineBlue,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{carebox}[1][]{enhanced,breakable,colback=SoftAmber,colframe=LineAmber,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{mathbox}[1][]{enhanced,breakable,colback=SoftGray,colframe=LineGray,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{promptbox}{colback=boxbg,colframe=boxframe,arc=2mm,boxrule=0.6pt,left=2mm,right=2mm,top=1mm,bottom=1mm}
+
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{gray!45},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,commentstyle=\color{gray!75},keywordstyle=\color{darkblue}\bfseries}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 1, 2026}}
+\fancyhead[R]{Electrodinámica II}
+
+% Macros usadas por los desarrollos originales
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\hr}{\hat{\mathbf r}}
+\newcommand{\hp}{\hat{\boldsymbol\phi}}
+\newcommand{\hz}{\hat{\mathbf z}}
+\newcommand{\Etot}{\vec E}
+\newcommand{\Eself}{\vec E^{\,(q)}}
+\newcommand{\Eext}{\vec E^{\,(\sigma)}}
+\newcommand{\nvec}{\hat n}
+\newcommand{\Fvec}{\vec F^{\,\mathrm{mec}}}
+\newcommand{\That}{\hat e_i\hat e_i}
+\newcommand{\trac}{\vec t^{\,(n)}}
+\newcommand{\grad}{\bm{\nabla}}
+\newcommand{\A}{\bm{A}}
+\newcommand{\J}{\bm{J}}
+\newcommand{\x}{\bm{x}}
+\newcommand{\xp}{\bm{x}'}
+\newcommand{\Boxop}{\mathcal{L}}
+\newcommand{\hR}{\hat{\bm{R}}}
+\newcommand{\Hh}{\mathrm H}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\arsinh}{\operatorname{arsinh}}
+\newcommand{\ret}{\big|_{\mathrm{ret}}}
+\newcommand{\bv}{\vec{\beta}}
+\newcommand{\av}{\vec{a}}
+\newcommand{\Rv}{\vec{R}}
+\newcommand{\nh}{\hat{n}}
+\newcommand{\K}{K}
+\newcommand{\LW}{Li\'enard--Wiechert}
+\newcommand{\vb}[1]{\boldsymbol{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\note}[1]{\vspace{0.2em}\noindent\fcolorbox{gray!30}{notegray}{\begin{minipage}{0.96\linewidth}#1\end{minipage}}\vspace{0.2em}}
+\newcommand{\important}[1]{\textcolor{notered}{#1}}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{1.8cm}
+    \includegraphics[width=0.22\textwidth]{UdeC_escudo.png}
+    \vspace{1.1cm}
+
+    {\Huge \textbf{Tarea 01} \par}
+    \vspace{0.45cm}
+    {\Huge \textbf{Electrodinámica II} \par}
+    \vspace{1.5cm}
+    {\Large José Ignacio Rosas Sepúlveda \par}
+    \vspace{0.8cm}
+    {\Large 2026 \par}
+    \vfill
+    \thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section{Problema 1}
+Una corriente $I(t)=I_0\cos(\omega t)$ fluye por un alambre recto muy largo y delgado. La corriente retorna (es decir, fluye en la dirección contraria) distribuida uniformemente por la superficie de un cilindro de radio $R$, concéntrico con el alambre central.
+
+\begin{enumerate}[label=(\alph*)]
+\item Resuelva las ecuaciones de Maxwell con las condiciones de borde pertinentes, para valores arbitrarios de $\omega$ y determine los campos eléctrico y magnético en el sistema (suponga que el campo se anula en el infinito).
+\item Compare su resultado con la solución ``cuasi-estática'' del problema 7.16 del libro de Griffiths. Esta solución es válida para frecuencias ``suficientemente pequeñas''. A partir de la solución exacta que encontró, ¿qué tan pequeña exactamente debe ser la frecuencia $\omega$ para que la aproximación cuasi-estática sea buena?, ¿pequeña comparada con qué?
+\end{enumerate}
+
+\textbf{Indicación:} La solución involucra funciones de Bessel :)
+
+\textbf{Solución:}
+
+\subsection{Solución de las ecuaciones de Maxwell con las condiciones de borde pertinentes}
+
+\subsubsection{Planteamiento físico}
+
+Modelaremos el alambre recto muy largo y delgado como una línea recta infinita. Consideraremos un sistema de referencia inercial en coordenadas cilíndricas $(r,\phi,z)$, con base ortonormal $(\hr,\hp,\hz)$, definido de modo que el eje axial, o eje $z$, coincida con la línea recta infinita que representa al alambre. Supondremos que por el alambre circula una corriente de magnitud
+
+\begin{equation}\tag{1}\label{eq:1}
+    I(t)=I_0\cos(\omega t),
+\end{equation}
+
+dirigida en el sentido positivo del eje $z$.
+
+Por otra parte, para la corriente superficial de retorno consideraremos una superficie cilíndrica de radio $R$, concéntrica al eje $z$, con densidad de corriente superficial fluyendo en el sentido negativo del eje. En consecuencia,
+
+\begin{equation}\tag{2}\label{eq:2}
+    \vec K(t)=-\frac{I_0\cos(\omega t)}{2\pi R}\,\hz.
+\end{equation}
+
+De manera equivalente, la distribución superficial puede representarse mediante una densidad volumétrica singular dada por
+
+\begin{equation}\tag{3}\label{eq:3}
+    \vec J_{\text{sup}}(t)=-\frac{I_0\cos(\omega t)}{2\pi R}\,\delta(r-R)\,\hz.
+\end{equation}
+
+De este modo, una representación singular de la densidad de corriente total del sistema viene dada por
+
+\begin{equation}\tag{4}\label{eq:4}
+    \vec J=\frac{I_0\cos(\omega t)}{2\pi r}\,\delta(r)\,\hz-\frac{I_0\cos(\omega t)}{2\pi R}\,\delta(r-R)\,\hz,
+\end{equation}
+
+donde el primer término representa la corriente concentrada sobre el eje, mientras que el segundo corresponde a la corriente de retorno distribuida uniformemente sobre la superficie cilíndrica.
+
+\subsubsection{Convención fasorial y forma de los campos}
+
+En lo que sigue utilizaremos la convención fasorial para trabajar con la dependencia temporal armónica de la corriente, así como de los campos eléctrico y magnético. Introducimos la amplitud compleja de la corriente, denotada por $I_c$, mediante
+
+\begin{equation}\tag{5}\label{eq:5}
+    I(t)=\operatorname{Re}\{I_c\e^{-\iu\omega t}\}.
+\end{equation}
+
+En este problema, como la amplitud de la corriente es real, puede tomarse simplemente $I_c=I_0$, de modo que
+\begin{equation*}
+    I(t)=\operatorname{Re}\{I_0\e^{-\iu\omega t}\}=I_0\cos(\omega t).
+\end{equation*}
+
+Ahora bien, dado que las corrientes del sistema fluyen en dirección axial, es natural esperar, por simetría cilíndrica y por la regla de la mano derecha, que el campo magnético rodee el eje en dirección azimutal. Por tanto, la única dirección físicamente admisible para $\vec B$ en este sistema es la dirección $\hp$. En consecuencia, el campo magnético debe tener una forma del tipo
+
+\begin{equation}\tag{6}\label{eq:6}
+    \vec B(r,t)=\operatorname{Re}\{\widetilde B_{\phi}(r)\e^{-\iu\omega t}\}\,\hp,
+\end{equation}
+
+donde, en principio, la amplitud fasorial $\widetilde B_{\phi}(r)$ puede depender de la coordenada radial $r$.
+
+Por otra parte, como el campo magnético dado en \eqref{eq:6} depende explícitamente del tiempo, por la ley de Faraday--Lenz
+
+\begin{equation}\tag{7}\label{eq:7}
+    \nabla\times \vec E=-\pp{\vec B}{t},
+\end{equation}
+
+se concluye que debe inducirse un campo eléctrico. Además, dado que el rotor de un campo con componente azimutal produce en esta geometría una contribución axial, se sigue que la componente no nula de $\vec E$ debe apuntar en la dirección $\hz$. Así, el campo eléctrico ha de escribirse como
+
+\begin{equation}\tag{8}\label{eq:8}
+    \vec E(r,t)=\operatorname{Re}\{\widetilde E_z(r)\e^{-\iu\omega t}\}\,\hz.
+\end{equation}
+
+Las expresiones \eqref{eq:6} y \eqref{eq:8} constituyen, entonces, la forma más general de los campos compatibles con la simetría del problema y con la dependencia temporal armónica fijada en \eqref{eq:5}.
+
+\subsubsection{Relación entre los fasores $\widetilde E_z$ y $\widetilde B_\phi$}
+
+Puesto que el campo eléctrico fue escrito como la parte real del fasor \eqref{eq:8}, se tiene
+\begin{equation*}
+    E_z(r,t)=\operatorname{Re}\{\widetilde E_z(r)\e^{-\iu\omega t}\}.
+\end{equation*}
+
+Ahora bien, dado que el único componente no nulo de $\vec E$ es el componente axial, y que éste depende únicamente de $r$, el rotacional del campo eléctrico posee únicamente componente azimutal, dada por
+
+\begin{equation}\tag{9}\label{eq:9}
+    \nabla\times \vec E=-\pp{E_z}{r}\,\hp=-\operatorname{Re}\left\{\frac{\ud \widetilde E_z}{\ud r}\e^{-\iu\omega t}\right\}\hp.
+\end{equation}
+
+Sustituyendo \eqref{eq:6} y \eqref{eq:9} en la ley de Faraday \eqref{eq:7}, se obtiene
+\begin{equation*}
+    -\operatorname{Re}\left\{\frac{\ud \widetilde E_z}{\ud r}\e^{-\iu\omega t}\right\}\hp
+    =\iu\omega\operatorname{Re}\left\{\widetilde B_{\phi}\e^{-\iu\omega t}\right\}\hp.
+\end{equation*}
+
+Como ambos miembros corresponden a la parte real de expresiones armónicas con la misma dependencia temporal $\e^{-\iu\omega t}$, se identifican sus amplitudes complejas, con lo cual resulta
+
+\begin{equation}\tag{10}\label{eq:10}
+    -\frac{\ud \widetilde E_z}{\ud r}=\iu\omega\widetilde B_{\phi}.
+\end{equation}
+
+Equivalentemente,
+
+\begin{equation}\tag{11}\label{eq:11}
+    \widetilde B_{\phi}=\frac{\iu}{\omega}\frac{\ud \widetilde E_z}{\ud r}.
+\end{equation}
+
+\subsubsection{Ecuación radial}
+
+De este modo, el problema puede reducirse a la determinación de una sola función radial, en este caso $\widetilde E_z(r)$. Para ello, consideramos la ley de Ampère--Maxwell,
+
+\begin{equation}\tag{12}\label{eq:12}
+    \nabla\times \vec B=\mu_0\vec J+\mu_0\varepsilon_0\pp{\vec E}{t}.
+\end{equation}
+
+Ahora bien, dado que el único componente no nulo de $\vec B$ es el componente azimutal, y que éste depende únicamente de $r$, el rotacional de $\vec B$ posee únicamente componente axial. En coordenadas cilíndricas, ésta viene dada por
+
+\begin{equation}\tag{13}\label{eq:13}
+    \nabla\times \vec B=\frac{1}{r}\frac{\partial}{\partial r}\bigl(rB_{\phi}\bigr)\,\hz.
+\end{equation}
+
+Puesto que el campo magnético fue escrito como la parte real de un fasor en \eqref{eq:6}, se tiene
+\begin{equation*}
+    B_{\phi}(r,t)=\operatorname{Re}\{\widetilde B_{\phi}(r)\e^{-\iu\omega t}\}.
+\end{equation*}
+
+Por tanto,
+
+\begin{equation}\tag{14}\label{eq:14}
+    \nabla\times \vec B
+    =\frac{1}{r}\frac{\partial}{\partial r}\left[r\,\operatorname{Re}\{\widetilde B_{\phi}\e^{-\iu\omega t}\}\right]\hz
+    =\operatorname{Re}\left\{\frac{1}{r}\frac{\ud}{\ud r}\bigl(r\widetilde B_{\phi}\bigr)\e^{-\iu\omega t}\right\}\hz.
+\end{equation}
+
+Sustituyendo \eqref{eq:11} en \eqref{eq:14}, se obtiene
+
+\begin{equation}\tag{15}\label{eq:15}
+    \nabla\times \vec B=\operatorname{Re}\left\{\frac{\iu}{\omega r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)\e^{-\iu\omega t}\right\}\hz.
+\end{equation}
+
+Por otra parte, la derivada temporal de \eqref{eq:8} está dada por
+
+\begin{equation}\tag{16}\label{eq:16}
+    \pp{\vec E}{t}=\operatorname{Re}\left\{-\iu\omega\widetilde E_z\e^{-\iu\omega t}\right\}\hz.
+\end{equation}
+
+Sustituyendo \eqref{eq:15} y \eqref{eq:16} en \eqref{eq:12}, se obtiene
+\begin{equation*}
+    \operatorname{Re}\left\{\frac{\iu}{\omega r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)\e^{-\iu\omega t}\right\}\hz
+    =\mu_0\vec J+\mu_0\varepsilon_0\operatorname{Re}\left\{-\iu\omega\widetilde E_z\e^{-\iu\omega t}\right\}\hz.
+\end{equation*}
+
+Ahora bien, en las regiones del espacio libres de corrientes, es decir, para $0<r<R$ y para $r>R$, se tiene $\vec J=\vec 0$. En tales regiones, la ecuación anterior se reduce a
+\begin{equation*}
+    \operatorname{Re}\left\{\frac{\iu}{\omega r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)\e^{-\iu\omega t}\right\}\hz
+    =\operatorname{Re}\left\{-\iu\omega\mu_0\varepsilon_0\widetilde E_z\e^{-\iu\omega t}\right\}\hz.
+\end{equation*}
+
+Equivalentemente,
+\begin{equation*}
+    \operatorname{Re}\left\{\left[\frac{\iu}{\omega r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)+\iu\omega\mu_0\varepsilon_0\widetilde E_z\right]\e^{-\iu\omega t}\right\}\hz=\vec 0.
+\end{equation*}
+
+Como esta igualdad debe cumplirse para todo instante $t$, se identifican las amplitudes complejas correspondientes, con lo cual se obtiene
+
+\begin{equation}\tag{17}\label{eq:17}
+    \frac{\iu}{\omega r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)+\iu\omega\mu_0\varepsilon_0\widetilde E_z=0.
+\end{equation}
+
+Multiplicando por $\omega/\iu$, se sigue que
+
+\begin{equation}\tag{18}\label{eq:18}
+    \frac{1}{r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)+\omega^2\mu_0\varepsilon_0\widetilde E_z=0.
+\end{equation}
+
+Considerando la relación $\mu_0\varepsilon_0=1/c^2$, la ecuación \eqref{eq:18} toma la forma
+
+\begin{equation}\tag{19}\label{eq:19}
+    \frac{1}{r}\frac{\ud}{\ud r}\left(r\frac{\ud \widetilde E_z}{\ud r}\right)+\frac{\omega^2}{c^2}\widetilde E_z=0.
+\end{equation}
+
+Desarrollando el primer término y tomando
+\begin{equation*}
+    k=\frac{\omega}{c},
+\end{equation*}
+
+se obtiene finalmente
+
+\begin{equation}\tag{20}\label{eq:20}
+    \frac{\ud^2\widetilde E_z}{\ud r^2}+\frac{1}{r}\frac{\ud \widetilde E_z}{\ud r}+k^2\widetilde E_z=0,
+\end{equation}
+
+la cual corresponde a la ecuación de Bessel de orden cero.
+
+Para reconocerla explícitamente como ecuación de Bessel, introducimos la variable adimensional $x=kr$ y escribimos $u(x)=\widetilde E_z(r)$. Entonces
+\begin{equation*}
+    \frac{\ud \widetilde E_z}{\ud r}=k\frac{\ud u}{\ud x},
+    \qquad
+    \frac{\ud^2\widetilde E_z}{\ud r^2}=k^2\frac{\ud^2u}{\ud x^2}.
+\end{equation*}
+Sustituyendo en \eqref{eq:20} y dividiendo por $k^2$, resulta
+\begin{equation*}
+    \frac{\ud^2u}{\ud x^2}+\frac{1}{x}\frac{\ud u}{\ud x}+u=0,
+\end{equation*}
+o, equivalentemente,
+\begin{equation*}
+    x^2u''+xu'+x^2u=0,
+\end{equation*}
+que es la ecuación de Bessel de orden cero. En lo que sigue volveremos a escribir la solución en función de $r$.
+
+\subsubsection{Solución general y condiciones de borde}
+
+Puesto que la ecuación \eqref{eq:20} es la ecuación de Bessel de orden cero, en cada región libre de corriente su solución es combinación lineal de funciones de Bessel. En la región interior $(0<r<R)$ escribimos
+
+\begin{equation}\tag{21}\label{eq:21}
+    \widetilde E_z^{(<)}(r)=AJ_0(kr)+BH_0^{(1)}(kr),
+\end{equation}
+
+mientras que en el exterior $(r>R)$ tomamos
+
+\begin{equation}\tag{22}\label{eq:22}
+    \widetilde E_z^{(>)}(r)=CH_0^{(1)}(kr).
+\end{equation}
+
+Aquí se ha escogido $H_0^{(1)}$ porque representa una onda cilíndrica saliente. Es decir, no basta con pedir que el campo decaiga cuando $r\to\infty$; además, se impone que no llegue una onda incidente desde el infinito, sino sólo la radiación generada por la fuente.
+
+\paragraph{Comportamiento en el eje}
+
+El alambre central está concentrado en $r=0$, de modo que el campo magnético debe reproducir allí el comportamiento de una corriente lineal infinita. Tomando una circunferencia amperiana de radio $r$ muy pequeño alrededor del eje, se obtiene
+\begin{equation*}
+    \oint \vec B\cdot \ud\vec l=2\pi r\,\widetilde B_{\phi}^{(<)}(r)\simeq \mu_0 I_c.
+\end{equation*}
+En el límite $r\to 0$, la contribución de la corriente de desplazamiento es de orden $r^2$ y desaparece, por lo que
+
+\begin{equation}\tag{23}\label{eq:23}
+    \widetilde B_{\phi}^{(<)}(r)\sim \frac{\mu_0 I_c}{2\pi r},
+    \qquad r\to 0.
+\end{equation}
+
+A partir de \eqref{eq:21} y usando
+\begin{equation*}
+    J_0'(x)=-J_1(x),
+    \qquad
+    \frac{\ud}{\ud r}H_0^{(1)}(kr)=-kH_1^{(1)}(kr),
+\end{equation*}
+la relación \eqref{eq:11} da
+\begin{equation*}
+    \widetilde B_{\phi}^{(<)}(r)=-\frac{\iu k}{\omega}\left[AJ_1(kr)+BH_1^{(1)}(kr)\right].
+\end{equation*}
+
+Cerca del eje se tiene
+\begin{equation*}
+    J_1(kr)\sim \frac{kr}{2},
+    \qquad
+    H_1^{(1)}(kr)\sim -\frac{2\iu}{\pi kr},
+\end{equation*}
+luego el término con $J_1$ es regular y el término singular proviene sólo de $H_1^{(1)}$. Así,
+\begin{equation*}
+    \widetilde B_{\phi}^{(<)}(r)\sim -\frac{2B}{\omega\pi r}.
+\end{equation*}
+Comparando con \eqref{eq:23}, resulta
+
+\begin{equation}\tag{24}\label{eq:24}
+    B=-\frac{\omega\mu_0 I_c}{4}.
+\end{equation}
+
+\paragraph{Continuidad de $E_z$ en $r=R$}
+
+El componente $E_z$ es tangencial a la superficie cilíndrica $r=R$. Como no hay ninguna singularidad que produzca un salto en el campo eléctrico tangencial, se impone
+\begin{equation*}
+    \hr\times\left(\vec E^{(>)}-\vec E^{(<)}\right)=\vec 0.
+\end{equation*}
+Dado que el único componente de $\vec E$ es precisamente el axial, esta condición se reduce a
+
+\begin{equation}\tag{25}\label{eq:25}
+    \widetilde E_z^{(<)}(R)=\widetilde E_z^{(>)}(R)
+    \qquad\Rightarrow\qquad
+    AJ_0(kR)+BH_0^{(1)}(kR)=CH_0^{(1)}(kR).
+\end{equation}
+
+\paragraph{Salto de $B_{\phi}$ en $r=R$}
+
+Sobre la superficie cilíndrica fluye la corriente superficial de retorno
+\begin{equation*}
+    \vec K=-\frac{I_c}{2\pi R}\,\hz.
+\end{equation*}
+La condición de contorno para el campo magnético tangencial es
+\begin{equation*}
+    \hr\times\left(\vec H^{(>)}-\vec H^{(<)}\right)=\vec K,
+    \qquad
+    \vec H=\frac{\vec B}{\mu_0}.
+\end{equation*}
+Como sólo existe componente azimutal,
+\begin{equation*}
+    \hr\times\left[\frac{1}{\mu_0}\bigl(\widetilde B_{\phi}^{(>)}(R)-\widetilde B_{\phi}^{(<)}(R)\bigr)\hp\right]
+    =\frac{\widetilde B_{\phi}^{(>)}(R)-\widetilde B_{\phi}^{(<)}(R)}{\mu_0}\,\hz.
+\end{equation*}
+Igualando con $\vec K$, se obtiene
+
+\begin{equation}\tag{26}\label{eq:26}
+    \widetilde B_{\phi}^{(>)}(R)-\widetilde B_{\phi}^{(<)}(R)=-\frac{\mu_0 I_c}{2\pi R}.
+\end{equation}
+
+Usando \eqref{eq:11}, esto equivale a
+
+\begin{equation}\tag{27}\label{eq:27}
+    -\frac{\iu k}{\omega}CH_1^{(1)}(kR)
+    +\frac{\iu k}{\omega}\left[AJ_1(kR)+BH_1^{(1)}(kR)\right]
+    =-\frac{\mu_0 I_c}{2\pi R}.
+\end{equation}
+
+\subsubsection{Determinación de las constantes}
+
+Introducimos la notación abreviada
+\begin{equation*}
+    x=kR.
+\end{equation*}
+La condición de continuidad \eqref{eq:25} puede escribirse como
+\begin{equation*}
+    C=B+A\frac{J_0(x)}{H_0^{(1)}(x)}.
+\end{equation*}
+Sustituyendo esta expresión en \eqref{eq:27}, se obtiene
+\begin{equation*}
+    \frac{\iu k}{\omega}A\left[J_1(x)-\frac{J_0(x)}{H_0^{(1)}(x)}H_1^{(1)}(x)\right]
+    =-\frac{\mu_0 I_c}{2\pi R}.
+\end{equation*}
+Llevando a común denominador,
+\begin{equation*}
+    \frac{\iu k}{\omega}A\,
+    \frac{J_1(x)H_0^{(1)}(x)-J_0(x)H_1^{(1)}(x)}{H_0^{(1)}(x)}
+    =-\frac{\mu_0 I_c}{2\pi R}.
+\end{equation*}
+Ahora usamos la identidad de Wronskiano
+\begin{equation}\tag{28}\label{eq:28}
+    J_0(x)H_1^{(1)}(x)-J_1(x)H_0^{(1)}(x)=-\frac{2\iu}{\pi x}.
+\end{equation}
+Equivalentemente,
+\begin{equation*}
+    J_1(x)H_0^{(1)}(x)-J_0(x)H_1^{(1)}(x)=\frac{2\iu}{\pi x}.
+\end{equation*}
+Sustituyendo esta identidad en la condición de salto se obtiene
+\begin{equation}\tag{29}\label{eq:29}
+    A=\frac{\omega\mu_0 I_c}{4}\,H_0^{(1)}(kR),
+\end{equation}
+\begin{equation}\tag{30}\label{eq:30}
+    C=\frac{\omega\mu_0 I_c}{4}\left[J_0(kR)-1\right].
+\end{equation}
+Recordemos además que, por el comportamiento singular requerido cerca del eje,
+\begin{equation*}
+    B=-\frac{\omega\mu_0 I_c}{4}.
+\end{equation*}
+
+\subsubsection{Campos eléctrico y magnético}
+
+Sustituyendo las constantes en las soluciones de cada región, las amplitudes fasoriales del campo eléctrico quedan
+\begin{equation}\tag{31}\label{eq:31}
+    \widetilde E_z^{(<)}(r)
+    =\frac{\omega\mu_0 I_c}{4}
+    \left[H_0^{(1)}(kR)J_0(kr)-H_0^{(1)}(kr)\right],
+    \qquad 0<r<R,
+\end{equation}
+\begin{equation}\tag{32}\label{eq:32}
+    \widetilde E_z^{(>)}(r)
+    =\frac{\omega\mu_0 I_c}{4}
+    \left[J_0(kR)-1\right]H_0^{(1)}(kr),
+    \qquad r>R.
+\end{equation}
+El campo magnético se obtiene de $\widetilde B_\phi=(\iu/\omega)\,\ud\widetilde E_z/\ud r$:
+\begin{equation}\tag{33}\label{eq:33}
+    \widetilde B_{\phi}^{(<)}(r)
+    =\frac{\iu k\mu_0 I_c}{4}
+    \left[H_1^{(1)}(kr)-H_0^{(1)}(kR)J_1(kr)\right],
+    \qquad 0<r<R,
+\end{equation}
+\begin{equation}\tag{34}\label{eq:34}
+    \widetilde B_{\phi}^{(>)}(r)
+    =\frac{\iu k\mu_0 I_c}{4}
+    \left[1-J_0(kR)\right]H_1^{(1)}(kr),
+    \qquad r>R.
+\end{equation}
+
+La solución física se recupera tomando la parte real de $\widetilde E_z(r)\e^{-\iu\omega t}$ y $\widetilde B_{\phi}(r)\e^{-\iu\omega t}$.
+
+\subsection{Comparación con la solución cuasiestática}
+
+La solución cuasiestática del problema 7.16 de Griffiths proporciona el campo eléctrico en el interior del cilindro $(r\le R)$ como
+
+\begin{equation*}
+    \vec E_{\text{qs}}(r,t)=\frac{\mu_0 I_0\omega}{2\pi}\sin(\omega t)\ln\left(\frac{R}{r}\right)\hz,
+\end{equation*}
+
+donde se ha supuesto que el campo eléctrico se anula en $r=R$ por analogía con un solenoide ideal. Esta expresión se obtiene despreciando la corriente de desplazamiento y utilizando la ley de Ampère en forma magnetostática, que da
+\begin{equation*}
+    B_{\phi}^{\text{qs}}=\frac{\mu_0 I}{2\pi r}.
+\end{equation*}
+
+Por otra parte, la solución exacta obtenida en la parte anterior, con dependencia temporal $\e^{-\iu\omega t}$, es
+\begin{equation}\tag{35}\label{eq:35}
+    \widetilde E_z^{(<)}(r)=\frac{\omega\mu_0 I_c}{4}
+    \left[H_0^{(1)}(kR)J_0(kr)-H_0^{(1)}(kr)\right],
+    \qquad 0<r<R,
+\end{equation}
+\begin{equation}\tag{36}\label{eq:36}
+    \widetilde B_{\phi}^{(<)}(r)=\frac{\iu k\mu_0 I_c}{4}
+    \left[H_1^{(1)}(kr)-H_0^{(1)}(kR)J_1(kr)\right].
+\end{equation}
+
+\subsubsection{Límite de bajas frecuencias}
+
+La cantidad adimensional que controla la aproximación es
+\begin{equation*}
+    kR=\frac{\omega R}{c}.
+\end{equation*}
+Si $kR\ll1$, entonces también $kr\ll1$ para todo punto interior $r<R$. Usando
+\begin{equation*}
+J_0(x)=1+O(x^2),
+\qquad
+H_0^{(1)}(x)=1+\frac{2\iu}{\pi}
+\left(\ln\frac{x}{2}+\gamma\right)+O(x^2\ln x),
+\end{equation*}
+se obtiene directamente de \eqref{eq:35}
+\begin{align*}
+\widetilde E_z^{(<)}(r)
+&=\frac{\omega\mu_0 I_c}{4}
+\left[\frac{2\iu}{\pi}\ln\frac{R}{r}
++O\!\left((kR)^2\lvert\ln(kR)\rvert\right)\right]\\
+&=\iu\frac{\mu_0 I_c\omega}{2\pi}\ln\frac{R}{r}
++O\!\left(\omega(kR)^2\lvert\ln(kR)\rvert\right).
+\end{align*}
+Por otra parte, usando $H_1^{(1)}(x)\sim-2\iu/(\pi x)$ en \eqref{eq:36},
+\begin{equation*}
+    \widetilde B_{\phi}^{(<)}(r)
+    =\frac{\mu_0 I_c}{2\pi r}
+    +O\!\left(k^2R\,\lvert\ln(kR)\rvert\right).
+\end{equation*}
+Al volver al dominio temporal, con $I_c=I_0$,
+\begin{equation*}
+    E_z^{(<)}(r,t)
+    \simeq
+    \frac{\mu_0 I_0\omega}{2\pi}
+    \sin(\omega t)\ln\frac{R}{r},
+\end{equation*}
+que coincide con la solución cuasi-estática de Griffiths.
+
+También es útil mirar la región exterior. De \eqref{eq:32},
+\begin{equation*}
+J_0(kR)-1=-\frac{(kR)^2}{4}+O((kR)^4),
+\end{equation*}
+de modo que el campo exterior queda suprimido por potencias de $kR$. Esto es consistente con la cancelación entre la corriente central y la corriente superficial de retorno en el límite cuasi-estático.
+
+\subsubsection{Condición de validez}
+
+La aproximación cuasi-estática exige que el tiempo característico de propagación $R/c$ sea mucho menor que el período característico $1/\omega$. Por tanto,
+\begin{equation*}
+    \boxed{\frac{\omega R}{c}\ll1}
+    \qquad\Longleftrightarrow\qquad
+    \boxed{\omega\ll\frac{c}{R}}.
+\end{equation*}
+Equivalentemente, la longitud de onda debe ser mucho mayor que la escala transversal del sistema,
+\begin{equation*}
+    \lambda=\frac{2\pi c}{\omega}\gg R.
+\end{equation*}
+Más precisamente, las primeras correcciones contienen términos del tipo $(kR)^2\lvert\ln(kR)\rvert$, pero la escala física que fija cuándo $\omega$ es ``pequeña'' es $c/R$.
+\end{document}

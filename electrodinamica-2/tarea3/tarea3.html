@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Campo retardado de un cable infinito · Visualización interactiva</title>
+<style>
+:root{
+  --paper:#f7f6f2; --surface:#fff; --ink:#182536; --muted:#667085;
+  --navy:#003a70; --navy2:#0e4f88; --rule:#c9d0d8; --soft:#eef2f6;
+  --cyan:#4f95b8; --gold:#c08a3c; --good:#2f6d46;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.wrap{max-width:1320px;margin:0 auto;padding:28px 24px 46px}
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:22px;border-bottom:1px solid #aeb7c3;padding-bottom:18px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:18px;min-width:0}.brand img{width:124px;height:auto}.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);font-weight:760;margin-bottom:5px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.85rem,3.4vw,2.75rem);line-height:1.08;margin:0;color:#14233a;font-weight:600}
+.meta{font-size:.88rem;color:var(--muted);text-align:right;line-height:1.45;white-space:nowrap}
+h2{font-family:Georgia,"Times New Roman",serif;font-size:1.3rem;margin:0 0 9px;color:#17263e;font-weight:600}h3{font-size:.98rem;margin:0 0 8px;color:#26364d}
+p{line-height:1.58;margin:0 0 9px;color:#4e5b6e}.math{font-family:"STIX Two Math","Cambria Math","Times New Roman",serif;color:#223149}
+.card{background:var(--surface);border:1px solid #c7ccd4;border-radius:2px;padding:19px;box-shadow:4px 4px 0 rgba(16,24,40,.11)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-bottom:20px}.formula{background:#fbfbfa;border:1px solid #c8cdd4;border-left:3px solid var(--navy);padding:12px 14px;margin-top:11px;font-family:"STIX Two Math","Cambria Math","Times New Roman",serif;line-height:1.55;color:#233650;overflow:auto}.note{font-size:.88rem;color:#687487;line-height:1.52}.result{border:1px solid #aec4b5;border-left:4px solid var(--good);background:#f4f8f5;padding:12px 14px;margin-top:12px;color:#2b5a3b}
+.main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 292px;gap:16px;align-items:start}.plot-card{padding:14px}.plot-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:9px}.plot-head span{font-size:.8rem;color:var(--muted)}canvas{width:100%;height:auto;display:block;background:#fcfcfb;border:1px solid #d1d7df}.controls{position:sticky;top:16px}.control{border-top:1px solid #d6dbe1;padding-top:12px;margin-top:12px}.control:first-child{border-top:0;padding-top:0;margin-top:0}label{display:block;font-size:.85rem;color:#536074;margin:10px 0 4px}input[type=range]{width:100%;accent-color:var(--navy)}.value{float:right;color:#203552;font-weight:700}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}button{border:1px solid #9eabb9;background:#fff;color:#26364d;padding:8px 10px;font-weight:650;cursor:pointer}button.primary{background:var(--navy);color:#fff;border-color:var(--navy)}button:hover{filter:brightness(.98)}
+.legend{display:flex;align-items:center;gap:9px;margin-top:9px;font-size:.8rem;color:#697487}.bar{height:9px;flex:1;border:1px solid #c6ced8;background:linear-gradient(90deg,#f7fafc,#c8dce8,#6ba4bf,#0d5f8c,#003a70)}
+.profile{margin-top:17px;display:grid;grid-template-columns:1fr 292px;gap:16px;align-items:start}.readout{display:grid;grid-template-columns:1fr auto;gap:7px 12px;font-size:.86rem;color:#667085;margin-top:9px}.readout strong{color:#26364d}.footer{margin-top:20px;border-top:1px solid #b9c2cd;padding-top:13px;color:#7a8492;font-size:.82rem}
+@media(max-width:1080px){.main{grid-template-columns:1fr 1fr}.controls{grid-column:1/-1;position:static;display:grid;grid-template-columns:1fr 1fr;gap:18px}.profile{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.meta{text-align:left;white-space:normal}.masthead{align-items:flex-start}}
+@media(max-width:720px){.wrap{padding:18px 14px 34px}.masthead{display:block}.brand img{width:96px}.meta{margin-top:12px}.main{grid-template-columns:1fr}.controls{display:block}.buttons{grid-template-columns:1fr}.plot-card{padding:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="masthead">
+  <div class="brand"><img src="UdeC_azul_centrado.png" alt="Universidad de Concepción"><div><div class="eyebrow">Electrodinámica II · Visualización interactiva</div><h1>Propagación causal del campo de un cable infinito</h1></div></div>
+  <div class="meta">José Ignacio Rosas Sepúlveda<br>Universidad de Concepción · 2026</div>
+</header>
+
+<section class="hero">
+  <article class="card">
+    <h2>Sistema físico</h2>
+    <p>Un cable recto, infinitamente largo y situado sobre el eje <span class="math">z</span>, comienza a transportar una corriente que crece linealmente con el tiempo. La información electromagnética no aparece simultáneamente en todo el espacio: se propaga desde el cable con velocidad <span class="math">c</span>.</p>
+    <div class="formula">I(t)=kt\,H(t), &nbsp;&nbsp; ρ=√(x²+y²), &nbsp;&nbsp; E=E<sub>z</sub>(ρ,t) ê<sub>z</sub></div>
+    <div class="result"><strong>Idea central:</strong> en un instante <span class="math">t</span>, solamente los puntos con <span class="math">ρ&lt;ct</span> han recibido la señal del encendido de la corriente.</div>
+  </article>
+  <aside class="card">
+    <h2>Solución que se evalúa</h2>
+    <div class="formula">E<sub>z</sub>(ρ,t)=− μ₀k/(2π) ln[(ct+√(c²t²−ρ²))/ρ] · H(ct−ρ)</div>
+    <p class="note" style="margin-top:11px">Para visualizar la singularidad ideal sobre el eje se usa un radio regularizador pequeño <span class="math">ρ₀</span>. Éste suaviza únicamente la zona central; no modifica el frente causal <span class="math">ρ=ct</span>.</p>
+    <p class="note">Las gráficas muestran <span class="math">−E<sub>z</sub></span> en unidades normalizadas con <span class="math">μ₀k/(2π)=1</span>, de modo que la cantidad representada es positiva dentro del frente.</p>
+  </aside>
+</section>
+
+<main class="main">
+  <section class="card plot-card">
+    <div class="plot-head"><h2>Plano transversal</h2><span>mapa de −E<sub>z</sub>(x,y,t)</span></div>
+    <canvas id="heat2d" width="760" height="760"></canvas>
+    <div class="legend"><span>0</span><div class="bar"></div><span>mayor intensidad</span></div>
+  </section>
+  <section class="card plot-card">
+    <div class="plot-head"><h2>Superficie tridimensional</h2><span>altura ∝ −E<sub>z</sub></span></div>
+    <canvas id="surf3d" width="760" height="760"></canvas>
+    <div class="legend"><span>plano xy</span><div class="bar"></div><span>altura de campo</span></div>
+  </section>
+  <aside class="card controls">
+    <h2>Parámetros</h2>
+    <div class="control">
+      <label>tiempo t <span class="value" id="tVal"></span></label><input id="time" type="range" min="0" max="5.2" step="0.01" value="0.70">
+      <label>velocidad de propagación c <span class="value" id="cVal"></span></label><input id="cvel" type="range" min="0.4" max="2.2" step="0.01" value="1.00">
+      <label>radio regularizador ρ₀ <span class="value" id="r0Val"></span></label><input id="r0" type="range" min="0.012" max="0.18" step="0.002" value="0.045">
+      <label>escala vertical <span class="value" id="scaleVal"></span></label><input id="scale" type="range" min="0.8" max="5.5" step="0.05" value="2.65">
+    </div>
+    <div class="control">
+      <h3>Vista 3D</h3>
+      <label>rotación <span class="value" id="angVal"></span></label><input id="angle" type="range" min="-90" max="90" step="1" value="-34">
+      <label>inclinación <span class="value" id="tiltVal"></span></label><input id="tilt" type="range" min="0.35" max="1.15" step="0.01" value="0.72">
+    </div>
+    <div class="buttons"><button id="play" class="primary">Pausar</button><button id="reset">Reiniciar</button></div>
+    <div class="control">
+      <h3>Lectura instantánea</h3>
+      <div class="readout"><span>frente causal</span><strong id="frontVal"></strong><span>campo en ρ=1</span><strong id="probeVal"></strong><span>región activa</span><strong>ρ &lt; ct</strong></div>
+    </div>
+  </aside>
+</main>
+
+<section class="profile">
+  <article class="card plot-card">
+    <div class="plot-head"><h2>Perfil radial</h2><span>−E<sub>z</sub>(ρ,t) sobre una línea radial</span></div>
+    <canvas id="profile" width="1100" height="360"></canvas>
+  </article>
+  <aside class="card">
+    <h2>Cómo leer las tres vistas</h2>
+    <p>El mapa 2D muestra qué puntos del plano ya están causalmente conectados con el cable. La superficie 3D usa la misma función y convierte la intensidad en altura. El perfil radial corta esa superficie desde el eje hacia afuera.</p>
+    <div class="formula">ρ=ct → frontera entre campo actualizado y región todavía no alcanzada</div>
+    <p class="note" style="margin-top:10px">La circunferencia azul del mapa y la línea vertical del perfil representan exactamente el mismo frente causal.</p>
+  </aside>
+</section>
+<div class="footer">Visualización autónoma: no requiere conexión a internet ni librerías externas.</div>
+</div>
+
+<script>
+const heat=document.getElementById('heat2d'), hctx=heat.getContext('2d');
+const surf=document.getElementById('surf3d'), sctx=surf.getContext('2d');
+const prof=document.getElementById('profile'), pctx=prof.getContext('2d');
+const timeSlider=document.getElementById('time'), cSlider=document.getElementById('cvel'), r0Slider=document.getElementById('r0'), scaleSlider=document.getElementById('scale'), angleSlider=document.getElementById('angle'), tiltSlider=document.getElementById('tilt');
+const tVal=document.getElementById('tVal'), cVal=document.getElementById('cVal'), r0Val=document.getElementById('r0Val'), scaleVal=document.getElementById('scaleVal'), angVal=document.getElementById('angVal'), tiltVal=document.getElementById('tiltVal');
+const frontVal=document.getElementById('frontVal'), probeVal=document.getElementById('probeVal');
+const playBtn=document.getElementById('play'), resetBtn=document.getElementById('reset');
+let t=parseFloat(timeSlider.value), playing=true, last=performance.now();
+const LBOX=4.0;
+function clamp(x,a,b){return Math.max(a,Math.min(b,x));}
+function fieldMinusEzRho(rho,t,c,rho0){
+  const r=Math.sqrt(rho*rho+rho0*rho0);
+  if(c*t<=r) return 0;
+  const disc=c*c*t*t-r*r;
+  if(disc<=0) return 0;
+  return Math.log((c*t+Math.sqrt(disc))/r);
+}
+function fieldMinusEz(x,y,t,c,rho0){return fieldMinusEzRho(Math.hypot(x,y),t,c,rho0);}
+function cmap(q){
+  q=clamp(q,0,1);
+  const stops=[[247,250,252],[198,219,231],[98,158,187],[13,95,140],[0,58,112]];
+  const u=q*(stops.length-1), i=Math.min(stops.length-2,Math.floor(u)), f=u-i;
+  const a=stops[i],b=stops[i+1]; return `rgb(${Math.round(a[0]+f*(b[0]-a[0]))},${Math.round(a[1]+f*(b[1]-a[1]))},${Math.round(a[2]+f*(b[2]-a[2]))})`;
+}
+function drawHeat(){
+  const c=parseFloat(cSlider.value),rho0=parseFloat(r0Slider.value),scale=parseFloat(scaleSlider.value),N=160;
+  const off=document.createElement('canvas'); off.width=N;off.height=N;const ox=off.getContext('2d'),im=ox.createImageData(N,N);
+  let k=0;
+  for(let j=0;j<N;j++) for(let i=0;i<N;i++){
+    const x=-LBOX+2*LBOX*i/(N-1),y=LBOX-2*LBOX*j/(N-1),v=fieldMinusEz(x,y,t,c,rho0),q=clamp(v/scale,0,1);
+    const rgb=cmap(q).match(/\d+/g).map(Number); im.data[k++]=rgb[0];im.data[k++]=rgb[1];im.data[k++]=rgb[2];im.data[k++]=255;
+  }
+  ox.putImageData(im,0,0);hctx.clearRect(0,0,heat.width,heat.height);hctx.drawImage(off,0,0,heat.width,heat.height);
+  hctx.save();hctx.translate(heat.width/2,heat.height/2);const unit=heat.width/(2*LBOX);
+  hctx.strokeStyle='rgba(24,37,54,.30)';hctx.lineWidth=1.2;hctx.beginPath();hctx.moveTo(-heat.width/2,0);hctx.lineTo(heat.width/2,0);hctx.moveTo(0,-heat.height/2);hctx.lineTo(0,heat.height/2);hctx.stroke();
+  const rf=c*t*unit;if(rf>0&&rf<heat.width*.75){hctx.strokeStyle='#003a70';hctx.lineWidth=3;hctx.setLineDash([10,7]);hctx.beginPath();hctx.arc(0,0,rf,0,2*Math.PI);hctx.stroke();hctx.setLineDash([]);}
+  hctx.fillStyle='#003a70';hctx.beginPath();hctx.arc(0,0,7,0,2*Math.PI);hctx.fill();hctx.fillStyle='#36485e';hctx.font='600 18px system-ui';hctx.fillText('cable (eje z)',14,-14);hctx.restore();
+  hctx.fillStyle='#27384f';hctx.font='15px system-ui';hctx.fillText('x',heat.width-25,heat.height/2-10);hctx.fillText('y',heat.width/2+10,24);
+}
+function project3D(x,y,z,ang,tilt,zoom,cx,cy){const ca=Math.cos(ang),sa=Math.sin(ang);const xr=ca*x-sa*y,yr=sa*x+ca*y;return [cx+zoom*xr,cy+zoom*(yr*0.48-z*tilt)];}
+function drawSurface(){
+  const c=parseFloat(cSlider.value),rho0=parseFloat(r0Slider.value),scale=parseFloat(scaleSlider.value),ang=parseFloat(angleSlider.value)*Math.PI/180,tilt=parseFloat(tiltSlider.value);
+  const W=surf.width,H=surf.height,cx=W*.50,cy=H*.57,zoom=70,N=28,range=3.6; sctx.clearRect(0,0,W,H);sctx.fillStyle='#fcfcfb';sctx.fillRect(0,0,W,H);
+  // base grid
+  sctx.strokeStyle='#d7dde4';sctx.lineWidth=1;
+  for(let a=-range;a<=range+.01;a+=.9){let p1=project3D(-range,a,0,ang,tilt,zoom,cx,cy),p2=project3D(range,a,0,ang,tilt,zoom,cx,cy);sctx.beginPath();sctx.moveTo(...p1);sctx.lineTo(...p2);sctx.stroke();p1=project3D(a,-range,0,ang,tilt,zoom,cx,cy);p2=project3D(a,range,0,ang,tilt,zoom,cx,cy);sctx.beginPath();sctx.moveTo(...p1);sctx.lineTo(...p2);sctx.stroke();}
+  const polys=[];
+  for(let j=0;j<N-1;j++) for(let i=0;i<N-1;i++){
+    const x0=-range+2*range*i/(N-1),x1=-range+2*range*(i+1)/(N-1),y0=-range+2*range*j/(N-1),y1=-range+2*range*(j+1)/(N-1);
+    const vals=[[x0,y0],[x1,y0],[x1,y1],[x0,y1]].map(([x,y])=>fieldMinusEz(x,y,t,c,rho0));const avg=vals.reduce((a,b)=>a+b,0)/4;
+    const pts=[[x0,y0,vals[0]],[x1,y0,vals[1]],[x1,y1,vals[2]],[x0,y1,vals[3]]].map(([x,y,z])=>project3D(x,y,Math.min(z,scale)*.85,ang,tilt,zoom,cx,cy));
+    const depth=(y0+y1)/2*Math.sin(ang)+(x0+x1)/2*Math.cos(ang);polys.push({pts,avg,depth});
+  }
+  polys.sort((a,b)=>a.depth-b.depth);polys.forEach(o=>{sctx.beginPath();sctx.moveTo(...o.pts[0]);for(let k=1;k<4;k++)sctx.lineTo(...o.pts[k]);sctx.closePath();sctx.fillStyle=cmap(clamp(o.avg/scale,0,1));sctx.fill();sctx.strokeStyle='rgba(255,255,255,.28)';sctx.lineWidth=.5;sctx.stroke();});
+  const O=project3D(0,0,0,ang,tilt,zoom,cx,cy);sctx.fillStyle='#003a70';sctx.beginPath();sctx.arc(O[0],O[1],6,0,2*Math.PI);sctx.fill();sctx.fillStyle='#27384f';sctx.font='600 15px system-ui';sctx.fillText('−E_z',25,32);
+}
+function drawProfile(){
+  const c=parseFloat(cSlider.value),rho0=parseFloat(r0Slider.value),scale=parseFloat(scaleSlider.value),W=prof.width,H=prof.height,m={l:62,r:24,t:24,b:46},pw=W-m.l-m.r,ph=H-m.t-m.b;
+  pctx.clearRect(0,0,W,H);pctx.fillStyle='#fcfcfb';pctx.fillRect(0,0,W,H);pctx.strokeStyle='#c6ced8';pctx.lineWidth=1;pctx.beginPath();pctx.moveTo(m.l,m.t);pctx.lineTo(m.l,H-m.b);pctx.lineTo(W-m.r,H-m.b);pctx.stroke();
+  for(let i=0;i<=4;i++){const y=m.t+ph*i/4;pctx.strokeStyle='#e2e6eb';pctx.beginPath();pctx.moveTo(m.l,y);pctx.lineTo(W-m.r,y);pctx.stroke();}
+  const maxR=LBOX,maxV=Math.max(.2,scale),N=360;pctx.strokeStyle='#003a70';pctx.lineWidth=3;pctx.beginPath();
+  for(let i=0;i<N;i++){const r=maxR*i/(N-1),v=fieldMinusEzRho(r,t,c,rho0),x=m.l+pw*r/maxR,y=H-m.b-ph*clamp(v/maxV,0,1);if(i===0)pctx.moveTo(x,y);else pctx.lineTo(x,y);}pctx.stroke();
+  const rf=c*t;if(rf<maxR){const x=m.l+pw*rf/maxR;pctx.strokeStyle='#c08a3c';pctx.lineWidth=2;pctx.setLineDash([8,6]);pctx.beginPath();pctx.moveTo(x,m.t);pctx.lineTo(x,H-m.b);pctx.stroke();pctx.setLineDash([]);pctx.fillStyle='#8a632c';pctx.font='14px system-ui';pctx.fillText('ρ=ct',Math.min(x+7,W-65),m.t+18);}
+  pctx.fillStyle='#526071';pctx.font='14px system-ui';pctx.fillText('ρ',W-m.r-8,H-14);pctx.save();pctx.translate(17,m.t+ph*.5);pctx.rotate(-Math.PI/2);pctx.fillText('−E_z',0,0);pctx.restore();
+}
+function updateLabels(){const c=parseFloat(cSlider.value),r0=parseFloat(r0Slider.value),sc=parseFloat(scaleSlider.value);tVal.textContent=t.toFixed(2);cVal.textContent=c.toFixed(2);r0Val.textContent=r0.toFixed(3);scaleVal.textContent=sc.toFixed(2);angVal.textContent=angleSlider.value+'°';tiltVal.textContent=parseFloat(tiltSlider.value).toFixed(2);frontVal.textContent=(c*t).toFixed(2);probeVal.textContent=fieldMinusEzRho(1,t,c,r0).toFixed(3);}
+function render(){updateLabels();drawHeat();drawSurface();drawProfile();}
+function animate(now){if(playing){const dt=Math.min(.05,(now-last)/1000);t+=dt*.70;if(t>parseFloat(timeSlider.max))t=0;timeSlider.value=t.toFixed(2);}last=now;render();requestAnimationFrame(animate);}
+[timeSlider,cSlider,r0Slider,scaleSlider,angleSlider,tiltSlider].forEach(el=>el.addEventListener('input',()=>{if(el===timeSlider)t=parseFloat(timeSlider.value);render();}));
+playBtn.addEventListener('click',()=>{playing=!playing;playBtn.textContent=playing?'Pausar':'Reproducir';last=performance.now();});resetBtn.addEventListener('click',()=>{t=0;timeSlider.value='0';render();});
+render();requestAnimationFrame(animate);
+</script>
+</body>
+</html>

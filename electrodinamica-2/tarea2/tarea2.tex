@@ -1,0 +1,1118 @@
+\documentclass{article}
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{bigints}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,babel}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=20mm, bottom=20mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black,pdfborder={0 0 0}]{hyperref}
+
+\numberwithin{equation}{section}
+\titleformat{\section}{\huge\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{2}
+\sloppy
+
+\definecolor{linkblue}{RGB}{50,30,200}
+\definecolor{SoftBlue}{RGB}{239,245,252}
+\definecolor{LineBlue}{RGB}{84,122,168}
+\definecolor{SoftAmber}{RGB}{252,246,233}
+\definecolor{LineAmber}{RGB}{178,126,54}
+\definecolor{SoftGray}{RGB}{245,246,248}
+\definecolor{LineGray}{RGB}{122,128,138}
+\definecolor{notegray}{RGB}{243,245,247}
+\definecolor{notered}{RGB}{139,30,30}
+\definecolor{udecblue}{RGB}{0,58,112}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{darkblue}{RGB}{20,55,110}
+\definecolor{boxbg}{RGB}{245,248,252}
+\definecolor{boxframe}{RGB}{60,85,120}
+
+\newtcolorbox{studybox}[1][]{enhanced,breakable,colback=SoftBlue,colframe=LineBlue,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{carebox}[1][]{enhanced,breakable,colback=SoftAmber,colframe=LineAmber,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{mathbox}[1][]{enhanced,breakable,colback=SoftGray,colframe=LineGray,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{promptbox}{colback=boxbg,colframe=boxframe,arc=2mm,boxrule=0.6pt,left=2mm,right=2mm,top=1mm,bottom=1mm}
+
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{gray!45},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,commentstyle=\color{gray!75},keywordstyle=\color{darkblue}\bfseries}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 2, 2026}}
+\fancyhead[R]{Electrodinámica II}
+
+% Macros usadas por los desarrollos originales
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\hr}{\hat{\mathbf r}}
+\newcommand{\hp}{\hat{\boldsymbol\phi}}
+\newcommand{\hz}{\hat{\mathbf z}}
+\newcommand{\Etot}{\vec E}
+\newcommand{\Eself}{\vec E^{\,(q)}}
+\newcommand{\Eext}{\vec E^{\,(\sigma)}}
+\newcommand{\nvec}{\hat n}
+\newcommand{\Fvec}{\vec F^{\,\mathrm{mec}}}
+\newcommand{\That}{\hat e_i\hat e_i}
+\newcommand{\trac}{\vec t^{\,(n)}}
+\newcommand{\grad}{\vec\nabla}
+\newcommand{\A}{\vec A}
+\newcommand{\J}{\vec J}
+\newcommand{\x}{\vec x}
+\newcommand{\xp}{\vec x\,'}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Boxop}{\mathcal{L}}
+\newcommand{\hR}{\hat{\bm{R}}}
+\newcommand{\Hh}{\mathrm H}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\arsinh}{\operatorname{arsinh}}
+\newcommand{\ret}{\big|_{\mathrm{ret}}}
+\newcommand{\bv}{\vec{\beta}}
+\newcommand{\av}{\vec{a}}
+\newcommand{\Rv}{\vec{R}}
+\newcommand{\nh}{\hat{n}}
+\newcommand{\K}{K}
+\newcommand{\LW}{Li\'enard--Wiechert}
+\newcommand{\vb}[1]{\boldsymbol{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\note}[1]{\vspace{0.2em}\noindent\fcolorbox{gray!30}{notegray}{\begin{minipage}{0.96\linewidth}#1\end{minipage}}\vspace{0.2em}}
+\newcommand{\important}[1]{\textcolor{notered}{#1}}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{1.8cm}
+    \includegraphics[width=0.22\textwidth]{UdeC_escudo.png}
+    \vspace{1.1cm}
+
+    {\Huge \textbf{Tarea 02} \par}
+    \vspace{0.45cm}
+    {\Huge \textbf{Electrodinámica II} \par}
+    \vspace{1.5cm}
+    {\Large José Ignacio Rosas Sepúlveda \par}
+    \vspace{0.8cm}
+    {\Large 2026 \par}
+    \vfill
+    \thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section{Problema 1}
+Considere un plano infinito de carga con densidad superficial de carga homogénea $\sigma$ y una carga puntual $q$ a una distancia $d$ del plano. Usando la ecuación de balance de momentum lineal para campos electromagnéticos, calcule la fuerza que experimenta la carga debido al plano.
+
+\textbf{Solución:}
+
+\paragraph{Convención notacional.}
+En todo este material usaremos exclusivamente la convención del apunte de Mecánica de Fluidos del profesor Navarro: un vector se escribe como $\vec A=A_i\hat e_i$, una díada como $\vec A\vec B=A_iB_j\hat e_i\hat e_j$, y la acción de un tensor sobre un vector se escribe con producto punto,
+\begin{equation*}
+T\cdot \vec c=(T_{ij}\hat e_i\hat e_j)\cdot(c_k\hat e_k)=T_{ij}c_j\hat e_i.
+\end{equation*}
+No usaremos representación matricial. La idea es que cada operación se vea siempre como una operación entre objetos geométricos: producto interno, producto diádico, contracción o acción tensorial.
+
+
+\textbf{Convención de índices.} Usaremos índices $i,j,k\in\{1,2,3\}$ en notación indicial. La base cartesiana ortonormal del espacio ambiente se denotará por $\{\hat e_i\}$, de modo que $\vec A=A_i\hat e_i$. Cuando expandamos componentes de forma explícita, escribiremos $x,y,z$ y las bases $\hat e_x,\hat e_y,\hat e_z$.
+
+\begin{center}
+\begingroup
+\shorthandoff{<>}
+\begin{tikzpicture}[scale=1.04, line cap=round, line join=round, >=stealth]
+    \fill[gray!18] (-3.4,-2.0) rectangle (3.4,-1.55);
+    \draw[thick] (-3.4,-1.55) -- (3.4,-1.55);
+    \node[below] at (0,-1.58) {$z=0$};
+
+    \draw[->, thick] (0,-2.1) -- (0,2.55) node[right] {$z$};
+
+    \filldraw[fill=white, draw=black, thick] (0,1.05) circle (0.17);
+    \node at (0,1.05) {$q$};
+
+    \draw[dashed, thick] (0,1.05) circle (0.9);
+    \node[right] at (0.95,1.7) {$S_a$};
+
+    \draw[<->] (0.48,-1.55) -- (0.48,1.05);
+    \node[right] at (0.48,-0.25) {$d$};
+
+    \foreach \x in {-2.2,-1.1,1.1,2.2}{
+        \draw[->, thick, blue!75!black] (\x,-1.02) -- (\x,-0.2);
+    }
+    \node[blue!75!black] at (2.65,0.12) {$\Eext$};
+
+    \draw[->, red!70!black] (0,1.05) -- (0.58,1.63);
+    \draw[->, red!70!black] (0,1.05) -- (-0.63,1.52);
+    \draw[->, red!70!black] (0,1.05) -- (0,1.92);
+    \node[red!70!black] at (-1.95,1.95) {$\Eself$};
+\end{tikzpicture}
+\endgroup
+\end{center}
+
+\subsection{Ecuación de partida}
+
+\textbf{Solución.} En una situación electrostática estacionaria, la ley integral de balance de momentum lineal toma la forma
+\begin{equation}
+    F_i^{\mathrm{mec}}=\oint_{\partial V} T_{ij}n_j\,\dd A,
+\end{equation}
+donde $\hat n=n_i\hat e_i$ es la normal exterior a la superficie $\partial V$.
+
+En el vacío, y en ausencia de campo magnético, el tensor de tensiones de Maxwell se escribe como
+\begin{equation}
+    T=T_{ij}\hat e_i\hat e_j
+    =\varepsilon_0\left(E_iE_j-\frac12\delta_{ij}E_kE_k\right)\hat e_i\hat e_j.
+\end{equation}
+Equivalentemente, en notación diádica,
+\begin{equation}
+    T=\varepsilon_0\left(\Etot\Etot-\frac12(\Etot\cdot\Etot)\,\hat e_i\hat e_i\right).
+\end{equation}
+
+
+\paragraph{Qué operación se está haciendo en cada término.}
+En la expresión anterior aparecen tres operaciones distintas:
+\begin{align*}
+\Etot\Etot &= E_iE_j\,\hat e_i\hat e_j
+&& \text{: producto diádico, retorna un tensor de rango 2,}\\
+\Etot\cdot\Etot &= E_kE_k
+&& \text{: producto interno o contracción, retorna un escalar,}\\
+T\cdot\hat n &= T_{ij}n_j\,\hat e_i
+&& \text{: acción del tensor sobre la normal, retorna un vector.}
+\end{align*}
+Por eso no basta con ``mirar'' los símbolos. En cada paso hay que decir explícitamente qué operación se está ejecutando y qué tipo de objeto produce.
+
+
+
+\paragraph{Interpretación física de los índices.}
+La cantidad
+\begin{equation*}
+(T\cdot\hat n)_i=T_{ij}n_j
+\end{equation*}
+es la componente $i$-ésima de la tracción que el campo ejerce sobre una cara de normal $\hat n$. Así,
+\begin{itemize}[leftmargin=1.5em]
+    \item el índice $j$ está asociado a la orientación de la cara, porque se contrae con la normal $n_j$;
+    \item el índice $i$ está asociado a la dirección de la fuerza superficial que actúa sobre esa cara.
+\end{itemize}
+En palabras: $j$ indica \emph{sobre qué cara se evalúa la tracción}, mientras que $i$ indica \emph{en qué dirección empuja esa tracción}.
+
+
+\begin{center}
+\begingroup
+\shorthandoff{<>}
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round, >=Latex]
+    \coordinate (O) at (0,0);
+    \draw[fill=gray!10] (-1.2,-1.2) rectangle (1.2,1.2);
+    \draw[thick] (-1.2,-1.2) rectangle (1.2,1.2);
+    \draw[->, thick, blue!75!black] (1.2,0) -- (2.0,0) node[right] {$\hat n=\hat e_j$};
+    \draw[->, thick, red!70!black] (0,0) -- (0.2,1.1) node[above] {$\trac=T\cdot\hat n$};
+    \node at (0,-1.55) {La normal elige la cara; el tensor retorna la tracción sobre esa cara.};
+    \node at (0,1.65) {$T_{ij}n_j\hat e_i$};
+\end{tikzpicture}
+\endgroup
+\end{center}
+
+\subsection{Geometría del problema}
+
+Ubicamos el sistema de referencia de modo que el plano cargado coincida con $z=0$ y la carga puntual se encuentre en la posición
+\begin{equation}
+    \vec x_q=(0,0,d),\qquad d>0.
+\end{equation}
+En el semiespacio $z>0$, el campo del plano es uniforme y está dado por
+\begin{equation}
+    E_i^{(\sigma)}=\frac{\sigma}{2\varepsilon_0}\,\delta_{iz}.
+\end{equation}
+En componentes cartesianas explícitas,
+\begin{equation}
+    E_x^{(\sigma)}=0,\qquad E_y^{(\sigma)}=0,\qquad E_z^{(\sigma)}=\frac{\sigma}{2\varepsilon_0}.
+\end{equation}
+
+Tomamos como volumen $V$ la bola de radio $a$ centrada en la carga, con frontera esférica $S_a$, exigiendo $a<d$. Así, la fuerza mecánica sobre la materia contenida en $V$ coincide con la fuerza sobre la carga puntual.
+
+
+\paragraph{Elección correcta de la superficie.}
+La ley integral es válida para cualquier superficie cerrada. Sin embargo, si se quiere obtener la fuerza sobre la carga puntual, conviene escoger una superficie que encierre únicamente a dicha carga. Esa es la razón por la cual la esfera se centra en $q$ y no en el plano ni en otro punto del espacio.
+
+
+\subsection{Parametrización esférica de la superficie y componentes cartesianas}
+
+Aquí conviene separar dos ideas.
+\begin{itemize}[leftmargin=1.5em]
+    \item La \emph{base del espacio ambiente} sigue siendo la base cartesiana ortonormal $\{\hat e_x,\hat e_y,\hat e_z\}$. Por eso seguimos escribiendo $E_i$, $T_{ij}$ y $n_i$.
+    \item La \emph{superficie de integración} se parametriza naturalmente por coordenadas angulares $(\theta,\varphi)$, porque es una esfera.
+\end{itemize}
+
+Es decir: \emph{no cambiamos todo el cálculo a coordenadas esféricas}; solamente parametrizamos la superficie. Esto es completamente riguroso y, para este problema, es lo más limpio.
+
+Una parametrización conveniente de $S_a$ es
+\begin{equation}
+    \vec x(\theta,\varphi)=\vec x_q+a\,\hat n(\theta,\varphi),
+\end{equation}
+con
+\begin{equation}
+    \hat n(\theta,\varphi)=\sin\theta\cos\varphi\,\hat e_x+
+    \sin\theta\sin\varphi\,\hat e_y+\cos\theta\,\hat e_z.
+\end{equation}
+Por lo tanto,
+\begin{equation}
+    n_x=\sin\theta\cos\varphi,
+    \qquad
+    n_y=\sin\theta\sin\varphi,
+    \qquad
+    n_z=\cos\theta,
+\end{equation}
+y el elemento de área es
+\begin{equation}
+    \dd A=a^2\sin\theta\,\dd\theta\,\dd\varphi.
+\end{equation}
+
+\begin{center}
+\begingroup
+\shorthandoff{<>}
+\begin{tikzpicture}[scale=1.0, line cap=round, line join=round, >=Latex]
+    \coordinate (O) at (0,0);
+    \draw[thick] (0,0) circle (1.7);
+    \draw[dashed] (-1.7,0) arc[start angle=180,end angle=360,x radius=1.7,y radius=0.5];
+    \draw[thick] (-1.7,0) arc[start angle=180,end angle=0,x radius=1.7,y radius=0.5];
+    \draw[dashed] (0,-1.7) -- (0,1.7);
+    \coordinate (P) at (0.78,1.12);
+    \fill (P) circle (1.2pt);
+    \draw[->, thick, LineBlue] (O) -- (P) node[midway, above left] {$a$};
+    \draw[->, thick, red!70!black] (0,0) -- (1.2,0) node[below] {$\hat e_x$};
+    \draw[->, thick, red!70!black] (0,0) -- (0,1.35) node[left] {$\hat e_z$};
+    \draw[->, thick, blue!75!black] (P) -- ++(0.45,0.65) node[right] {$\hat n(\theta,\varphi)$};
+    \draw[thick] (0.55,0) arc[start angle=0,end angle=55,radius=0.55];
+    \node at (0.82,0.24) {$\theta$};
+    \draw[thick] (0.28,0) arc[start angle=0,end angle=18,radius=0.28];
+    \node at (0.42,-0.12) {$\varphi$};
+    \node[below] at (0,-1.95) {La esfera se parametriza por $(\theta,\varphi)$, pero las componentes siguen siendo cartesianas.};
+\end{tikzpicture}
+\endgroup
+\end{center}
+
+
+\paragraph{Identidades geométricas sobre la esfera.}
+Las siguientes identidades se usarán repetidamente:
+\begin{equation}
+    \oint_{S_a} n_i\,\dd A=0,
+    \qquad
+    \oint_{S_a} n_in_j\,\dd A=\frac{4\pi a^2}{3}\,\delta_{ij}.
+\end{equation}
+La primera se verifica, por ejemplo, integrando $n_x=\sin\theta\cos\varphi$ sobre la esfera y observando que $\int_0^{2\pi}\cos\varphi\,\dd\varphi=0$. La segunda expresa la isotropía angular de la esfera.
+
+
+\subsection{Descomposición del campo y del tensor}
+
+Sobre la esfera $S_a$, el campo total es la suma
+\begin{equation}
+    \Etot=\Eself+\Eext,
+    \qquad
+    E_i=E_i^{(q)}+E_i^{(\sigma)}.
+\end{equation}
+La contribución de la carga puntual, evaluada sobre la esfera de radio $a$, es radial:
+\begin{equation}
+    E_i^{(q)}=\frac{q}{4\pi\varepsilon_0a^2}\,n_i.
+\end{equation}
+Si definimos
+\begin{equation}
+    C:=\frac{q}{4\pi\varepsilon_0a^2},
+\end{equation}
+entonces
+\begin{equation}
+    \Eself=C\,\hat n.
+\end{equation}
+
+El tensor total se descompone naturalmente en tres contribuciones:
+\begin{equation}
+    T=T^{(qq)}+T^{(q\sigma)}+T^{(\sigma\sigma)},
+\end{equation}
+donde
+\begin{equation}
+    T^{(qq)}=\varepsilon_0\left(\Eself\Eself-\frac12(\Eself\cdot\Eself)\,\hat e_i\hat e_i\right),
+\end{equation}
+\begin{equation}
+    T^{(\sigma\sigma)}=\varepsilon_0\left(\Eext\Eext-\frac12(\Eext\cdot\Eext)\,\hat e_i\hat e_i\right),
+\end{equation}
+\begin{equation}
+    T^{(q\sigma)}=\varepsilon_0\left(\Eself\Eext+\Eext\Eself-(\Eself\cdot\Eext)\,\hat e_i\hat e_i\right).
+\end{equation}
+En componentes,
+\begin{equation}
+    T^{(q\sigma)}=T_{ij}^{(q\sigma)}\hat e_i\hat e_j,
+    \qquad
+    T_{ij}^{(q\sigma)}=\varepsilon_0\left(E_i^{(q)}E_j^{(\sigma)}+E_i^{(\sigma)}E_j^{(q)}-\delta_{ij}E_k^{(q)}E_k^{(\sigma)}\right).
+\end{equation}
+
+
+\paragraph{Por qué aparece esta descomposición.}
+La razón no es que el tensor ``tenga dos índices''. La razón es que depende \emph{cuadráticamente} del campo total. En efecto,
+\begin{align}
+T
+&=\varepsilon_0\left[(\Eself+\Eext)(\Eself+\Eext)-\frac12\big((\Eself+\Eext)\cdot(\Eself+\Eext)\big)\,\hat e_i\hat e_i\right] \\
+&=\varepsilon_0\left[\Eself\Eself+\Eself\Eext+\Eext\Eself+\Eext\Eext\right] \\
+&\qquad -\frac{\varepsilon_0}{2}\left[\Eself\cdot\Eself+2\,\Eself\cdot\Eext+\Eext\cdot\Eext\right]\hat e_i\hat e_i.
+\end{align}
+Aquí se usó:
+\begin{itemize}[leftmargin=1.5em]
+    \item bilinealidad del producto diádico, para expandir $(\Eself+\Eext)(\Eself+\Eext)$;
+    \item bilinealidad del producto interno, para expandir $(\Eself+\Eext)\cdot(\Eself+\Eext)$.
+\end{itemize}
+Agrupando términos puros y mixtos se obtiene exactamente la descomposición anterior.
+
+
+\begin{center}
+\begingroup
+\shorthandoff{<>}
+\begin{tikzpicture}[
+    >=Latex,
+    box/.style={draw=LineBlue, rounded corners=1.3mm, fill=SoftBlue, align=center, inner sep=4pt},
+    smallbox/.style={draw=LineGray, rounded corners=1mm, fill=SoftGray, align=center, inner sep=3pt},
+    arrow/.style={->, semithick, LineBlue}
+]
+    \node[box, minimum width=4.1cm] (Etot) {$\Etot=\Eself+\Eext$};
+    \node[smallbox, below left=1.4cm and 1.6cm of Etot, minimum width=4.2cm] (dyadic) {producto diádico\\$\Etot\Etot$};
+    \node[smallbox, below right=1.4cm and 1.6cm of Etot, minimum width=4.2cm] (scalar) {producto interno\\$\Etot\cdot\Etot$};
+
+    \draw[arrow] (Etot.south west) -- (dyadic.north);
+    \draw[arrow] (Etot.south east) -- (scalar.north);
+
+    \node[smallbox, below=1.4cm of dyadic, minimum width=4.3cm] (dyexp)
+    {$\Eself\Eself+\Eself\Eext+\Eext\Eself+\Eext\Eext$};
+    \node[smallbox, below=1.4cm of scalar, minimum width=4.3cm] (scexp)
+    {$\Eself\cdot\Eself+2\,\Eself\cdot\Eext+\Eext\cdot\Eext$};
+
+    \draw[arrow] (dyadic.south) -- (dyexp.north);
+    \draw[arrow] (scalar.south) -- (scexp.north);
+
+    \node[box, below=2.0cm of $(dyexp)!0.5!(scexp)$, minimum width=9.2cm] (Texp)
+    {$\displaystyle T=\varepsilon_0\left(\Etot\Etot-\frac12(\Etot\cdot\Etot)\hat e_i\hat e_i\right)
+    =T^{(qq)}+T^{(q\sigma)}+T^{(\sigma\sigma)}$};
+
+    \draw[arrow] (dyexp.south) -- ($(Texp.north west)!0.35!(Texp.north)$);
+    \draw[arrow] (scexp.south) -- ($(Texp.north east)!0.35!(Texp.north)$);
+\end{tikzpicture}
+\endgroup
+\end{center}
+
+
+\paragraph{Lectura física de la descomposición.}
+La figura resume el punto delicado de la cuenta. Primero se expande el diádico $\Etot\Etot$, lo que produce cuatro términos tensoriales. Luego se expande el producto interno $\Etot\cdot\Etot$, lo que produce tres contribuciones escalares, porque los términos cruzados son iguales. Finalmente, al combinar ambas expansiones en la definición de $T$, los términos puros se agrupan en $T^{(qq)}$ y $T^{(\sigma\sigma)}$, mientras que los términos mixtos se reúnen en $T^{(q\sigma)}$.
+
+Físicamente:
+\begin{itemize}[leftmargin=1.5em]
+    \item $T^{(qq)}$ describe las tensiones del campo propio de la carga;
+    \item $T^{(\sigma\sigma)}$ describe las tensiones del campo uniforme del plano, tomado aisladamente;
+    \item $T^{(q\sigma)}$ describe cómo ambos campos se entrelazan al formar el campo total.
+\end{itemize}
+La fuerza neta sobre la carga está codificada precisamente en esta última pieza.
+
+
+
+\paragraph{Desarrollo explícito a nivel de componentes.}
+Si escribimos
+\begin{equation*}
+E_i=E_i^{(q)}+E_i^{(\sigma)},
+\end{equation*}
+entonces cada entrada del diádico total se expande como
+\begin{equation*}
+E_iE_j=\big(E_i^{(q)}+E_i^{(\sigma)}\big)\big(E_j^{(q)}+E_j^{(\sigma)}\big)
+=E_i^{(q)}E_j^{(q)}+E_i^{(q)}E_j^{(\sigma)}+E_i^{(\sigma)}E_j^{(q)}+E_i^{(\sigma)}E_j^{(\sigma)}.
+\end{equation*}
+En cambio, el escalar $E_kE_k$ se expande con contracción sobre $k$:
+\begin{align*}
+E_kE_k
+&=\big(E_k^{(q)}+E_k^{(\sigma)}\big)\big(E_k^{(q)}+E_k^{(\sigma)}\big)\\
+&=E_k^{(q)}E_k^{(q)}+E_k^{(q)}E_k^{(\sigma)}+E_k^{(\sigma)}E_k^{(q)}+E_k^{(\sigma)}E_k^{(\sigma)}\\
+&=E_k^{(q)}E_k^{(q)}+2E_k^{(q)}E_k^{(\sigma)}+E_k^{(\sigma)}E_k^{(\sigma)}.
+\end{align*}
+La diferencia entre ambas expansiones es justamente la presencia o ausencia de contracción.
+
+
+\subsection{Evaluación de las tres contribuciones}
+
+La fuerza buscada es
+\begin{equation}
+    F_i^{\mathrm{mec}}=
+    \oint_{S_a} T_{ij}^{(qq)}n_j\,\dd A+
+    \oint_{S_a} T_{ij}^{(q\sigma)}n_j\,\dd A+
+    \oint_{S_a} T_{ij}^{(\sigma\sigma)}n_j\,\dd A.
+\end{equation}
+Analizamos término por término.
+
+\subsubsection{Parte pura de la carga}
+
+Como $\Eself=C\hat n$, se tiene
+\begin{equation}
+    T^{(qq)}=\varepsilon_0C^2\left(\hat n\hat n-\frac12(\hat n\cdot\hat n)\,\hat e_i\hat e_i\right).
+\end{equation}
+Pero $\hat n\cdot\hat n=1$, porque $\hat n$ es unitario. Luego,
+\begin{equation}
+    T^{(qq)}=\varepsilon_0C^2\left(\hat n\hat n-\frac12\hat e_i\hat e_i\right).
+\end{equation}
+Ahora hacemos actuar este tensor sobre $\hat n$:
+\begin{align}
+T^{(qq)}\cdot\hat n
+&=\varepsilon_0C^2\left[(\hat n\hat n)\cdot\hat n-\frac12(\hat e_i\hat e_i)\cdot\hat n\right]\\
+&=\varepsilon_0C^2\left[\hat n(\hat n\cdot\hat n)-\frac12\hat n\right]\\
+&=\frac{\varepsilon_0C^2}{2}\,\hat n.
+\end{align}
+En el primer término se usó la regla del apunte de Navarro
+\begin{equation*}
+\vec a\vec b\cdot\vec c=\vec a(\vec b\cdot\vec c).
+\end{equation*}
+Por lo tanto,
+\begin{equation}
+\oint_{S_a}T^{(qq)}\cdot\hat n\,\dd A
+=\frac{\varepsilon_0C^2}{2}\oint_{S_a}\hat n\,\dd A
+=\vec 0.
+\end{equation}
+Equivalente indicialmente,
+\begin{equation}
+\oint_{S_a}T_{ij}^{(qq)}n_j\,\dd A=0.
+\end{equation}
+
+\subsubsection{Parte pura del plano}
+
+Como $\Eext$ es constante sobre la esfera, el tensor $T^{(\sigma\sigma)}$ también es constante. Entonces
+\begin{equation}
+\oint_{S_a}T^{(\sigma\sigma)}\cdot\hat n\,\dd A
+=T^{(\sigma\sigma)}\cdot\oint_{S_a}\hat n\,\dd A
+=\vec 0,
+\end{equation}
+y por tanto
+\begin{equation}
+\oint_{S_a}T_{ij}^{(\sigma\sigma)}n_j\,\dd A=0.
+\end{equation}
+
+\subsubsection{Término mixto}
+
+Aquí está la contribución relevante. Sustituyendo $\Eself=C\hat n$ en la parte mixta,
+\begin{equation}
+T^{(q\sigma)}=\varepsilon_0C\left(\hat n\Eext+\Eext\hat n-(\hat n\cdot\Eext)\,\hat e_i\hat e_i\right).
+\end{equation}
+Hacemos actuar este tensor sobre $\hat n$:
+\begin{align}
+T^{(q\sigma)}\cdot\hat n
+&=\varepsilon_0C\left[(\hat n\Eext)\cdot\hat n+(\Eext\hat n)\cdot\hat n-(\hat n\cdot\Eext)(\hat e_i\hat e_i)\cdot\hat n\right]\\
+&=\varepsilon_0C\left[\hat n(\Eext\cdot\hat n)+\Eext(\hat n\cdot\hat n)- (\hat n\cdot\Eext)\hat n\right]\\
+&=\varepsilon_0C\left[\hat n(\Eext\cdot\hat n)+\Eext-(\hat n\cdot\Eext)\hat n\right]\\
+&=\varepsilon_0C\,\Eext.
+\end{align}
+En la segunda línea se usaron, de forma explícita, las reglas
+\begin{equation*}
+\vec a\vec b\cdot\vec c=\vec a(\vec b\cdot\vec c),
+\qquad
+(\hat e_i\hat e_i)\cdot\vec c=\vec c.
+\end{equation*}
+Además, los términos primero y tercero se cancelan porque representan el mismo vector.
+
+\begin{center}
+\begingroup
+\shorthandoff{<>}
+\begin{tikzpicture}[
+    >=Latex,
+    every node/.style={font=\small},
+    note/.style={draw=LineAmber, fill=SoftAmber, rounded corners=1mm, inner sep=4pt, align=left}
+]
+    \node[anchor=west] (eq1) at (0,0) {$ (\hat n\Eext)\cdot\hat n=\hat n(\Eext\cdot\hat n)$};
+    \node[anchor=west] (eq2) at (0,-0.9) {$ (\Eext\hat n)\cdot\hat n=\Eext(\hat n\cdot\hat n)=\Eext$};
+    \node[anchor=west] (eq3) at (0,-1.8) {$ (\hat n\cdot\Eext)(\hat e_i\hat e_i)\cdot\hat n=(\hat n\cdot\Eext)\hat n$};
+    \node[note, right=0.8cm of eq2] (note) {El primer y el tercer término se cancelan\\porque ambos son el mismo vector paralelo a $\hat n$.\\Sobrevive solo la contribución $\Eext$.};
+\end{tikzpicture}
+\endgroup
+\end{center}
+
+Como $\varepsilon_0C=q/(4\pi a^2)$, resulta
+\begin{equation}
+T^{(q\sigma)}\cdot\hat n=\frac{q}{4\pi a^2}\,\Eext.
+\end{equation}
+Integrando sobre la esfera,
+\begin{align}
+\Fvec
+&=\oint_{S_a}T^{(q\sigma)}\cdot\hat n\,\dd A\\
+&=\frac{q}{4\pi a^2}\,\Eext\oint_{S_a}\dd A\\
+&=\frac{q}{4\pi a^2}(4\pi a^2)\,\Eext\\
+&=q\,\Eext.
+\end{align}
+Por lo tanto,
+\begin{equation}
+    F_i^{\mathrm{mec}}=qE_i^{(\sigma)}.
+\end{equation}
+Finalmente,
+\begin{equation}
+    F_i^{\mathrm{mec}}=\frac{q\sigma}{2\varepsilon_0}\,\delta_{iz}.
+\end{equation}
+En componentes cartesianas explícitas,
+\begin{equation}
+    F_x=0,\qquad F_y=0,\qquad F_z=\frac{q\sigma}{2\varepsilon_0}.
+\end{equation}
+Y en forma vectorial,
+\begin{equation}
+    \Fvec=\frac{q\sigma}{2\varepsilon_0}\,\hat e_z.
+\end{equation}
+
+\subsection{Interpretación física}
+
+La fuerza aparece porque el campo propio de la carga rompe la isotropía del patrón de tensiones cuando se superpone con el campo uniforme del plano. Las contribuciones puras $T^{(qq)}$ y $T^{(\sigma\sigma)}$ no producen fuerza neta sobre la esfera: la primera por simetría radial y la segunda por uniformidad del campo externo. El efecto físico real está codificado en el término mixto, que describe la interacción entre ambos campos.
+
+
+\paragraph{Lectura física de cada bloque.}
+La descomposición
+\[
+T=T^{(qq)}+T^{(q\sigma)}+T^{(\sigma\sigma)}
+\]
+puede interpretarse así:
+\begin{align*}
+T^{(qq)} &\quad \text{mide cómo el campo de la propia carga distribuye tensiones en torno a ella},\\
+T^{(\sigma\sigma)} &\quad \text{mide las tensiones del campo uniforme del plano tomado aisladamente},\\
+T^{(q\sigma)} &\quad \text{mide cómo ambos campos se entrelazan al formar el campo total}.
+\end{align*}
+La primera pieza es esféricamente simétrica alrededor de la carga, la segunda es espacialmente uniforme sobre la esfera pequeña, y la tercera introduce una anisotropía privilegiando la dirección del campo externo. Esa anisotropía es precisamente la huella tensorial de la fuerza neta.
+
+
+
+\paragraph{Resultado final y lectura conceptual.}
+La cuenta completa reproduce la forma familiar de la fuerza de Lorentz para una carga en un campo electrostático externo,
+\begin{equation*}
+    \Fvec=q\Eext.
+\end{equation*}
+La diferencia es que aquí ese resultado emerge a partir del flujo del tensor de tensiones de Maxwell. En otras palabras: el campo electromagnético no solo almacena energía, sino que también transporta momentum, y esa transferencia de momentum se manifiesta como fuerza mecánica sobre la carga.
+
+
+\newpage
+\section{Problema 2}
+Demuestre que, en el gauge de Coulomb, siempre es posible realizar una transformación de gauge que permita elegir potenciales tales que
+\begin{equation}
+\phi(\vec x,t)=\frac{1}{4\pi\varepsilon}\int\frac{\rho(\vec x\,',t)}{|\vec x-\vec x\,'|}\,dV'.
+\end{equation}
+
+\textbf{Solución:}
+\subsection{Idea general del problema}
+
+La afirmación tiene dos partes conceptuales distintas:
+\begin{enumerate}[leftmargin=1.5em]
+    \item Primero, debemos estar trabajando ya dentro de la familia de potenciales que satisfacen el \textbf{gauge de Coulomb}, es decir,
+    \begin{equation}
+        \grad\cdot\A=0.
+    \end{equation}
+    \item Después, una vez impuesta esa condición, debemos mostrar que aún queda una \textbf{libertad remanente de gauge} suficientemente grande como para elegir la parte escalar de los potenciales en la forma coulombiana usual.
+\end{enumerate}
+
+La estructura matemática detrás de esto es la siguiente: en el gauge de Coulomb, el potencial escalar satisface una ecuación de Poisson en cada instante de tiempo. La solución de Poisson no es única: siempre puede sumarse una función armónica. La tarea consiste en demostrar que esa parte armónica puede eliminarse mediante una transformación de gauge que preserve el gauge de Coulomb.
+
+
+\paragraph{Interpretación física.}
+El punto físico es muy importante. Los campos eléctricos y magnéticos son los observables, mientras que los potenciales no lo son: sólo están definidos \emph{hasta transformaciones de gauge}. Por eso, si una parte del potencial escalar no cambia los campos, debemos poder moverla o eliminarla escogiendo otra representación equivalente del mismo campo electromagnético.
+
+
+\subsection{Ecuaciones para los potenciales en el gauge de Coulomb}
+
+Partimos de las definiciones usuales
+\begin{equation}
+\vec B=\grad\times\A,
+\qquad
+\vec E=-\grad\phi-\frac{\partial \A}{\partial t}.
+\end{equation}
+
+En un medio lineal, isótropo y homogéneo, al reemplazar estas expresiones en las ecuaciones inhomogéneas de Maxwell se obtiene
+\begin{align}
+\nabla^2\phi+\frac{\partial\ }{\partial t}(\grad\cdot\A)&=-\frac{\rho}{\eps},
+\\
+\nabla^2\A-\frac{1}{c^2}\frac{\partial^2\A}{\partial t^2}-\grad\left(\grad\cdot\A+\frac{1}{c^2}\frac{\partial\phi}{\partial t}\right)&=-\mu\J.
+\end{align}
+
+Si imponemos el gauge de Coulomb,
+\begin{equation}
+\grad\cdot\A=0,
+\end{equation}
+entonces la primera ecuación se desacopla y toma la forma
+\begin{equation}\label{PoissonPhi}
+\nabla^2\phi(\x,t)=-\frac{\rho(\x,t)}{\eps}.
+\end{equation}
+
+Esta ecuación debe entenderse de la siguiente manera: para cada tiempo fijo $t$, el potencial escalar es una solución de la ecuación de Poisson en la variable espacial $\x$.
+
+\subsection{Solución general de la ecuación de Poisson}
+
+Sea
+\begin{equation}\label{phiCoulomb}
+\phi_{\mathrm C}(\x,t):=\frac{1}{4\pi\eps}\int \frac{\rho(\xp,t)}{|\x-\xp|}\,\dd V'.
+\end{equation}
+
+Sabemos, por la teoría usual de Green para la ecuación de Poisson, que esta función satisface
+\begin{equation}
+\nabla^2\phi_{\mathrm C}(\x,t)=-\frac{\rho(\x,t)}{\eps}.
+\end{equation}
+
+Ahora bien, si $\phi(\x,t)$ es \emph{cualquier} otra solución de \eqref{PoissonPhi}, entonces la diferencia
+\begin{equation}
+ h(\x,t):=\phi(\x,t)-\phi_{\mathrm C}(\x,t)
+\end{equation}
+satisface
+\begin{equation}\label{Laplaceh}
+\nabla^2 h(\x,t)=0.
+\end{equation}
+
+Por lo tanto, la solución general de \eqref{PoissonPhi} puede escribirse como
+\begin{equation}\label{phiGeneral}
+\phi(\x,t)=\phi_{\mathrm C}(\x,t)+h(\x,t),
+\qquad \nabla^2 h(\x,t)=0.
+\end{equation}
+
+
+\paragraph{Qué significa matemáticamente esta descomposición.}
+La expresión \eqref{phiGeneral} separa el potencial escalar en dos piezas:
+\begin{itemize}[leftmargin=1.5em]
+    \item una pieza \emph{forzada por las fuentes}, $\phi_{\mathrm C}$, determinada por $\rho$;
+    \item una pieza \emph{homogénea}, $h$, que satisface la ecuación de Laplace y no está fijada por la densidad de carga.
+\end{itemize}
+Justamente esta segunda pieza es la que queremos eliminar usando la libertad remanente de gauge.
+
+
+\subsection{Transformaciones de gauge y libertad remanente}
+
+Las transformaciones de gauge son
+\begin{equation}\label{GaugeTransf}
+\A' = \A-\grad\chi,
+\qquad
+\phi'=\phi+\frac{\partial\chi}{\partial t}.
+\end{equation}
+
+Si ya estamos en el gauge de Coulomb, y deseamos permanecer en él después de la transformación, debemos exigir
+\begin{equation}
+\grad\cdot\A'=0.
+\end{equation}
+
+Usando \eqref{GaugeTransf},
+\begin{equation}
+\grad\cdot\A' = \grad\cdot(\A-\grad\chi)=\underbrace{\grad\cdot\A}_{=0}-\nabla^2\chi.
+\end{equation}
+
+Luego, la condición necesaria y suficiente para que la transformación preserve el gauge de Coulomb es
+\begin{equation}\label{chiHarmonic}
+\nabla^2\chi=0.
+\end{equation}
+
+Esta es precisamente la llamada \textbf{libertad remanente} del gauge de Coulomb: dentro de la familia de potenciales que satisfacen $\grad\cdot\A=0$, todavía podemos realizar transformaciones generadas por funciones armónicas.
+
+\subsection{Construcción explícita de la transformación buscada}
+
+Queremos escoger $\chi$ de manera que el nuevo potencial escalar sea exactamente $\phi_{\mathrm C}$. Partimos de \eqref{phiGeneral} y pedimos
+\begin{equation}
+\phi'\stackrel{!}{=}\phi_{\mathrm C}.
+\end{equation}
+
+Usando \eqref{GaugeTransf}, esto equivale a
+\begin{equation}
+\phi+\frac{\partial\chi}{\partial t}=\phi_{\mathrm C}.
+\end{equation}
+
+Sustituyendo $\phi=\phi_{\mathrm C}+h$,
+\begin{equation}
+\phi_{\mathrm C}+h+\frac{\partial\chi}{\partial t}=\phi_{\mathrm C},
+\end{equation}
+y por lo tanto debe cumplirse
+\begin{equation}\label{dchi}
+\frac{\partial\chi}{\partial t}=-h.
+\end{equation}
+
+Una elección explícita es
+\begin{equation}\label{chiSol}
+\chi(\x,t):=-\int_{t_0}^{t} h(\x,\tau)\,\dd\tau,
+\end{equation}
+donde $t_0$ es un tiempo de referencia arbitrario.
+
+Ahora debemos verificar que esta elección preserva el gauge de Coulomb. Aplicando el Laplaciano a \eqref{chiSol},
+\begin{equation}
+\nabla^2\chi(\x,t)=-\int_{t_0}^{t} \nabla^2 h(\x,\tau)\,\dd\tau.
+\end{equation}
+
+Pero por \eqref{Laplaceh}, $\nabla^2 h=0$ para todo tiempo, de modo que
+\begin{equation}
+\nabla^2\chi(\x,t)=0.
+\end{equation}
+
+Esto demuestra que la transformación propuesta pertenece efectivamente a la libertad remanente del gauge de Coulomb.
+
+Finalmente, derivando \eqref{chiSol} respecto del tiempo,
+\begin{equation}
+\frac{\partial\chi}{\partial t}=-h,
+\end{equation}
+como se requería. Luego,
+\begin{equation}
+\phi'=
+\phi+\frac{\partial\chi}{\partial t}
+=(\phi_{\mathrm C}+h)-h
+=\phi_{\mathrm C}.
+\end{equation}
+
+Por consiguiente,
+\begin{equation}
+\boxed{\phi'(\x,t)=\frac{1}{4\pi\eps}\int\frac{\rho(\xp,t)}{|\x-\xp|}\,\dd V'.}
+\end{equation}
+
+Esto es exactamente lo que se quería demostrar.
+
+\subsection{Interpretación física del resultado}
+
+El resultado obtenido puede leerse físicamente así:
+\begin{enumerate}[leftmargin=1.5em]
+    \item En el gauge de Coulomb, el potencial escalar satisface una ecuación instantánea de Poisson. Por eso su forma natural se parece a la del caso electrostático.
+    \item Sin embargo, esa ecuación no fija a $\phi$ en forma única: siempre puede agregarse una solución homogénea de Laplace.
+    \item Esa ambigüedad no corresponde a nueva física. Se trata sólo de una redundancia en la descripción en términos de potenciales.
+    \item La transformación de gauge construida arriba elimina precisamente esa parte no física y deja a $\phi$ en su forma coulombiana pura.
+\end{enumerate}
+
+
+\paragraph{Cuidado conceptual.}
+No debe confundirse este resultado con la afirmación de que el potencial escalar en el gauge de Coulomb describe por sí solo toda la física. En situaciones dinámicas, la información radiativa del campo electromagnético sigue estando contenida en el potencial vectorial. Lo que ocurre es que, dentro de este gauge, la parte escalar puede elegirse en la forma instantánea de Coulomb, mientras que la dinámica verdaderamente radiativa queda contenida en $\A$.
+
+
+\subsection{Resumen final}
+
+La demostración completa se resume en tres pasos:
+\begin{enumerate}[leftmargin=1.5em]
+    \item En el gauge de Coulomb, $\phi$ satisface la ecuación de Poisson $\nabla^2\phi=-\rho/\eps$.
+    \item Toda solución de esta ecuación puede escribirse como la suma de la solución coulombiana particular y una función armónica: $\phi=\phi_{\mathrm C}+h$, con $\nabla^2h=0$.
+    \item La libertad remanente del gauge de Coulomb permite realizar transformaciones generadas por funciones armónicas $\chi$. Escogiendo $\partial_t\chi=-h$, se obtiene un nuevo potencial escalar exactamente igual a $\phi_{\mathrm C}$.
+\end{enumerate}
+
+Por lo tanto, queda demostrado que \emph{en el gauge de Coulomb siempre es posible elegir los potenciales de modo que el potencial escalar adopte la forma coulombiana instantánea}.
+
+\newpage
+\section{Problema 3}
+Demuestre ``en el gauge de Coulomb'', siempre es posible (realizar una transformación de gauge que permite) elegir $\phi\neq0$ en regiones donde $\rho=0$.
+
+\textbf{Solución:}
+
+Del problema anterior, en gauge de Coulomb podemos elegir el potencial escalar en la forma
+\begin{equation}
+\phi(\vec x,t)=\frac{1}{4\pi\varepsilon}
+\int \frac{\rho(\vec x\,',t)}{|\vec x-\vec x\,'|}\,dV'.
+\end{equation}
+La integral se realiza sobre las fuentes en todo el espacio. Por eso, que $\rho(\vec x,t)=0$ en una región no obliga a que el potencial sea cero en esa misma región: las cargas situadas fuera de ella siguen contribuyendo a la integral.
+
+Localmente, si $\rho=0$, la ecuación de Poisson se reduce a
+\begin{equation}
+    \nabla^2\phi=0.
+\end{equation}
+Esto sólo implica que $\phi$ es armónica en esa región, no que deba anularse.
+
+Como ejemplo, para una carga puntual $q$ situada en el origen,
+\begin{equation}
+    \phi(r)=\frac{q}{4\pi\varepsilon r}.
+\end{equation}
+En cualquier región que no contenga al origen se cumple $\rho=0$ y, sin embargo, $\phi\neq0$. Por tanto,
+\begin{equation}
+    \boxed{\rho=0\ \text{localmente}\;\not\Rightarrow\;\phi=0.}
+\end{equation}
+
+\newpage
+\section{Problema 4}
+Considere un campo electromagnético descrito, en coordenadas cartesianas $(x,y,z)$, por los siguientes potenciales:
+\begin{align}
+\phi(\vec x,t)&=cA_1k_1\cos\big(k_1(z-ct)\big),\\
+\vec A(\vec x,t)&=A_2\sin\big[k_2(x-ct)\big]\,\hat e_y+A_1k_1\cos\big(k_1(z-ct)\big)\,\hat e_z,
+\end{align}
+donde $A_0,A_1,k_1$ y $k_2$ son constantes, y $c=1/\sqrt{\varepsilon_0\mu_0}$.
+\begin{enumerate}[label=(\alph*)]
+\item ¿Satisfacen estos potenciales el gauge de Coulomb?
+\item ¿Satisfacen estos potenciales el gauge de Lorenz?
+\item Calcule los campos eléctrico y magnético asociados.
+\item Determine la densidad de carga $\rho(\vec x)$ y la densidad de corriente $\vec J(\vec x)$ asociadas a este campo.
+\item A partir de sus resultados anteriores, interprete físicamente el campo electromagnético descrito por estos potenciales. ¿Qué situación física describen? ¿Qué interpretación física tiene cada una de las constantes?
+\end{enumerate}
+\emph{Nota de transcripción.} El enunciado original enumera $A_0,A_1,k_1,k_2$, pero las expresiones dependen de $A_1$ y $A_2$; en la resolución se mantienen las constantes que aparecen efectivamente en los potenciales.
+
+\textbf{Solución:}
+\subsection{Consideraciones estructurales y de simetría}
+Definimos
+\begin{equation}
+\xi_1:=k_1(z-ct),
+\qquad
+\xi_2:=k_2(x-ct).
+\end{equation}
+
+Entonces
+\begin{equation}
+\phi=cA_1k_1\cos\xi_1,
+\qquad
+\vec A=A_2\sin\xi_2\,\hat e_y + A_1k_1\cos\xi_1\,\hat e_z.
+\end{equation}
+
+La estructura del problema sugiere dos piezas distintas:
+\begin{itemize}
+    \item una parte transversal, dirigida según $\hat e_y$, con dependencia $x-ct$, que sugiere propagación en dirección $+\hat e_x$;
+    \item una parte longitudinal, dirigida según $\hat e_z$, acompañada por un potencial escalar con la misma fase $z-ct$.
+\end{itemize}
+
+
+\subsection{Ecuaciones a resolver}
+Trabajaremos con
+\begin{equation}
+\nabla\cdot\vec A \stackrel{?}{=} 0 \qquad \text{(gauge de Coulomb)},
+\end{equation}
+\begin{equation}
+\frac{1}{c^2}\frac{\partial \phi}{\partial t}+\nabla\cdot\vec A \stackrel{?}{=} 0 \qquad \text{(gauge de Lorenz)},
+\end{equation}
+\begin{equation}
+\vec E=-\nabla\phi-\frac{\partial\vec A}{\partial t},
+\qquad
+\vec B=\nabla\times\vec A,
+\end{equation}
+
+y, para las fuentes,
+\begin{equation}
+\nabla\cdot\vec E=\frac{\rho}{\varepsilon_0},
+\qquad
+\nabla\times\vec B=\mu_0\vec J+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}.
+\end{equation}
+
+\subsection{Gauge de Coulomb}
+Las componentes de $\vec A$ son
+\begin{equation}
+A_x=0,
+\qquad
+A_y=A_2\sin\xi_2,
+\qquad
+A_z=A_1k_1\cos\xi_1.
+\end{equation}
+
+Entonces
+\begin{align}
+\nabla\cdot\vec A
+&=\frac{\partial A_x}{\partial x}+\frac{\partial A_y}{\partial y}+\frac{\partial A_z}{\partial z} \\
+&=0+0+\frac{\partial}{\partial z}\big(A_1k_1\cos\xi_1\big).
+\end{align}
+
+Como $\partial\xi_1/\partial z=k_1$,
+\begin{equation}
+\frac{\partial A_z}{\partial z}=A_1k_1(-\sin\xi_1)k_1=-A_1k_1^2\sin\xi_1.
+\end{equation}
+
+Por tanto,
+\begin{equation}
+\boxed{\nabla\cdot\vec A=-A_1k_1^2\sin\xi_1\neq 0 \quad \text{en general}.}
+\end{equation}
+
+Luego, los potenciales dados no satisfacen el gauge de Coulomb.
+
+\subsection{Gauge de Lorenz}
+Ahora calculamos
+\begin{equation}
+\frac{1}{c^2}\frac{\partial\phi}{\partial t}.
+\end{equation}
+
+Partimos de
+\begin{equation}
+\phi=cA_1k_1\cos\xi_1,
+\qquad
+\frac{\partial\xi_1}{\partial t}=-ck_1.
+\end{equation}
+
+Entonces
+\begin{align}
+\frac{\partial\phi}{\partial t}
+&=cA_1k_1\frac{\partial}{\partial t}(\cos\xi_1) \\
+&=cA_1k_1(-\sin\xi_1)(-ck_1) \\
+&=c^2A_1k_1^2\sin\xi_1.
+\end{align}
+
+Luego,
+\begin{equation}
+\frac{1}{c^2}\frac{\partial\phi}{\partial t}=A_1k_1^2\sin\xi_1.
+\end{equation}
+
+Al sumar con la divergencia ya calculada,
+\begin{equation}
+\frac{1}{c^2}\frac{\partial\phi}{\partial t}+\nabla\cdot\vec A
+=A_1k_1^2\sin\xi_1-A_1k_1^2\sin\xi_1=0.
+\end{equation}
+
+Por consiguiente,
+\begin{equation}
+\boxed{\frac{1}{c^2}\frac{\partial\phi}{\partial t}+\nabla\cdot\vec A=0,}
+\end{equation}
+
+y los potenciales sí satisfacen el gauge de Lorenz.
+
+\subsection{Solución final de los campos}
+\subsubsection{Campo eléctrico}
+Como $\phi$ depende solo de $z$ y $t$,
+\begin{equation}
+\nabla\phi=\frac{\partial\phi}{\partial z}\,\hat e_z.
+\end{equation}
+
+Además,
+\begin{align}
+\frac{\partial\phi}{\partial z}
+&=cA_1k_1\frac{\partial}{\partial z}(\cos\xi_1) \\
+&=cA_1k_1(-\sin\xi_1)k_1 \\
+&=-cA_1k_1^2\sin\xi_1.
+\end{align}
+
+Por tanto,
+\begin{equation}
+-\nabla\phi=cA_1k_1^2\sin\xi_1\,\hat e_z.
+\end{equation}
+
+Ahora derivamos temporalmente $\vec A$:
+\begin{align}
+\frac{\partial\vec A}{\partial t}
+&=A_2\cos\xi_2\,\frac{\partial\xi_2}{\partial t}\,\hat e_y + A_1k_1(-\sin\xi_1)\frac{\partial\xi_1}{\partial t}\,\hat e_z \\
+&=A_2\cos\xi_2(-ck_2)\hat e_y + A_1k_1(-\sin\xi_1)(-ck_1)\hat e_z \\
+&=-cA_2k_2\cos\xi_2\,\hat e_y + cA_1k_1^2\sin\xi_1\,\hat e_z.
+\end{align}
+
+Entonces,
+\begin{equation}
+-\frac{\partial\vec A}{\partial t}=cA_2k_2\cos\xi_2\,\hat e_y-cA_1k_1^2\sin\xi_1\,\hat e_z.
+\end{equation}
+
+Sumando ambas contribuciones,
+\begin{equation}
+\boxed{\vec E=cA_2k_2\cos\big(k_2(x-ct)\big)\,\hat e_y.}
+\end{equation}
+
+\subsubsection{Campo magnético}
+Como $A_x=0$, $A_y=A_2\sin\xi_2$ y $A_z=A_1k_1\cos\xi_1$, resulta
+\begin{equation}
+\vec B=\nabla\times\vec A = \left(\frac{\partial A_y}{\partial x}\right)\hat e_z,
+\end{equation}
+
+pues los demás términos del rotor se anulan. Ahora,
+\begin{align}
+\frac{\partial A_y}{\partial x}
+&=A_2\cos\xi_2\,\frac{\partial\xi_2}{\partial x} \\
+&=A_2k_2\cos\xi_2.
+\end{align}
+
+Luego,
+\begin{equation}
+\boxed{\vec B=A_2k_2\cos\big(k_2(x-ct)\big)\,\hat e_z.}
+\end{equation}
+
+
+\paragraph{Interpretación física de los campos.}
+Los campos físicos dependen únicamente de la pieza proporcional a $A_2$. La contribución proporcional a $A_1$ desaparece de $\vec E$ y de $\vec B$, lo que ya sugiere que se trata de una parte de gauge puro.
+
+
+\subsection{Densidad de carga y densidad de corriente}
+\subsubsection{Densidad de carga}
+De la ley de Gauss,
+\begin{equation}
+\rho=\varepsilon_0\,\nabla\cdot\vec E.
+\end{equation}
+
+Como $\vec E$ solo tiene componente $y$ y depende de $x$ y $t$,
+\begin{equation}
+\nabla\cdot\vec E=\frac{\partial E_y}{\partial y}=0.
+\end{equation}
+
+Por tanto,
+\begin{equation}
+\boxed{\rho=0.}
+\end{equation}
+
+\subsubsection{Densidad de corriente}
+Usamos la ley de Ampère-Maxwell:
+\begin{equation}
+\nabla\times\vec B=\mu_0\vec J+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}.
+\end{equation}
+
+Como $\vec B=B_z\hat e_z$ con $B_z=A_2k_2\cos\xi_2$,
+\begin{equation}
+\nabla\times\vec B=-\frac{\partial B_z}{\partial x}\,\hat e_y.
+\end{equation}
+
+Pero
+\begin{align}
+\frac{\partial B_z}{\partial x}
+&=A_2k_2\frac{\partial}{\partial x}(\cos\xi_2) \\
+&=A_2k_2(-\sin\xi_2)k_2 \\
+&=-A_2k_2^2\sin\xi_2,
+\end{align}
+
+de modo que
+\begin{equation}
+\nabla\times\vec B=A_2k_2^2\sin\xi_2\,\hat e_y.
+\end{equation}
+
+Por otra parte,
+\begin{align}
+\frac{\partial\vec E}{\partial t}
+&=cA_2k_2\frac{\partial}{\partial t}(\cos\xi_2)\,\hat e_y \\
+&=cA_2k_2(-\sin\xi_2)(-ck_2)\,\hat e_y \\
+&=c^2A_2k_2^2\sin\xi_2\,\hat e_y.
+\end{align}
+
+Entonces,
+\begin{equation}
+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}=\frac{1}{c^2}c^2A_2k_2^2\sin\xi_2\,\hat e_y=A_2k_2^2\sin\xi_2\,\hat e_y.
+\end{equation}
+
+Comparando con $\nabla\times\vec B$, se concluye que
+\begin{equation}
+\mu_0\vec J=\vec 0,
+\end{equation}
+
+y por tanto
+\begin{equation}
+\boxed{\vec J=\vec 0.}
+\end{equation}
+
+\subsection{Interpretación física final}
+Los resultados pueden resumirse así:
+\begin{enumerate}
+    \item Los potenciales no están en gauge de Coulomb, pero sí en gauge de Lorenz.
+    \item Los campos físicos son
+    \begin{equation}
+    \vec E=cA_2k_2\cos\big(k_2(x-ct)\big)\,\hat e_y,
+    \qquad
+    \vec B=A_2k_2\cos\big(k_2(x-ct)\big)\,\hat e_z.
+    \end{equation}
+    \item Se trata de una onda electromagnética plana propagándose en dirección $+\hat e_x$, polarizada linealmente según $\hat e_y$.
+    \item No hay fuentes materiales: $\rho=0$ y $\vec J=0$.
+    \item La parte proporcional a $A_1$ no contribuye a los campos; representa una transformación de gauge pura.
+\end{enumerate}
+
+En efecto, si definimos
+\begin{equation}
+\chi(\vec x,t)=A_1\sin\big(k_1(z-ct)\big),
+\end{equation}
+
+entonces
+\begin{equation}
+\nabla\chi=A_1k_1\cos\xi_1\,\hat e_z,
+\qquad
+-\frac{\partial\chi}{\partial t}=cA_1k_1\cos\xi_1,
+\end{equation}
+
+que reproducen exactamente la parte proporcional a $A_1$ de $\vec A$ y de $\phi$. Esto verifica que dicha contribución es de gauge puro.
+
+
+\paragraph{Resumen físico en dos líneas.}
+La configuración física real es una onda plana electromagnética en el vacío, propagándose según $+\hat e_x$ con polarización lineal $\hat e_y$. La parte asociada a $A_1$ no transporta campo físico: solo cambia la representación gauge de los potenciales.
+
+\end{document}

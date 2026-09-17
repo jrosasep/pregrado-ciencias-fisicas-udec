@@ -1,0 +1,862 @@
+\documentclass{article}
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{bigints}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,babel}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=20mm, bottom=20mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black,pdfborder={0 0 0}]{hyperref}
+
+\numberwithin{equation}{section}
+\titleformat{\section}{\huge\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{2}
+\sloppy
+
+\definecolor{linkblue}{RGB}{50,30,200}
+\definecolor{SoftBlue}{RGB}{239,245,252}
+\definecolor{LineBlue}{RGB}{84,122,168}
+\definecolor{SoftAmber}{RGB}{252,246,233}
+\definecolor{LineAmber}{RGB}{178,126,54}
+\definecolor{SoftGray}{RGB}{245,246,248}
+\definecolor{LineGray}{RGB}{122,128,138}
+\definecolor{notegray}{RGB}{243,245,247}
+\definecolor{notered}{RGB}{139,30,30}
+\definecolor{udecblue}{RGB}{0,58,112}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{darkblue}{RGB}{20,55,110}
+\definecolor{boxbg}{RGB}{245,248,252}
+\definecolor{boxframe}{RGB}{60,85,120}
+
+\newtcolorbox{studybox}[1][]{enhanced,breakable,colback=SoftBlue,colframe=LineBlue,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{carebox}[1][]{enhanced,breakable,colback=SoftAmber,colframe=LineAmber,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{mathbox}[1][]{enhanced,breakable,colback=SoftGray,colframe=LineGray,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{promptbox}{colback=boxbg,colframe=boxframe,arc=2mm,boxrule=0.6pt,left=2mm,right=2mm,top=1mm,bottom=1mm}
+
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{gray!45},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,commentstyle=\color{gray!75},keywordstyle=\color{darkblue}\bfseries}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 3, 2026-2}}
+\fancyhead[R]{Electrodinámica II}
+
+% Macros usadas por los desarrollos originales
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\hr}{\hat{\mathbf r}}
+\newcommand{\hp}{\hat{\boldsymbol\phi}}
+\newcommand{\hz}{\hat{\mathbf z}}
+\newcommand{\Etot}{\vec E}
+\newcommand{\Eself}{\vec E^{\,(q)}}
+\newcommand{\Eext}{\vec E^{\,(\sigma)}}
+\newcommand{\nvec}{\hat n}
+\newcommand{\Fvec}{\vec F^{\,\mathrm{mec}}}
+\newcommand{\That}{\hat e_i\hat e_i}
+\newcommand{\trac}{\vec t^{\,(n)}}
+\newcommand{\grad}{\bm{\nabla}}
+\newcommand{\A}{\bm{A}}
+\newcommand{\J}{\bm{J}}
+\newcommand{\x}{\bm{x}}
+\newcommand{\xp}{\bm{x}'}
+\newcommand{\R}{R}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\Boxop}{\mathcal{L}}
+\newcommand{\hR}{\hat{\bm{R}}}
+\newcommand{\Hh}{\mathrm H}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\arsinh}{\operatorname{arsinh}}
+\newcommand{\ret}{\big|_{\mathrm{ret}}}
+\newcommand{\bv}{\vec{\beta}}
+\newcommand{\av}{\vec{a}}
+\newcommand{\Rv}{\vec{R}}
+\newcommand{\nh}{\hat{n}}
+\newcommand{\K}{K}
+\newcommand{\LW}{Li\'enard--Wiechert}
+\newcommand{\vb}[1]{\boldsymbol{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\note}[1]{\vspace{0.2em}\noindent\fcolorbox{gray!30}{notegray}{\begin{minipage}{0.96\linewidth}#1\end{minipage}}\vspace{0.2em}}
+\newcommand{\important}[1]{\textcolor{notered}{#1}}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{1.8cm}
+    \includegraphics[width=0.22\textwidth]{UdeC_escudo.png}
+    \vspace{1.1cm}
+
+    {\Huge \textbf{Tarea 03} \par}
+    \vspace{0.45cm}
+    {\Huge \textbf{Electrodinámica II} \par}
+    \vspace{1.5cm}
+    {\Large José Ignacio Rosas Sepúlveda \par}
+    \vspace{0.8cm}
+    {\Large 2026-2 \par}
+    \vfill
+    \thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section{Problema 1}
+Verifique directamente (e.d. reemplazando en las ecuaciones) que los potenciales retardados y avanzados
+\begin{align}
+\phi_{\pm}(\vec x,t)&=\frac{1}{4\pi\varepsilon}\int_V\frac{\rho(\vec x\,',t_{\pm})}{|\vec x-\vec x\,'|}\,d^3x',\\
+A^i_{\pm}(\vec x,t)&=\frac{\mu}{4\pi}\int_V\frac{J^i(\vec x\,',t_{\pm})}{|\vec x-\vec x\,'|}\,d^3x',
+\end{align}
+con $t_{\pm}:=t\pm|\vec x-\vec x\,'|/c$, satisfacen la ecuación de onda inhomogénea correspondiente.
+
+\textbf{Solución:}
+\subsection{Preparación del cálculo}
+
+Para no escribir dos veces lo mismo, introducimos un signo
+\begin{equation}
+    s=\pm 1,
+    \qquad
+    \tau_s:=t+s\frac{\R}{c}.
+    \label{eq:tau_s}
+\end{equation}
+El caso \(s=-1\) corresponde al potencial retardado si se usa la convención física usual \(t_R=t-\R/c\), mientras que \(s=+1\) corresponde al avanzado. El enunciado escribe ambas posibilidades como \(t_\pm=t\pm \R/c\), de modo que el cálculo debe funcionar para ambos signos.
+
+Tomemos una función escalar cualquiera \(f\), pensada después como \(f(\tau_s)=\rho(\xp,\tau_s)\) o \(f(\tau_s)=J_i(\xp,\tau_s)\). Definimos el núcleo elemental
+\begin{equation}
+    K_s(\x,t;\xp):=\frac{f(\tau_s)}{\R}.
+    \label{eq:kernel}
+\end{equation}
+La verificación de los potenciales se reduce a calcular \(\Boxop K_s\).
+
+\subsubsection{Identidades geométricas básicas}
+
+Como \(\R=|\x-\xp|\), se tiene, para \(\R\neq 0\),
+\begin{equation}
+    \partial_i \R
+    =\frac{x^i-x'^i}{\R}
+    =\hat R_i,
+    \qquad
+    \partial_i \tau_s
+    =\frac{s}{c}\hat R_i,
+    \qquad
+    \partial_t\tau_s=1.
+    \label{eq:basic_derivatives}
+\end{equation}
+Además,
+\begin{equation}
+    \partial_i\left(\frac{1}{\R}\right)
+    =-\frac{\hat R_i}{\R^2},
+    \qquad
+    \grad \R=\hR,
+    \qquad
+    \grad\left(\frac{1}{\R}\right)=-\frac{\hR}{\R^2}.
+    \label{eq:grad_1R}
+\end{equation}
+Finalmente, si una función depende de \(\x\) solo a través de \(\R\), entonces su laplaciano se puede escribir como
+\begin{equation}
+    \nabla^2 g(\R,t)
+    =\frac{1}{\R^2}\frac{\partial}{\partial \R}
+    \left(\R^2\frac{\partial g}{\partial \R}\right)
+    =\frac{\partial^2 g}{\partial \R^2}+\frac{2}{\R}\frac{\partial g}{\partial \R}.
+    \label{eq:radial_laplacian}
+\end{equation}
+Esta última identidad es la forma más rápida para no perderse con índices.
+
+\subsection{Cálculo regular: \texorpdfstring{\(\R\neq 0\)}{R distinto de cero}}
+
+Primero calculamos lejos de la fuente puntual \(\xp\), es decir, para \(\R\neq 0\). En esta región no aparece todavía la delta de Dirac. La delta se incorporará en la sección siguiente.
+
+\subsubsection{Derivadas temporales}
+
+Como \(\R\) no depende de \(t\), se obtiene directamente
+\begin{equation}
+    \partial_t K_s
+    =\partial_t\left(\frac{f(\tau_s)}{\R}\right)
+    =\frac{\dot f(\tau_s)}{\R}\partial_t\tau_s
+    =\frac{\dot f(\tau_s)}{\R},
+    \label{eq:time_first}
+\end{equation}
+por lo tanto
+\begin{equation}
+    \partial_t^2K_s
+    =\frac{\ddot f(\tau_s)}{\R}.
+    \label{eq:time_second}
+\end{equation}
+Aquí \(\dot f\) y \(\ddot f\) significan derivadas ordinarias respecto del argumento temporal:
+\begin{equation}
+    \dot f(\tau_s)=\left.\frac{\dd f(u)}{\dd u}\right|_{u=\tau_s},
+    \qquad
+    \ddot f(\tau_s)=\left.\frac{\dd^2 f(u)}{\dd u^2}\right|_{u=\tau_s}.
+    \label{eq:dots}
+\end{equation}
+
+\subsubsection{Derivadas espaciales usando la variable radial}
+
+Para \(\R\neq 0\), el núcleo \(K_s=f(t+s\R/c)/\R\) depende espacialmente solo de \(\R\). Por tanto usamos la identidad radial \eqref{eq:radial_laplacian}. Primero,
+\begin{align}
+    \frac{\partial K_s}{\partial \R}
+    &=\frac{\partial}{\partial \R}\left(\frac{f(\tau_s)}{\R}\right) \notag\\
+    &=\frac{1}{\R}\dot f(\tau_s)\frac{\partial \tau_s}{\partial \R}
+    +f(\tau_s)\frac{\partial}{\partial \R}\left(\frac{1}{\R}\right) \notag\\
+    &=\frac{s}{c}\frac{\dot f(\tau_s)}{\R}
+    -\frac{f(\tau_s)}{\R^2}.
+    \label{eq:R_first}
+\end{align}
+Ahora derivamos otra vez con respecto a \(\R\):
+\begin{align}
+    \frac{\partial^2 K_s}{\partial \R^2}
+    &=\frac{\partial}{\partial \R}
+    \left(
+    \frac{s}{c}\frac{\dot f(\tau_s)}{\R}
+    -\frac{f(\tau_s)}{\R^2}
+    \right) \notag\\
+    &=\frac{s}{c}\left[
+        \frac{1}{\R}\ddot f(\tau_s)\frac{\partial\tau_s}{\partial\R}
+        -\frac{\dot f(\tau_s)}{\R^2}
+    \right]
+    -\left[
+        \frac{1}{\R^2}\dot f(\tau_s)\frac{\partial\tau_s}{\partial\R}
+        -\frac{2f(\tau_s)}{\R^3}
+    \right] \notag\\
+    &=\frac{s}{c}\left[
+        \frac{s}{c}\frac{\ddot f(\tau_s)}{\R}
+        -\frac{\dot f(\tau_s)}{\R^2}
+    \right]
+    -\left[
+        \frac{s}{c}\frac{\dot f(\tau_s)}{\R^2}
+        -\frac{2f(\tau_s)}{\R^3}
+    \right] \notag\\
+    &=\frac{\ddot f(\tau_s)}{c^2\R}
+    -\frac{2s}{c}\frac{\dot f(\tau_s)}{\R^2}
+    +\frac{2f(\tau_s)}{\R^3},
+    \label{eq:R_second}
+\end{align}
+porque \(s^2=1\). Por otra parte,
+\begin{equation}
+    \frac{2}{\R}\frac{\partial K_s}{\partial \R}
+    =\frac{2s}{c}\frac{\dot f(\tau_s)}{\R^2}
+    -\frac{2f(\tau_s)}{\R^3}.
+    \label{eq:radial_second_piece}
+\end{equation}
+Sumando \eqref{eq:R_second} y \eqref{eq:radial_second_piece}, los términos con \(\dot f/\R^2\) y \(f/\R^3\) se cancelan exactamente:
+\begin{align}
+    \nabla^2K_s
+    &=\frac{\partial^2K_s}{\partial\R^2}
+    +\frac{2}{\R}\frac{\partial K_s}{\partial\R} \notag\\
+    &=\left[
+    \frac{\ddot f(\tau_s)}{c^2\R}
+    -\frac{2s}{c}\frac{\dot f(\tau_s)}{\R^2}
+    +\frac{2f(\tau_s)}{\R^3}
+    \right]
+    +\left[
+    \frac{2s}{c}\frac{\dot f(\tau_s)}{\R^2}
+    -\frac{2f(\tau_s)}{\R^3}
+    \right] \notag\\
+    &=\frac{1}{c^2}\frac{\ddot f(\tau_s)}{\R}.
+    \label{eq:laplacian_kernel_regular}
+\end{align}
+Usando \eqref{eq:time_second}, resulta
+\begin{equation}
+    \Boxop K_s
+    =\nabla^2K_s-\frac{1}{c^2}\partial_t^2K_s
+    =\frac{1}{c^2}\frac{\ddot f(\tau_s)}{\R}
+    -\frac{1}{c^2}\frac{\ddot f(\tau_s)}{\R}
+    =0,
+    \qquad \R\neq 0.
+    \label{eq:regular_zero}
+\end{equation}
+
+\note{\textbf{Qué muestra este cálculo.} Tanto el núcleo retardado como el avanzado resuelven la ecuación de onda homogénea en todos los puntos donde no hay fuente. La fuente no aparece por los términos regulares: aparece exclusivamente por la singularidad \(1/\R\) cuando \(\x=\xp\).}
+
+\subsection{Parte singular: aparición de la delta de Dirac}
+
+El cálculo anterior es correcto solo para \(\R\neq 0\). Sin embargo, el núcleo \(K_s=f(\tau_s)/\R\) tiene una singularidad en \(\R=0\). Esta singularidad produce la fuente puntual.
+
+La identidad distribucional que necesitamos es
+\begin{equation}
+    \Boxop\left[\frac{f(t+s\R/c)}{\R}\right]
+    =-4\pi f(t)\delta^{(3)}(\x-\xp).
+    \label{eq:main_distribution_identity}
+\end{equation}
+Veamos cómo se obtiene el coeficiente \(-4\pi f(t)\) sin saltarse el cálculo.
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0,>=Latex]
+    \coordinate (xp) at (0,0);
+    \coordinate (x) at (4,1.2);
+    \draw[fill=udecblue!8,draw=udecblue!60,thick] (xp) circle (1.0);
+    \draw[->,thick] (-1.8,-1.4) -- (5.0,-1.4) node[right] {$x^1$};
+    \draw[->,thick] (-1.5,-1.7) -- (-1.5,2.3) node[above] {$x^2$};
+    \fill[notered] (xp) circle (2pt) node[below left] {$\xp$};
+    \fill[black] (x) circle (2pt) node[above right] {$\x$};
+    \draw[->,thick,notered] (xp) -- (x) node[midway,above] {$\bm{R}=\x-\xp$};
+    \draw[->,udecblue,thick] (xp) -- (1,0) node[midway,below] {$a$};
+    \node[udecblue] at (0,1.35) {$S_a$};
+    \node[align=center] at (3.0,-0.15) {pequeña esfera\\alrededor de la fuente};
+\end{tikzpicture}
+\end{center}
+
+Consideremos una pequeña bola \(B_a\) de radio \(a\) centrada en \(\xp\), y su frontera \(S_a\). Como fuera de \(\R=0\) ya sabemos que \(\Boxop K_s=0\), basta estudiar la integral de \(\Boxop K_s\) en esa bola y tomar el límite \(a\to 0\):
+\begin{align}
+    \int_{B_a}\Boxop K_s\dd^3x
+    &=\int_{B_a}\nabla^2K_s\dd^3x
+    -\frac{1}{c^2}\partial_t^2\int_{B_a}K_s\dd^3x \notag\\
+    &=\oint_{S_a}\grad K_s\cdot \dd\bm{S}
+    -\frac{1}{c^2}\partial_t^2\int_{B_a}\frac{f(t+s\R/c)}{\R}\dd^3x.
+    \label{eq:ball_integral}
+\end{align}
+En la última línea usamos el teorema de Gauss. Analicemos ambos términos.
+
+\subsubsection{El término temporal no contribuye al límite}
+
+Dentro de la bola,
+\begin{equation}
+    \int_{B_a}K_s\dd^3x
+    =4\pi\int_0^a \frac{f(t+s\R/c)}{\R}\R^2\dd\R
+    =4\pi\int_0^a f(t+s\R/c)\R\dd\R.
+    \label{eq:small_ball_time}
+\end{equation}
+Si \(f\) es suficientemente regular, para \(a\) pequeño el integrando es finito, y por tanto
+\begin{equation}
+    \int_{B_a}K_s\dd^3x=O(a^2).
+    \label{eq:small_ball_order}
+\end{equation}
+Por consiguiente,
+\begin{equation}
+    \lim_{a\to 0}\frac{1}{c^2}\partial_t^2\int_{B_a}K_s\dd^3x=0.
+    \label{eq:time_term_zero}
+\end{equation}
+
+\subsubsection{El flujo del gradiente sí deja una contribución finita}
+
+Como \(K_s\) es radial alrededor de \(\xp\), se tiene \(\grad K_s=(\partial K_s/\partial\R)\hR\). Usando \eqref{eq:R_first}, en la superficie \(S_a\), donde \(\R=a\),
+\begin{equation}
+    \grad K_s\cdot\dd\bm{S}
+    =\frac{\partial K_s}{\partial\R}a^2\dd\Omega
+    =\left[\frac{s}{c}\frac{\dot f(t+sa/c)}{a}-\frac{f(t+sa/c)}{a^2}\right]a^2\dd\Omega.
+    \label{eq:flux_density}
+\end{equation}
+Entonces
+\begin{align}
+    \oint_{S_a}\grad K_s\cdot\dd\bm{S}
+    &=\int_{4\pi}\left[\frac{s}{c}\frac{\dot f(t+sa/c)}{a}-\frac{f(t+sa/c)}{a^2}\right]a^2\dd\Omega \notag\\
+    &=4\pi\left[\frac{s a}{c}\dot f(t+sa/c)-f(t+sa/c)\right].
+    \label{eq:flux_result}
+\end{align}
+Tomando el límite \(a\to 0\), el primer término desaparece y el segundo queda evaluado en \(t\):
+\begin{equation}
+    \lim_{a\to 0}\oint_{S_a}\grad K_s\cdot\dd\bm{S}
+    =-4\pi f(t).
+    \label{eq:flux_limit}
+\end{equation}
+Juntando \eqref{eq:time_term_zero} y \eqref{eq:flux_limit}, se obtiene
+\begin{equation}
+    \lim_{a\to 0}\int_{B_a}\Boxop K_s\dd^3x=-4\pi f(t).
+    \label{eq:small_ball_result}
+\end{equation}
+Como fuera del punto singular el operador da cero, la única distribución compatible con este resultado es
+\begin{equation}
+    \Boxop K_s=-4\pi f(t)\delta^{(3)}(\x-\xp),
+    \label{eq:kernel_distribution_final}
+\end{equation}
+que es precisamente la identidad \eqref{eq:main_distribution_identity}.
+
+\note{\textbf{Lectura física.} El retardo o avance desplaza el tiempo de evaluación de la fuente en una cantidad \(\R/c\). Pero justo en la singularidad \(\R=0\), donde el operador ``detecta'' la fuente local, se tiene \(t+s\R/c\to t\). Por eso aparece \(f(t)\), no \(f(t\pm \R/c)\), multiplicando la delta.}
+
+\subsection{Aplicación al potencial escalar}
+
+Tomemos ahora
+\begin{equation}
+    f(\tau_s)=\rho(\xp,\tau_s).
+    \label{eq:f_rho}
+\end{equation}
+La identidad \eqref{eq:kernel_distribution_final} dice que
+\begin{equation}
+    \Boxop\left[\frac{\rho(\xp,t+s\R/c)}{\R}\right]
+    =-4\pi\rho(\xp,t)\delta^{(3)}(\x-\xp).
+    \label{eq:rho_kernel_identity}
+\end{equation}
+Aplicamos \(\Boxop\) a \(\phi_s\):
+\begin{align}
+    \Boxop\phi_s(\x,t)
+    &=\Boxop\left[
+    \frac{1}{4\pi\eps}\int_V
+    \frac{\rho(\xp,t+s\R/c)}{\R}\dd^3x'
+    \right] \notag\\
+    &=\frac{1}{4\pi\eps}\int_V
+    \Boxop\left[
+    \frac{\rho(\xp,t+s\R/c)}{\R}
+    \right]\dd^3x' \notag\\
+    &=\frac{1}{4\pi\eps}\int_V
+    \left[-4\pi\rho(\xp,t)\delta^{(3)}(\x-\xp)\right]
+    \dd^3x' \notag\\
+    &=-\frac{1}{\eps}\int_V
+    \rho(\xp,t)\delta^{(3)}(\x-\xp)\dd^3x'.
+    \label{eq:phi_substitution}
+\end{align}
+Usando la propiedad de filtrado de la delta de Dirac,
+\begin{equation}
+    \int_V \rho(\xp,t)\delta^{(3)}(\x-\xp)\dd^3x'
+    =\rho(\x,t),
+    \label{eq:delta_filter_rho}
+\end{equation}
+si \(\x\in V\); si \(\x\notin V\), puede entenderse \(\rho\) extendida por cero fuera de la región fuente. Por tanto,
+\begin{equation}
+    \boxed{
+    \left(\nabla^2-\frac{1}{c^2}\partial_t^2\right)\phi_s(\x,t)
+    =-\frac{\rho(\x,t)}{\eps}}
+    \label{eq:phi_final}
+\end{equation}
+Como \(s=+1\) o \(s=-1\), esto demuestra la ecuación tanto para el potencial avanzado como para el retardado.
+
+\subsection{Aplicación al potencial vectorial}
+
+La verificación para \(A_i^s\) es idéntica componente a componente. Tomamos ahora
+\begin{equation}
+    f(\tau_s)=J_i(\xp,\tau_s),
+    \label{eq:f_J}
+\end{equation}
+con \(i\) fijo. Entonces
+\begin{equation}
+    \Boxop\left[\frac{J_i(\xp,t+s\R/c)}{\R}\right]
+    =-4\pi J_i(\xp,t)\delta^{(3)}(\x-\xp).
+    \label{eq:J_kernel_identity}
+\end{equation}
+Ahora,
+\begin{align}
+    \Boxop A_i^s(\x,t)
+    &=\Boxop\left[
+    \frac{\mu}{4\pi}
+    \int_V\frac{J_i(\xp,t+s\R/c)}{\R}\dd^3x'
+    \right] \notag\\
+    &=\frac{\mu}{4\pi}
+    \int_V
+    \Boxop\left[\frac{J_i(\xp,t+s\R/c)}{\R}\right]
+    \dd^3x' \notag\\
+    &=\frac{\mu}{4\pi}
+    \int_V
+    \left[-4\pi J_i(\xp,t)\delta^{(3)}(\x-\xp)\right]
+    \dd^3x' \notag\\
+    &=-\mu\int_V J_i(\xp,t)\delta^{(3)}(\x-\xp)\dd^3x' \notag\\
+    &=-\mu J_i(\x,t).
+    \label{eq:A_substitution}
+\end{align}
+Por consiguiente,
+\begin{equation}
+    \boxed{
+    \left(\nabla^2-\frac{1}{c^2}\partial_t^2\right)A_i^s(\x,t)
+    =-\mu J_i(\x,t)}.
+    \label{eq:A_final}
+\end{equation}
+Nuevamente, el resultado vale para ambos signos \(s=\pm 1\).
+
+\subsection{Conclusión}
+
+Hemos verificado directamente que
+\begin{equation*}
+    \Boxop\phi_\pm(\x,t)=-\frac{\rho(\x,t)}{\eps},
+    \qquad
+    \Boxop A_i^\pm(\x,t)=-\mu J_i(\x,t),
+\end{equation*}
+con
+\begin{equation*}
+    \Boxop=\nabla^2-\frac{1}{c^2}\partial_t^2.
+\end{equation*}
+La parte regular del cálculo muestra que el núcleo retardado/avanzado satisface la ecuación homogénea fuera de la fuente. La parte singular del cálculo muestra que la fuente local aparece por la identidad distribucional asociada a \(1/\R\). Por eso ambos potenciales, retardado y avanzado, satisfacen la misma ecuación de onda inhomogénea: se distinguen por la condición de borde temporal, no por la ecuación diferencial local.
+
+\newpage
+\section{Problema 2}
+Un cable recto muy delgado y de extensión infinita transporta la corriente
+\begin{equation*}
+I(t)=\begin{cases}
+0,&t\le 0,\\
+kt,&t>0,
+\end{cases}
+\end{equation*}
+donde $k$ es una constante positiva.
+\begin{enumerate}[label=(\alph*)]
+\item Calcule los potenciales retardados generados por esta línea de corriente.
+\item Calcule el campo eléctrico y magnético correspondiente.
+\item Cree una animación en la que se represente el campo eléctrico (en una grilla apropiadamente definida) en función del tiempo. \textbf{Indicación:} Puede usar alguna herramienta de IA. Si lo hace indique qué herramienta usó y explique el proceso realizado y cómo verificó que el resultado es adecuado.
+\end{enumerate}
+
+\textbf{Solución:}
+\subsection{Planteamiento físico}
+
+Consideremos un cable recto, muy delgado e infinito, ubicado sobre el eje $z$. La corriente circula en la dirección $+\hat e_z$ y está dada por
+\begin{equation*}
+    I(t)=
+    \begin{cases}
+        0, & t\leq 0,\\
+        kt, & t>0,
+    \end{cases}
+\end{equation*}
+donde $k>0$. Para escribirla de forma compacta usaremos la función escalón de Heaviside:
+\begin{equation*}
+    I(t)=kt\,\Hh(t).
+\end{equation*}
+
+Tomamos al cable como neutro. Por tanto,
+\begin{equation*}
+    \phi(\vec x,t)=0.
+\end{equation*}
+La densidad de corriente de una línea infinita sobre el eje $z$ se escribe como
+\begin{equation*}
+    \vec J(\vec x',t)=I(t)\,\delta(x')\delta(y')\,\hat e_z.
+\end{equation*}
+El potencial vectorial retardado queda entonces
+\begin{equation*}
+    \vec A(\vec x,t)
+    =\frac{\mu}{4\pi}\int_{\mathbb R^3}
+    \frac{\vec J\left(\vec x',t-\frac{|\vec x-\vec x'|}{c}\right)}{|\vec x-\vec x'|}\dd^3x'.
+\end{equation*}
+
+Sea $s$ la distancia perpendicular desde el punto de observación al cable. Es decir, si
+\begin{equation*}
+    \vec x=s\hat e_s+z\hat e_z,
+    \qquad
+    \vec x'=z'\hat e_z,
+\end{equation*}
+entonces
+\begin{equation*}
+    |\vec x-\vec x'|=\sqrt{s^2+(z-z')^2}.
+\end{equation*}
+Por simetría de traslación en $z$ y simetría de rotación alrededor del cable, el potencial solo puede depender de $s$ y de $t$, y apunta en la dirección de la corriente:
+\begin{equation*}
+    \vec A(\vec x,t)=A_z(s,t)\hat e_z.
+\end{equation*}
+
+\subsection{Parte (a): cálculo del potencial vectorial retardado}
+
+Sustituyendo la densidad de corriente en el potencial retardado,
+\begin{align*}
+    \vec A(\vec x,t)
+    &=\frac{\mu}{4\pi}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+    \frac{I\left(t-\frac{|\vec x-\vec x'|}{c}\right)\delta(x')\delta(y')\hat e_z}{|\vec x-\vec x'|}
+    \dd x'\dd y'\dd z'.
+\end{align*}
+Las deltas fijan $x'=0$, $y'=0$. Por tanto,
+\begin{equation*}
+    \vec A(\vec x,t)=A_z(s,t)\hat e_z,
+\end{equation*}
+con
+\begin{equation*}
+    A_z(s,t)
+    =\frac{\mu}{4\pi}\int_{-\infty}^{\infty}
+    \frac{I\left(t-\frac{\sqrt{s^2+(z-z')^2}}{c}\right)}{\sqrt{s^2+(z-z')^2}}
+    \dd z'.
+\end{equation*}
+
+Ahora reemplazamos $I(t)=kt\Hh(t)$. Así,
+\begin{align*}
+    A_z(s,t)
+    &=\frac{\mu k}{4\pi}\int_{-\infty}^{\infty}
+    \frac{\left(t-\frac{\sqrt{s^2+(z-z')^2}}{c}\right)
+    \Hh\left(t-\frac{\sqrt{s^2+(z-z')^2}}{c}\right)}{\sqrt{s^2+(z-z')^2}}
+    \dd z'.
+\end{align*}
+
+La función escalón impone la condición retardada
+\begin{equation*}
+    t-\frac{\sqrt{s^2+(z-z')^2}}{c}>0,
+\end{equation*}
+es decir,
+\begin{equation*}
+    \sqrt{s^2+(z-z')^2}<ct.
+\end{equation*}
+Equivalente a
+\begin{equation*}
+    (z-z')^2<c^2t^2-s^2.
+\end{equation*}
+Por lo tanto, solo contribuyen los puntos de la línea de corriente que satisfacen
+\begin{equation*}
+    |z-z'|<\sqrt{c^2t^2-s^2}.
+\end{equation*}
+Esto muestra explícitamente la causalidad: el campo en el punto situado a distancia $s$ del cable solo aparece después de que el frente retardado haya recorrido esa distancia transversal.
+
+Hacemos el cambio de variable
+\begin{equation*}
+    \zeta=z'-z.
+\end{equation*}
+Entonces
+\begin{equation*}
+    \sqrt{s^2+(z-z')^2}=\sqrt{s^2+\zeta^2},
+\end{equation*}
+y el intervalo de integración queda
+\begin{equation*}
+    -\sqrt{c^2t^2-s^2}<\zeta<\sqrt{c^2t^2-s^2}.
+\end{equation*}
+Así,
+\begin{align*}
+    A_z(s,t)
+    &=\frac{\mu k}{4\pi}
+    \int_{-\sqrt{c^2t^2-s^2}}^{\sqrt{c^2t^2-s^2}}
+    \frac{t-\frac{\sqrt{s^2+\zeta^2}}{c}}{\sqrt{s^2+\zeta^2}}\dd\zeta \\
+    &=\frac{\mu k}{4\pi}
+    \int_{-\sqrt{c^2t^2-s^2}}^{\sqrt{c^2t^2-s^2}}
+    \left(\frac{t}{\sqrt{s^2+\zeta^2}}-\frac{1}{c}\right)\dd\zeta.
+\end{align*}
+El integrando es par, de modo que
+\begin{align*}
+    A_z(s,t)
+    &=\frac{\mu k}{2\pi}
+    \int_{0}^{\sqrt{c^2t^2-s^2}}
+    \left(\frac{t}{\sqrt{s^2+\zeta^2}}-\frac{1}{c}\right)\dd\zeta \\
+    &=\frac{\mu k}{2\pi}
+    \left[
+    t\int_{0}^{\sqrt{c^2t^2-s^2}}
+    \frac{\dd\zeta}{\sqrt{s^2+\zeta^2}}
+    -\frac{1}{c}\int_{0}^{\sqrt{c^2t^2-s^2}}\dd\zeta
+    \right].
+\end{align*}
+Usando
+\begin{equation*}
+    \int \frac{\dd\zeta}{\sqrt{s^2+\zeta^2}}
+    =\arsinh\left(\frac{\zeta}{s}\right),
+\end{equation*}
+se obtiene
+\begin{align*}
+    A_z(s,t)
+    &=\frac{\mu k}{2\pi}
+    \left[
+    t\,\arsinh\left(\frac{\sqrt{c^2t^2-s^2}}{s}\right)
+    -\frac{1}{c}\sqrt{c^2t^2-s^2}
+    \right].
+\end{align*}
+Además,
+\begin{equation*}
+    \arsinh\left(\frac{\sqrt{c^2t^2-s^2}}{s}\right)
+    =\arcosh\left(\frac{ct}{s}\right).
+\end{equation*}
+Por tanto,
+\begin{equation*}
+    A_z(s,t)
+    =\frac{\mu k}{2\pi}
+    \left[
+    t\,\arcosh\left(\frac{ct}{s}\right)
+    -\frac{1}{c}\sqrt{c^2t^2-s^2}
+    \right]\Hh\left(t-\frac{s}{c}\right).
+\end{equation*}
+Finalmente,
+\begin{equation*}
+    \boxed{
+    \vec A(\vec x,t)
+    =\frac{\mu k}{2\pi}
+    \left[
+    t\,\arcosh\left(\frac{ct}{s}\right)
+    -\frac{1}{c}\sqrt{c^2t^2-s^2}
+    \right]\Hh\left(t-\frac{s}{c}\right)\hat e_z
+    }
+\end{equation*}
+y
+\begin{equation*}
+    \boxed{\phi(\vec x,t)=0.}
+\end{equation*}
+
+\subsection{Parte (b): cálculo de los campos}
+
+Los campos se calculan desde los potenciales mediante
+\begin{equation*}
+    \vec E=-\vec\nabla\phi-\frac{\partial\vec A}{\partial t},
+    \qquad
+    \vec B=\vec\nabla\times\vec A.
+\end{equation*}
+Como $\phi=0$,
+\begin{equation*}
+    \vec E=-\frac{\partial A_z}{\partial t}\hat e_z.
+\end{equation*}
+Definamos el factor que aparece entre corchetes:
+\begin{equation*}
+    F(s,t)=t\,\arcosh\left(\frac{ct}{s}\right)
+    -\frac{1}{c}\sqrt{c^2t^2-s^2}.
+\end{equation*}
+Entonces
+\begin{equation*}
+    A_z(s,t)=\frac{\mu k}{2\pi}F(s,t)\Hh\left(t-\frac{s}{c}\right).
+\end{equation*}
+En el frente $t=s/c$ se tiene
+\begin{equation*}
+    F\left(s,\frac{s}{c}\right)
+    =\frac{s}{c}\arcosh(1)-\frac{1}{c}\sqrt{s^2-s^2}=0.
+\end{equation*}
+Por eso, al derivar, el término proporcional a la delta de Dirac producido por la derivada de $\Hh$ no contribuye. Basta derivar $F(s,t)$.
+
+Primero,
+\begin{align*}
+    \frac{\partial}{\partial t}
+    \left[t\,\arcosh\left(\frac{ct}{s}\right)\right]
+    &=\arcosh\left(\frac{ct}{s}\right)
+    +t\frac{\partial}{\partial t}\arcosh\left(\frac{ct}{s}\right).
+\end{align*}
+Ahora,
+\begin{equation*}
+    \frac{\partial}{\partial t}\arcosh\left(\frac{ct}{s}\right)
+    =\frac{c}{\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Por tanto,
+\begin{equation*}
+    \frac{\partial}{\partial t}
+    \left[t\,\arcosh\left(\frac{ct}{s}\right)\right]
+    =\arcosh\left(\frac{ct}{s}\right)
+    +\frac{ct}{\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Además,
+\begin{equation*}
+    \frac{\partial}{\partial t}
+    \left[-\frac{1}{c}\sqrt{c^2t^2-s^2}\right]
+    =-\frac{ct}{\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Sumando ambos términos,
+\begin{equation*}
+    \frac{\partial F}{\partial t}
+    =\arcosh\left(\frac{ct}{s}\right).
+\end{equation*}
+Luego,
+\begin{equation*}
+    \boxed{
+    \vec E(\vec x,t)
+    =-\frac{\mu k}{2\pi}
+    \arcosh\left(\frac{ct}{s}\right)
+    \Hh\left(t-\frac{s}{c}\right)\hat e_z
+    }
+\end{equation*}
+
+Para el campo magnético usamos que, si
+\begin{equation*}
+    \vec A=A_z(s,t)\hat e_z,
+\end{equation*}
+entonces en coordenadas cilíndricas
+\begin{equation*}
+    \vec\nabla\times\vec A
+    =-\frac{\partial A_z}{\partial s}\hat e_\phi.
+\end{equation*}
+Por tanto,
+\begin{equation*}
+    \vec B=-\frac{\partial A_z}{\partial s}\hat e_\phi.
+\end{equation*}
+Nuevamente, como $F(s,s/c)=0$, no aparece contribución efectiva desde la derivada de la función escalón. Derivamos entonces $F(s,t)$ respecto de $s$:
+\begin{align*}
+    \frac{\partial F}{\partial s}
+    &=t\frac{\partial}{\partial s}\arcosh\left(\frac{ct}{s}\right)
+    -\frac{1}{c}\frac{\partial}{\partial s}\sqrt{c^2t^2-s^2}.
+\end{align*}
+Calculamos cada término. Primero,
+\begin{equation*}
+    \frac{\partial}{\partial s}\arcosh\left(\frac{ct}{s}\right)
+    =-\frac{ct}{s\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Entonces
+\begin{equation*}
+    t\frac{\partial}{\partial s}\arcosh\left(\frac{ct}{s}\right)
+    =-\frac{ct^2}{s\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Por otro lado,
+\begin{equation*}
+    -\frac{1}{c}\frac{\partial}{\partial s}\sqrt{c^2t^2-s^2}
+    =\frac{s}{c\sqrt{c^2t^2-s^2}}.
+\end{equation*}
+Por lo tanto,
+\begin{align*}
+    \frac{\partial F}{\partial s}
+    &=-\frac{ct^2}{s\sqrt{c^2t^2-s^2}}
+    +\frac{s}{c\sqrt{c^2t^2-s^2}}\\
+    &=\frac{-c^2t^2+s^2}{cs\sqrt{c^2t^2-s^2}}\\
+    &=-\frac{\sqrt{c^2t^2-s^2}}{cs}.
+\end{align*}
+Así,
+\begin{equation*}
+    \vec B
+    =-\frac{\mu k}{2\pi}\frac{\partial F}{\partial s}
+    \Hh\left(t-\frac{s}{c}\right)\hat e_\phi,
+\end{equation*}
+y finalmente
+\begin{equation*}
+    \boxed{
+    \vec B(\vec x,t)
+    =\frac{\mu k}{2\pi cs}\sqrt{c^2t^2-s^2}\,
+    \Hh\left(t-\frac{s}{c}\right)\hat e_\phi
+    }
+\end{equation*}
+
+También se puede escribir como
+\begin{equation*}
+    \boxed{
+    \vec B(\vec x,t)
+    =\frac{\mu k}{2\pi s}\sqrt{t^2-\frac{s^2}{c^2}}\,
+    \Hh\left(t-\frac{s}{c}\right)\hat e_\phi.
+    }
+\end{equation*}
+
+\subsection{Interpretación física breve}
+
+El factor
+\begin{equation*}
+    \Hh\left(t-\frac{s}{c}\right)
+\end{equation*}
+indica que el punto ubicado a distancia $s$ del cable no siente campo antes del tiempo $t=s/c$. Esto es exactamente lo que se espera de un potencial retardado: la información no se propaga instantáneamente, sino a velocidad $c$.
+
+Para tiempos grandes, con $ct\gg s$, el campo magnético se aproxima a
+\begin{equation*}
+    \vec B(\vec x,t)\approx \frac{\mu k t}{2\pi s}\hat e_\phi
+    =\frac{\mu I(t)}{2\pi s}\hat e_\phi,
+\end{equation*}
+que coincide con el resultado magnetostático de un cable infinito con corriente instantánea $I(t)=kt$. En cambio, el campo eléctrico apunta en la dirección $-\hat e_z$ y aparece porque el potencial vectorial cambia en el tiempo:
+\begin{equation*}
+    \vec E=-\frac{\partial \vec A}{\partial t}.
+\end{equation*}
+
+\subsection{Parte (c): animación del campo eléctrico}
+
+La animación se construye usando la expresión analítica
+\begin{equation*}
+    E_z(s,t)
+    =-\frac{\mu k}{2\pi}\arcosh\left(\frac{ct}{s}\right)
+    \Hh\left(t-\frac{s}{c}\right).
+\end{equation*}
+Como el campo eléctrico apunta en la dirección $\hat e_z$, en una grilla del plano perpendicular al cable se puede representar con color: cada punto del plano $(x,y)$ tiene
+\begin{equation*}
+    s=\sqrt{x^2+y^2}.
+\end{equation*}
+Entonces se evalúa
+\begin{equation*}
+    E_z(x,y,t)
+    =-\frac{\mu k}{2\pi}\arcosh\left(\frac{ct}{\sqrt{x^2+y^2}}\right)
+    \Hh\left(t-\frac{\sqrt{x^2+y^2}}{c}\right).
+\end{equation*}
+En el archivo HTML adjunto se usaron unidades adimensionales
+\begin{equation*}
+    c=1,
+    \qquad
+    \frac{\mu k}{2\pi}=1,
+\end{equation*}
+para visualizar la estructura causal del campo sin distraerse con factores dimensionales. La singularidad del cable ideal en $s=0$ se regulariza gráficamente ocultando un pequeño disco central, que representa el radio efectivo del cable.
+
+La verificación de la animación se hace comparando cuadro a cuadro con la fórmula anterior: fuera del frente $s=ct$ el campo debe ser nulo, dentro del frente debe apuntar en dirección $-\hat e_z$, y el frente circular debe expandirse a velocidad $c$.
+
+
+\end{document}

@@ -15,15 +15,16 @@ Cada carpeta de curso contiene:
 - `optica/` – tareas del curso.
 - `mecanica-clasica-1/` – **certámenes**, no tareas.
 - `mecanica-clasica-2/` – **certámenes**, no tareas (en desarrollo).
-- `electrodinamica-1/` (en desarrollo)
+- `electrodinamica-1/` – tareas del curso (en desarrollo).
+- `electrodinamica-2/` – tareas, códigos y visualizaciones del curso; material en revisión progresiva.
+- `relatividad-general-1/` – portafolio de problemas resueltos; desarrollo en LaTeX previo a la versión manuscrita.
 
 ## Estructura de carpetas
 
-```tex
+```text
 curso/
 ├── README.md
 ├── tarea1/
-│   ├── README.md
 │   ├── tarea1.tex
 │   ├── tarea1.pdf
 │   ├── figuras/
@@ -31,6 +32,7 @@ curso/
 └── tarea2/
     └── ...
 ```
+
 ## Nota
 
 Este repositorio tiene fines personales y académicos: dejar un registro ordenado

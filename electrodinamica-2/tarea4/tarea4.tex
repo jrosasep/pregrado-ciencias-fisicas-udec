@@ -1,0 +1,879 @@
+\documentclass{article}
+\usepackage{fvextra}
+\usepackage{csquotes}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{bigints}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{listings}
+\usepackage{nameref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,babel}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{lastpage}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper, left=1.5cm, right=1.5cm, top=20mm, bottom=20mm]{geometry}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black,filecolor=black,pdfborder={0 0 0}]{hyperref}
+
+\numberwithin{equation}{section}
+\titleformat{\section}{\huge\bfseries}{\thesection.}{1em}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{0.8em}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{0.6em}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setcounter{tocdepth}{2}
+\sloppy
+
+\definecolor{linkblue}{RGB}{50,30,200}
+\definecolor{SoftBlue}{RGB}{239,245,252}
+\definecolor{LineBlue}{RGB}{84,122,168}
+\definecolor{SoftAmber}{RGB}{252,246,233}
+\definecolor{LineAmber}{RGB}{178,126,54}
+\definecolor{SoftGray}{RGB}{245,246,248}
+\definecolor{LineGray}{RGB}{122,128,138}
+\definecolor{notegray}{RGB}{243,245,247}
+\definecolor{notered}{RGB}{139,30,30}
+\definecolor{udecblue}{RGB}{0,58,112}
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{darkblue}{RGB}{20,55,110}
+\definecolor{boxbg}{RGB}{245,248,252}
+\definecolor{boxframe}{RGB}{60,85,120}
+
+\newtcolorbox{studybox}[1][]{enhanced,breakable,colback=SoftBlue,colframe=LineBlue,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{carebox}[1][]{enhanced,breakable,colback=SoftAmber,colframe=LineAmber,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{mathbox}[1][]{enhanced,breakable,colback=SoftGray,colframe=LineGray,boxrule=0.6pt,arc=1.2mm,left=2mm,right=2mm,top=1.4mm,bottom=1.4mm,title=#1,fonttitle=\bfseries}
+\newtcolorbox{promptbox}{colback=boxbg,colframe=boxframe,arc=2mm,boxrule=0.6pt,left=2mm,right=2mm,top=1mm,bottom=1mm}
+
+\lstdefinestyle{py}{language=Python,basicstyle=\ttfamily\footnotesize,backgroundcolor=\color{codebg},frame=single,rulecolor=\color{gray!45},breaklines=true,columns=fullflexible,keepspaces=true,showstringspaces=false,commentstyle=\color{gray!75},keywordstyle=\color{darkblue}\bfseries}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 4, 2026-2}}
+\fancyhead[R]{Electrodinámica II}
+
+% Macros usadas por los desarrollos originales
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\iu}{\mathrm{i}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\hr}{\hat{\mathbf r}}
+\newcommand{\hp}{\hat{\boldsymbol\phi}}
+\newcommand{\hz}{\hat{\mathbf z}}
+\newcommand{\Etot}{\vec E}
+\newcommand{\Eself}{\vec E^{\,(q)}}
+\newcommand{\Eext}{\vec E^{\,(\sigma)}}
+\newcommand{\nvec}{\hat n}
+\newcommand{\Fvec}{\vec F^{\,\mathrm{mec}}}
+\newcommand{\That}{\hat e_i\hat e_i}
+\newcommand{\trac}{\vec t^{\,(n)}}
+\newcommand{\grad}{\bm{\nabla}}
+\newcommand{\A}{\bm{A}}
+\newcommand{\J}{\bm{J}}
+\newcommand{\x}{\bm{x}}
+\newcommand{\xp}{\bm{x}'}
+\newcommand{\eps}{\varepsilon_0}
+\newcommand{\Boxop}{\mathcal{L}}
+\newcommand{\hR}{\hat{\bm{R}}}
+\newcommand{\Hh}{\mathrm H}
+\newcommand{\arcosh}{\operatorname{arcosh}}
+\newcommand{\arsinh}{\operatorname{arsinh}}
+\newcommand{\ret}{\big|_{\mathrm{ret}}}
+\newcommand{\bv}{\vec{\beta}}
+\newcommand{\av}{\vec{a}}
+\newcommand{\Rv}{\vec{R}}
+\newcommand{\nh}{\hat{n}}
+\newcommand{\K}{K}
+\newcommand{\LW}{Li\'enard--Wiechert}
+\newcommand{\vb}[1]{\boldsymbol{#1}}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\note}[1]{\vspace{0.2em}\noindent\fcolorbox{gray!30}{notegray}{\begin{minipage}{0.96\linewidth}#1\end{minipage}}\vspace{0.2em}}
+\newcommand{\important}[1]{\textcolor{notered}{#1}}
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{1.8cm}
+    \includegraphics[width=0.22\textwidth]{UdeC_escudo.png}
+    \vspace{1.1cm}
+
+    {\Huge \textbf{Tarea 04} \par}
+    \vspace{0.45cm}
+    {\Huge \textbf{Electrodinámica II} \par}
+    \vspace{1.5cm}
+    {\Large José Ignacio Rosas Sepúlveda \par}
+    \vspace{0.8cm}
+    {\Large 2026-2 \par}
+    \vfill
+    \thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\setcounter{section}{1}
+\section{Problema 2}
+Verifique la expresión (4.113) del apunte para el campo magnético producido por una carga puntual en movimiento arbitrario. \textbf{Sugerencia:} La relación (4.54) podría ser útil.
+
+\textbf{Solución:}
+%=============================================================
+
+Se quiere verificar que el campo magn\'etico de una carga puntual $q$ en
+movimiento arbitrario satisface
+\begin{equation}
+  \boxed{
+  \vec{B}(\vec{x},t)=\frac{1}{c}\,\nh_{\mathrm{ret}}\times\vec{E}(\vec{x},t)
+  }
+  \tag{4.113}
+\end{equation}
+partiendo desde el potencial vectorial retardado. La idea es calcular
+expl\'icitamente
+\begin{equation*}
+  \vec{B}=\nabla\times\vec{A}
+\end{equation*}
+y luego comparar el resultado con $\frac{1}{c}\nh\times\vec{E}$.
+
+\subsection{Notaci\'on retardada}
+
+Sea $t'$ el tiempo retardado. Definimos
+\begin{equation*}
+  \Rv:=\vec{x}-\vec{z}(t'),
+  \qquad
+  R:=|\Rv|,
+  \qquad
+  \nh:=\frac{\Rv}{R},
+\end{equation*}
+\begin{equation*}
+  \bv:=\frac{\dot{\vec{z}}(t')}{c},
+  \qquad
+  \av:=\ddot{\vec{z}}(t'),
+  \qquad
+  \K:=1-\bv\cdot\nh.
+\end{equation*}
+La condici\'on de retardo es
+\begin{equation*}
+  R=c(t-t').
+\end{equation*}
+Adem\'as,
+\begin{equation*}
+  \varkappa:=R(1-\bv\cdot\nh)=R\K.
+\end{equation*}
+Como $R\nh=\Rv$, tambi\'en podemos escribir
+\begin{equation}
+  \varkappa=R-\bv\cdot\Rv.
+  \label{eq:kappa_alt}
+\end{equation}
+Los potenciales de Li\'enard--Wiechert son
+\begin{equation}
+  \varphi(\vec{x},t)
+  =\frac{q}{4\pi\eps}\frac{1}{\varkappa}\ret,
+  \qquad
+  \vec{A}(\vec{x},t)
+  =\frac{1}{c}\varphi(\vec{x},t)\,\bv\ret.
+  \label{eq:potenciales}
+\end{equation}
+
+\subsection{Derivadas b\'asicas respecto a $x^i$}
+
+Al derivar con respecto a $x^i$, el tiempo $t$ se mantiene fijo, pero el
+tiempo retardado $t'$ depende de $\vec{x}$. Por tanto, hay que usar regla de
+la cadena.
+
+Primero,
+\begin{equation*}
+  R_j=x_j-z_j(t').
+\end{equation*}
+Derivando,
+\begin{equation*}
+  \partial_i R_j
+  =\frac{\partial R_j}{\partial x^i}
+  =\delta_{ij}-\frac{d z_j}{dt'}\frac{\partial t'}{\partial x^i}.
+\end{equation*}
+Como $\dot{z}_j=c\beta_j$, se obtiene
+\begin{equation}
+  \boxed{
+  \partial_i R_j=\delta_{ij}-c\beta_j\partial_i t'.
+  }
+  \label{eq:partial_Rj_1}
+\end{equation}
+
+Por otro lado, usando $R=(R_jR_j)^{1/2}$,
+\begin{equation}
+\begin{aligned}  \partial_i R
+  &=\partial_i(R_jR_j)^{1/2} \\
+  &=\frac{1}{2}(R_jR_j)^{-1/2}\,2R_k\partial_iR_k \\
+  &=\frac{R_k}{R}\partial_iR_k \\
+  &=\hat{n}_k\partial_iR_k.
+\end{aligned}
+  \label{eq:partial_R_general}
+\end{equation}
+Sustituyendo \eqref{eq:partial_Rj_1} en \eqref{eq:partial_R_general},
+\begin{equation}
+\begin{aligned}  \partial_iR
+  &=\hat{n}_k(\delta_{ik}-c\beta_k\partial_i t') \\
+  &=\hat{n}_i-c(\bv\cdot\nh)\partial_i t'.
+\end{aligned}
+  \label{eq:partial_R_aux}
+\end{equation}
+Pero, a partir de la condici\'on de retardo $R=c(t-t')$, y manteniendo $t$
+fijo,
+\begin{equation}
+  \partial_iR=-c\partial_i t'.
+  \label{eq:partial_R_retardo}
+\end{equation}
+Igualando \eqref{eq:partial_R_aux} y \eqref{eq:partial_R_retardo},
+\begin{equation*}
+  -c\partial_i t'
+  =\hat{n}_i-c(\bv\cdot\nh)\partial_i t'.
+\end{equation*}
+Entonces
+\begin{equation*}
+  c\big[(\bv\cdot\nh)-1\big]\partial_i t'=\hat{n}_i,
+\end{equation*}
+y por tanto
+\begin{equation}
+  \boxed{
+  \partial_i t'
+  =-\frac{\hat{n}_i}{c(1-\bv\cdot\nh)}
+  =-\frac{\hat{n}_i}{c\K}.
+  }
+  \label{eq:partial_tret}
+\end{equation}
+
+Con esto, de \eqref{eq:partial_Rj_1},
+\begin{equation}
+\begin{aligned}  \partial_i R_j
+  &=\delta_{ij}-c\beta_j\left(-\frac{\hat{n}_i}{c\K}\right) \\
+  &=\boxed{\delta_{ij}+\frac{\beta_j\hat{n}_i}{\K}}.
+\end{aligned}
+  \label{eq:partial_Rj}
+\end{equation}
+Adem\'as, usando \eqref{eq:partial_R_retardo} y \eqref{eq:partial_tret},
+\begin{equation}
+  \boxed{
+  \partial_iR=\frac{\hat{n}_i}{\K}.
+  }
+  \label{eq:partial_R}
+\end{equation}
+
+\subsection{Derivada de $\varkappa$}
+
+Usamos la forma equivalente \eqref{eq:kappa_alt}, es decir,
+\begin{equation*}
+  \varkappa=R-\bv\cdot\Rv=R-\beta_jR_j.
+\end{equation*}
+Entonces
+\begin{equation}
+  \partial_i\varkappa
+  =\partial_iR-\partial_i(\beta_jR_j).
+  \label{eq:partial_kappa_start}
+\end{equation}
+Calculemos el segundo t\'ermino:
+\begin{equation}
+  \partial_i(\beta_jR_j)
+  =R_j\partial_i\beta_j+\beta_j\partial_iR_j.
+  \label{eq:partial_betaR}
+\end{equation}
+Como $\beta_j=\beta_j(t')$, se tiene
+\begin{equation*}
+  \partial_i\beta_j
+  =\frac{d\beta_j}{dt'}\partial_i t'.
+\end{equation*}
+Pero
+\begin{equation*}
+  \frac{d\beta_j}{dt'}
+  =\frac{1}{c}\frac{d\dot{z}_j}{dt'}
+  =\frac{a_j}{c}.
+\end{equation*}
+Luego,
+\begin{equation}
+  \partial_i\beta_j
+  =\frac{a_j}{c}\partial_i t'
+  =-\frac{a_j\hat{n}_i}{c^2\K}.
+  \label{eq:partial_beta}
+\end{equation}
+Por tanto,
+\begin{equation}
+\begin{aligned}  R_j\partial_i\beta_j
+  &=R_j\left(-\frac{a_j\hat{n}_i}{c^2\K}\right) \\
+  &=-\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}.
+\end{aligned}
+  \label{eq:R_partial_beta}
+\end{equation}
+Adem\'as, usando \eqref{eq:partial_Rj},
+\begin{equation}
+\begin{aligned}  \beta_j\partial_iR_j
+  &=\beta_j\left(\delta_{ij}+\frac{\beta_j\hat{n}_i}{\K}\right) \\
+  &=\beta_i+\frac{\beta_j\beta_j\hat{n}_i}{\K} \\
+  &=\beta_i+\frac{\beta^2\hat{n}_i}{\K}.
+\end{aligned}
+  \label{eq:beta_partial_R}
+\end{equation}
+Sustituyendo \eqref{eq:R_partial_beta} y \eqref{eq:beta_partial_R} en
+\eqref{eq:partial_betaR},
+\begin{equation*}
+  \partial_i(\beta_jR_j)
+  =-\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}
+  +\beta_i+\frac{\beta^2\hat{n}_i}{\K}.
+\end{equation*}
+Finalmente, reemplazando esto y \eqref{eq:partial_R} en
+\eqref{eq:partial_kappa_start},
+\begin{align*}
+  \partial_i\varkappa
+  &=\frac{\hat{n}_i}{\K}
+  -\left[-\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}
+  +\beta_i+\frac{\beta^2\hat{n}_i}{\K}\right] \\
+  &=\frac{\hat{n}_i}{\K}
+  +\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}
+  -\beta_i-\frac{\beta^2\hat{n}_i}{\K} \\
+  &=\frac{(1-\beta^2)\hat{n}_i}{\K}
+  +\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}
+  -\beta_i.
+\end{align*}
+Como $1-\beta^2=\gamma^{-2}$,
+\begin{equation*}
+  \boxed{
+  \partial_i\varkappa
+  =\frac{\hat{n}_i}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)\hat{n}_i}{c^2\K}
+  -\beta_i.
+  }
+\end{equation*}
+En forma vectorial,
+\begin{equation}
+  \boxed{
+  \nabla\varkappa
+  =\left[
+  \frac{\nh}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)\nh}{c^2\K}
+  -\bv
+  \right]_{\mathrm{ret}}.
+  }
+  \label{eq:grad_kappa}
+\end{equation}
+
+\subsection{Gradiente del potencial escalar}
+
+De \eqref{eq:potenciales},
+\begin{equation*}
+  \varphi=\frac{q}{4\pi\eps}\varkappa^{-1}.
+\end{equation*}
+Luego,
+\begin{align*}
+  \nabla\varphi
+  &=\frac{q}{4\pi\eps}\nabla(\varkappa^{-1}) \\
+  &=-\frac{q}{4\pi\eps}\frac{\nabla\varkappa}{\varkappa^2}.
+\end{align*}
+Usando \eqref{eq:grad_kappa}, queda
+\begin{equation}
+  \boxed{
+  \nabla\varphi
+  =-\frac{q}{4\pi\eps\,\varkappa^2}
+  \left[
+  \frac{\nh}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)\nh}{c^2\K}
+  -\bv
+  \right]_{\mathrm{ret}}.
+  }
+  \label{eq:grad_phi}
+\end{equation}
+
+\subsection{Rotor de $\bv$}
+
+Como $\bv=\bv(t')$, usamos \eqref{eq:partial_beta}, es decir,
+\begin{equation*}
+  \partial_i\beta_j
+  =-\frac{a_j\hat{n}_i}{c^2\K}.
+\end{equation*}
+El rotor se calcula como
+\begin{align*}
+  (\nabla\times\bv)_k
+  &=\varepsilon_{kij}\partial_i\beta_j \\
+  &=-\frac{1}{c^2\K}\varepsilon_{kij}\hat{n}_i a_j \\
+  &=-\frac{(\nh\times\av)_k}{c^2\K}.
+\end{align*}
+Por tanto,
+\begin{equation}
+  \boxed{
+  \nabla\times\bv
+  =-\frac{\nh\times\av}{c^2\K}.
+  }
+  \label{eq:rot_beta}
+\end{equation}
+
+\subsection{C\'alculo de $\vec{B}=\nabla\times\vec{A}$}
+
+Como
+\begin{equation*}
+  \vec{A}=\frac{1}{c}\varphi\bv,
+\end{equation*}
+se tiene
+\begin{equation}
+\begin{aligned}  \vec{B}
+  &=\nabla\times\vec{A} \\
+  &=\frac{1}{c}\nabla\times(\varphi\bv) \\
+  &=\frac{1}{c}\left[(\nabla\varphi)\times\bv
+  +\varphi(\nabla\times\bv)\right].
+\end{aligned}
+  \label{eq:B_start}
+\end{equation}
+
+Primero calculemos $(\nabla\varphi)\times\bv$. Usando \eqref{eq:grad_phi},
+\begin{align*}
+  (\nabla\varphi)\times\bv
+  &=-\frac{q}{4\pi\eps\,\varkappa^2}
+  \left[
+  \left(
+  \frac{\nh}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)\nh}{c^2\K}
+  -\bv
+  \right)\times\bv
+  \right]_{\mathrm{ret}} \\
+  &=-\frac{q}{4\pi\eps\,\varkappa^2}
+  \left[
+  \frac{\nh\times\bv}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)(\nh\times\bv)}{c^2\K}
+  -\bv\times\bv
+  \right]_{\mathrm{ret}}.
+\end{align*}
+Como $\bv\times\bv=\vec{0}$,
+\begin{equation}
+  (\nabla\varphi)\times\bv
+  =-\frac{q}{4\pi\eps\,\varkappa^2}
+  \left[
+  \frac{\nh\times\bv}{\gamma^2\K}
+  +\frac{(\av\cdot\Rv)(\nh\times\bv)}{c^2\K}
+  \right]_{\mathrm{ret}}.
+  \label{eq:grad_phi_cross_beta}
+\end{equation}
+
+El segundo t\'ermino de \eqref{eq:B_start} se obtiene usando \eqref{eq:potenciales} y \eqref{eq:rot_beta}:
+\begin{equation}
+\begin{aligned}  \varphi(\nabla\times\bv)
+  &=\frac{q}{4\pi\eps\,\varkappa}
+  \left(-\frac{\nh\times\av}{c^2\K}\right)_{\mathrm{ret}} \\
+  &=-\frac{q}{4\pi\eps}
+  \left[
+  \frac{\nh\times\av}{c^2\varkappa\K}
+  \right]_{\mathrm{ret}}.
+\end{aligned}
+  \label{eq:phi_rot_beta}
+\end{equation}
+
+Sustituyendo \eqref{eq:grad_phi_cross_beta} y \eqref{eq:phi_rot_beta} en
+\eqref{eq:B_start},
+\begin{equation}
+\begin{aligned}  \vec{B}
+  &=-\frac{q}{4\pi\eps c}
+  \left[
+  \frac{\nh\times\bv}{\gamma^2\varkappa^2\K}
+  +\frac{(\av\cdot\Rv)(\nh\times\bv)}{c^2\varkappa^2\K}
+  +\frac{\nh\times\av}{c^2\varkappa\K}
+  \right]_{\mathrm{ret}}.
+\end{aligned}
+  \label{eq:B_intermedia}
+\end{equation}
+
+A partir de \eqref{eq:B_intermedia}, usamos $\Rv=R\nh$, por lo que
+\begin{equation*}
+  \av\cdot\Rv=R(\av\cdot\nh).
+\end{equation*}
+Adem\'as, $\varkappa=R\K$, de modo que
+\begin{equation*}
+  \frac{R}{\varkappa^2\K}
+  =\frac{R}{R^2\K^2\K}
+  =\frac{1}{R\K^3}
+  =\frac{1}{\varkappa\K^2}.
+\end{equation*}
+Por tanto,
+\begin{equation*}
+  \frac{(\av\cdot\Rv)(\nh\times\bv)}{c^2\varkappa^2\K}
+  =\frac{(\av\cdot\nh)(\nh\times\bv)}{c^2\varkappa\K^2}.
+\end{equation*}
+Tambi\'en,
+\begin{equation*}
+  \frac{\nh\times\av}{c^2\varkappa\K}
+  =\frac{\K(\nh\times\av)}{c^2\varkappa\K^2}.
+\end{equation*}
+As\'i,
+\begin{equation}
+  \boxed{
+  \vec{B}
+  =-\frac{q}{4\pi\eps c}
+  \left[
+  \frac{\nh\times\bv}{\gamma^2\varkappa^2\K}
+  \right]_{\mathrm{ret}}
+  -\frac{q}{4\pi\eps c^3}
+  \left[
+  \frac{(\av\cdot\nh)(\nh\times\bv)+\K(\nh\times\av)}{\varkappa\K^2}
+  \right]_{\mathrm{ret}}.
+  }
+  \label{eq:B_directa}
+\end{equation}
+Esta es la forma directa obtenida desde $\nabla\times\vec{A}$.
+
+\subsection{Comparaci\'on con $\frac{1}{c}\nh\times\vec{E}$}
+
+El campo el\'ectrico de Li\'enard--Wiechert se escribe como
+\begin{equation*}
+  \vec{E}=\vec{E}_{\mathrm{vel}}+\vec{E}_{\mathrm{ac}},
+\end{equation*}
+con
+\begin{equation}
+  \vec{E}_{\mathrm{vel}}
+  =\frac{q}{4\pi\eps}
+  \left[
+  \frac{\nh-\bv}{\gamma^2R^2\K^3}
+  \right]_{\mathrm{ret}},
+  \label{eq:E_vel}
+\end{equation}
+y
+\begin{equation}
+  \vec{E}_{\mathrm{ac}}
+  =\frac{q}{4\pi\eps c^2}
+  \left[
+  \frac{\nh\times\big[(\nh-\bv)\times\av\big]}{R\K^3}
+  \right]_{\mathrm{ret}}.
+  \label{eq:E_ac}
+\end{equation}
+La expresi\'on \eqref{eq:E_ac} es equivalente a escribir el coeficiente como
+$q\mu_0/(4\pi)$, pues $\mu_0=1/(\eps c^2)$.
+
+\paragraph{Parte de velocidad}
+
+Usando \eqref{eq:E_vel} y $\varkappa=R\K$, se tiene
+\begin{equation*}
+  R^2\K^3=\varkappa^2\K.
+\end{equation*}
+Luego,
+\begin{align*}
+  \frac{1}{c}\nh\times\vec{E}_{\mathrm{vel}}
+  &=\frac{q}{4\pi\eps c}
+  \left[
+  \frac{\nh\times(\nh-\bv)}{\gamma^2R^2\K^3}
+  \right]_{\mathrm{ret}} \\
+  &=\frac{q}{4\pi\eps c}
+  \left[
+  \frac{\nh\times\nh-\nh\times\bv}{\gamma^2\varkappa^2\K}
+  \right]_{\mathrm{ret}}.
+\end{align*}
+Como $\nh\times\nh=\vec{0}$,
+\begin{equation}
+  \boxed{
+  \frac{1}{c}\nh\times\vec{E}_{\mathrm{vel}}
+  =-\frac{q}{4\pi\eps c}
+  \left[
+  \frac{\nh\times\bv}{\gamma^2\varkappa^2\K}
+  \right]_{\mathrm{ret}}.
+  }
+  \label{eq:n_cross_Evel}
+\end{equation}
+Este resultado coincide exactamente con el primer t\'ermino de
+\eqref{eq:B_directa}.
+
+\paragraph{Parte de aceleraci\'on}
+
+Para la parte de aceleraci\'on, de \eqref{eq:E_ac} se obtiene
+\begin{equation*}
+  \frac{1}{c}\nh\times\vec{E}_{\mathrm{ac}}
+  =\frac{q}{4\pi\eps c^3}
+  \left[
+  \frac{\nh\times\left\{\nh\times\big[(\nh-\bv)\times\av\big]\right\}}{R\K^3}
+  \right]_{\mathrm{ret}}.
+\end{equation*}
+Como $\varkappa=R\K$, entonces $R\K^3=\varkappa\K^2$. Por tanto,
+\begin{equation}
+  \frac{1}{c}\nh\times\vec{E}_{\mathrm{ac}}
+  =\frac{q}{4\pi\eps c^3}
+  \left[
+  \frac{\nh\times\left\{\nh\times\big[(\nh-\bv)\times\av\big]\right\}}{\varkappa\K^2}
+  \right]_{\mathrm{ret}}.
+  \label{eq:n_cross_Eac_start}
+\end{equation}
+
+Simplificamos primero el producto que aparece dentro de las llaves:
+\begin{equation*}
+  \nh\times\big[(\nh-\bv)\times\av\big].
+\end{equation*}
+Usando
+\begin{equation*}
+  \vec{A}\times(\vec{B}\times\vec{C})
+  =\vec{B}(\vec{A}\cdot\vec{C})-\vec{C}(\vec{A}\cdot\vec{B}),
+\end{equation*}
+con $\vec{A}=\nh$, $\vec{B}=\nh-\bv$ y $\vec{C}=\av$, resulta
+\begin{align*}
+  \nh\times\big[(\nh-\bv)\times\av\big]
+  &=(\nh-\bv)(\nh\cdot\av)
+  -\av\,[\nh\cdot(\nh-\bv)].
+\end{align*}
+Pero
+\begin{equation*}
+  \nh\cdot(\nh-\bv)
+  =\nh\cdot\nh-\nh\cdot\bv
+  =1-\bv\cdot\nh
+  =\K.
+\end{equation*}
+Luego,
+\begin{equation}
+  \nh\times\big[(\nh-\bv)\times\av\big]
+  =(\av\cdot\nh)(\nh-\bv)-\K\av.
+  \label{eq:producto_interno_aceleracion}
+\end{equation}
+
+Sustituyendo \eqref{eq:producto_interno_aceleracion} en el numerador de
+\eqref{eq:n_cross_Eac_start},
+\begin{align*}
+  \nh\times\left\{\nh\times\big[(\nh-\bv)\times\av\big]\right\}
+  &=\nh\times\left[(\av\cdot\nh)(\nh-\bv)-\K\av\right] \\
+  &=(\av\cdot\nh)\nh\times(\nh-\bv)-\K(\nh\times\av).
+\end{align*}
+Adem\'as,
+\begin{equation*}
+  \nh\times(\nh-\bv)
+  =\nh\times\nh-\nh\times\bv
+  =-\nh\times\bv.
+\end{equation*}
+Por consiguiente,
+\begin{equation}
+  \boxed{
+  \nh\times\left\{\nh\times\big[(\nh-\bv)\times\av\big]\right\}
+  =-\left[(\av\cdot\nh)(\nh\times\bv)+\K(\nh\times\av)\right].
+  }
+  \label{eq:identidad_clave}
+\end{equation}
+
+Finalmente, sustituyendo \eqref{eq:identidad_clave} en
+\eqref{eq:n_cross_Eac_start}, queda
+\begin{equation}
+  \boxed{
+  \frac{1}{c}\nh\times\vec{E}_{\mathrm{ac}}
+  =-\frac{q}{4\pi\eps c^3}
+  \left[
+  \frac{(\av\cdot\nh)(\nh\times\bv)+\K(\nh\times\av)}{\varkappa\K^2}
+  \right]_{\mathrm{ret}}.
+  }
+  \label{eq:n_cross_Eac}
+\end{equation}
+Este es el segundo t\'ermino de \eqref{eq:B_directa}.
+
+Juntando \eqref{eq:n_cross_Evel} y \eqref{eq:n_cross_Eac}, queda probado que
+\begin{equation*}
+  \boxed{
+  \vec{B}(\vec{x},t)
+  =\frac{1}{c}\,\nh_{\mathrm{ret}}\times\vec{E}(\vec{x},t).
+  }
+\end{equation*}
+
+%=============================================================
+\newpage
+
+\newpage
+\section{Problema 3}
+Un electrón tiene inicialmente una velocidad $v_0=10^5\,\mathrm{m/s}$ y frena con aceleración constante (y negativa) hasta llegar al reposo. En este periodo, el electrón avanzó una distancia $d=30\,\text{\AA}$. Calcule la energía total radiada por el electrón en el proceso de frenado. ¿Qué fracción de la energía cinética inicial representa esta energía radiada?
+
+\textbf{Solución:}
+%=============================================================
+
+Un electr\'on parte con velocidad
+\begin{equation*}
+  v_0=10^5\,\mathrm{m/s}
+\end{equation*}
+y frena hasta quedar en reposo recorriendo
+\begin{equation*}
+  d=30\,\text{\AA}=30\times10^{-10}\,\mathrm{m}=3.0\times10^{-9}\,\mathrm{m}.
+\end{equation*}
+Se pide calcular la energ\'ia electromagn\'etica radiada y compararla con la
+energ\'ia cin\'etica inicial.
+
+\subsection{Justificaci\'on del r\'egimen no relativista}
+
+La velocidad inicial satisface
+\begin{equation*}
+  \frac{v_0}{c}
+  =\frac{10^5}{3.0\times10^8}
+  \approx3.3\times10^{-4}\ll1.
+\end{equation*}
+Por tanto, el movimiento es no relativista. En este r\'egimen se puede usar
+la f\'ormula de Larmor:
+\begin{equation}
+  \boxed{
+  P=\frac{e^2\mu_0}{6\pi c}\,a^2.
+  }
+  \label{eq:larmor}
+\end{equation}
+Aqu\'i $e$ es el m\'odulo de la carga del electr\'on. El signo de la carga no
+importa porque aparece $e^2$.
+
+\subsection{C\'alculo de la aceleraci\'on}
+
+Supondremos que el frenado ocurre con aceleraci\'on constante. De la ecuaci\'on
+cinem\'atica
+\begin{equation*}
+  v_f^2=v_0^2+2ad,
+\end{equation*}
+y usando $v_f=0$, resulta
+\begin{equation*}
+  0=v_0^2+2ad.
+\end{equation*}
+Despejando,
+\begin{equation*}
+  a=-\frac{v_0^2}{2d}.
+\end{equation*}
+Sustituyendo los valores num\'ericos,
+\begin{align*}
+  a
+  &=-\frac{(10^5\,\mathrm{m/s})^2}{2(3.0\times10^{-9}\,\mathrm{m})} \\
+  &=-\frac{10^{10}\,\mathrm{m^2/s^2}}{6.0\times10^{-9}\,\mathrm{m}} \\
+  &=-1.67\times10^{18}\,\mathrm{m/s^2}.
+\end{align*}
+Por tanto,
+\begin{equation}
+  \boxed{|a|=1.67\times10^{18}\,\mathrm{m/s^2}.}
+  \label{eq:aceleracion_num}
+\end{equation}
+
+\subsection{Tiempo de frenado}
+
+Usando
+\begin{equation*}
+  v_f=v_0+aT,
+\end{equation*}
+con $v_f=0$, se obtiene
+\begin{equation*}
+  0=v_0+aT.
+\end{equation*}
+Luego,
+\begin{equation*}
+  T=-\frac{v_0}{a}=\frac{v_0}{|a|}.
+\end{equation*}
+Como $|a|=v_0^2/(2d)$,
+\begin{equation*}
+  T=\frac{v_0}{v_0^2/(2d)}=\frac{2d}{v_0}.
+\end{equation*}
+Sustituyendo,
+\begin{align*}
+  T
+  &=\frac{2(3.0\times10^{-9}\,\mathrm{m})}{10^5\,\mathrm{m/s}} \\
+  &=6.0\times10^{-14}\,\mathrm{s}.
+\end{align*}
+Por tanto,
+\begin{equation}
+  \boxed{T=6.0\times10^{-14}\,\mathrm{s}.}
+  \label{eq:tiempo_num}
+\end{equation}
+
+\subsection{Energ\'ia total radiada}
+
+Como la aceleraci\'on es constante, la potencia de Larmor tambi\'en es
+constante. Entonces
+\begin{equation*}
+  E_{\mathrm{rad}}=PT.
+\end{equation*}
+Usando \eqref{eq:larmor},
+\begin{equation}
+  E_{\mathrm{rad}}
+  =\frac{e^2\mu_0}{6\pi c}a^2T.
+  \label{eq:Erad_general}
+\end{equation}
+Ahora sustituimos \eqref{eq:aceleracion_num} y \eqref{eq:tiempo_num} en \eqref{eq:Erad_general}. Adem\'as usamos
+\begin{equation*}
+  e=1.60\times10^{-19}\,\mathrm{C},
+  \qquad
+  \mu_0=4\pi\times10^{-7}\,\mathrm{N/A^2},
+  \qquad
+  c=3.00\times10^8\,\mathrm{m/s}.
+\end{equation*}
+Entonces
+\begin{align*}
+  E_{\mathrm{rad}}
+  &=\frac{(1.60\times10^{-19})^2(4\pi\times10^{-7})}{6\pi(3.00\times10^8)}
+  (1.67\times10^{18})^2(6.0\times10^{-14})\,\mathrm{J}.
+\end{align*}
+Simplificamos por partes. Primero,
+\begin{equation*}
+  (1.60\times10^{-19})^2=2.56\times10^{-38}.
+\end{equation*}
+Adem\'as,
+\begin{equation*}
+  (1.67\times10^{18})^2\approx2.79\times10^{36}.
+\end{equation*}
+Por tanto,
+\begin{align*}
+  E_{\mathrm{rad}}
+  &\approx
+  \frac{(2.56\times10^{-38})(4\pi\times10^{-7})}{6\pi(3.00\times10^8)}
+  (2.79\times10^{36})(6.0\times10^{-14})\,\mathrm{J} \\
+  &=
+  \frac{(2.56)(4)}{6(3.00)}
+  \times 10^{-38-7-8}
+  \times(2.79)(6.0)\times10^{36-14}\,\mathrm{J} \\
+  &\approx
+  0.569\times10^{-53}\times16.74\times10^{22}\,\mathrm{J} \\
+  &\approx9.5\times10^{-31}\,\mathrm{J}.
+\end{align*}
+Luego,
+\begin{equation*}
+  \boxed{E_{\mathrm{rad}}\approx9.5\times10^{-31}\,\mathrm{J}.}
+\end{equation*}
+
+Tambi\'en se puede obtener una forma compacta. Como
+\begin{equation*}
+  a^2T=\left(\frac{v_0^2}{2d}\right)^2\frac{2d}{v_0}
+  =\frac{v_0^3}{2d},
+\end{equation*}
+la energ\'ia radiada puede escribirse como
+\begin{equation*}
+  E_{\mathrm{rad}}
+  =\frac{e^2\mu_0}{6\pi c}\frac{v_0^3}{2d}
+  =\boxed{\frac{e^2\mu_0v_0^3}{12\pi cd}}.
+\end{equation*}
+
+\subsection{Fracci\'on respecto de la energ\'ia cin\'etica inicial}
+
+La energ\'ia cin\'etica inicial del electr\'on es
+\begin{equation*}
+  E_k=\frac{1}{2}m_ev_0^2.
+\end{equation*}
+Con
+\begin{equation*}
+  m_e=9.11\times10^{-31}\,\mathrm{kg},
+\end{equation*}
+se obtiene
+\begin{align*}
+  E_k
+  &=\frac{1}{2}(9.11\times10^{-31}\,\mathrm{kg})(10^5\,\mathrm{m/s})^2 \\
+  &=\frac{1}{2}(9.11\times10^{-31})(10^{10})\,\mathrm{J} \\
+  &=4.56\times10^{-21}\,\mathrm{J}.
+\end{align*}
+Por tanto,
+\begin{align*}
+  \frac{E_{\mathrm{rad}}}{E_k}
+  &=\frac{9.5\times10^{-31}}{4.56\times10^{-21}} \\
+  &\approx2.1\times10^{-10}.
+\end{align*}
+As\'i,
+\begin{equation*}
+  \boxed{
+  \frac{E_{\mathrm{rad}}}{E_k}\approx2.1\times10^{-10}.
+  }
+\end{equation*}
+
+La fracci\'on radiada es extremadamente peque\~na. Esto significa que,
+para este frenado no relativista, casi toda la energ\'ia cin\'etica inicial se
+pierde por el mecanismo que detiene al electr\'on, no por radiaci\'on
+electromagn\'etica.
+\end{document}
