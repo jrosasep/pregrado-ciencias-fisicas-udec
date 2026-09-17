@@ -1,0 +1,80 @@
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+
+\begin{document}
+\begin{tikzpicture}[line cap=round,line join=round]
+
+  %---------------------------------
+  % Conductor vertical izquierdo
+  %---------------------------------
+  \draw (-4,0) -- (-4,5);
+
+  %---------------------------------
+  % Lazo superior: batería + resistencia grande
+  %---------------------------------
+  % Parte superior con batería
+  \draw (-4,5) -- (-1.0,5);            % cable
+  \draw (-1.0,4.6) -- (-1.0,5.4);      % placa larga de la pila
+    \node at (-1.3,5.3) {$+$};
+  \draw (-0.7,4.8) -- (-0.7,5.2);       % placa corta de la pila
+  \node at (-0.4,5.3) {$-$};
+  \draw (-0.7,5) -- (3,5);             % cable hasta la derecha
+    \node at (-0.8,5.6) {$15\;V$};
+
+  % Parte inferior del lazo superior (resistencia 1 MΩ)
+  \draw (-4,3.2) -- (-1.1,3.2);            % cable por la izquierda
+  \draw[decorate,decoration={zigzag,segment length=4pt,amplitude=2pt}]
+       (-1.1,3.2) -- (-0.5,3.2);            % resistencia grande
+  \draw (-0.5,3.2) -- (3,3.2);              % cable por la derecha
+  \draw (3,3.2)  -- (3,5);               % lado derecho del rectángulo
+  \draw (-4,3.2) -- (-4,5);              % lado izquierdo del rectángulo
+    \fill (-1.2,3.2) circle (1.2pt);
+  \fill (-0.4,3.2)   circle (1.2pt);
+
+  % Rama vertical desde la resistencia grande hacia el lazo medio
+  \draw  [->] (-0.8,2.4) -- (-0.8,3);
+  \draw (3,1.5) -- (3,2.4) ;
+  \draw (3,2.4) -- (-0.8,2.4) ;
+  % Rama hacia el voltímetro intermedia
+
+  \draw (0,1.5) circle (0.45);         % voltímetro
+ \node at (0,1.5) {$V_0$};
+  
+  %---------------------------------
+  % Lazo inferior (el que me diste)
+  %---------------------------------
+  % Parte superior del lazo inferior
+  \draw (-4,1.5) -- (-0.45,1.5);
+  \draw (0.45,1.5) -- (3,1.5);
+  % Lado izquierdo del lazo inferior
+  \draw (-4,1.5) -- (-4,0);
+
+  % Cable inferior hasta el tubo
+  \draw (-4,0) -- (-2.2,0);
+
+  % Tubo fotoeléctrico
+  \draw (-1.5,0) circle (1);           % circunferencia exterior
+  \draw (-1.5,0) ++(100:0.7)
+        arc[start angle=100,end angle=260,radius=0.7]; % cátodo (C abierto)
+  \fill (-0.8,0) circle (1.2pt);       % ánodo
+
+  % Cable desde el ánodo hacia la derecha
+  \draw (-0.8,0) -- (0.8,0) -- (3,0);
+
+  % Resistencia R vertical
+  \draw (3,1.5) -- (3,1.3);
+  \draw[decorate,decoration={zigzag,segment length=4pt,amplitude=2pt}]
+       (3,1.3) -- (3,0.2);
+  \draw (3,0.2) -- (3,0);
+    \fill (3,1.5) circle (1.2pt);
+  \fill (3,0)   circle (1.2pt);
+
+  % Rama hacia el voltímetro derecho
+  \draw (3,1.5) -- (5,1.5) -- (5,1.2);  % rama superior
+  \draw (3,0)   -- (5,0)   -- (5,0.3);  % rama inferior
+  \draw (5,0.75) circle (0.45);         % voltímetro
+ \node at (5,0.75) {$V$};
+\end{tikzpicture}
+\end{document}

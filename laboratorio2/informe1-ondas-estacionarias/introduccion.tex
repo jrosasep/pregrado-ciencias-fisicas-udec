@@ -1,0 +1,53 @@
+\begin{multicols}{2}
+[\section*{Introducción}]
+
+\paragraph{Contexto histórico.}
+El estudio de las ondas en cuerdas tensas se consolidó a mediados del siglo XVIII con los trabajos de d’Alembert, Euler y Bernoulli sobre la ecuación de ondas y los modos normales; más tarde, experimentos como el de Melde (siglo XIX) ilustraron la formación de \emph{ondas estacionarias} por superposición de ondas viajeras con igual amplitud y frecuencia en sentidos opuestos \parencite{FeynmanI49,BritannicaStandingWaves,MeldeWiki}.
+
+\paragraph{Marco teórico mínimo.}
+Para una cuerda fija en $x=0$ y $x=L$ (condiciones de borde $y(0,t)=y(L,t)=0$), la superposición de dos ondas viajeras
+\begin{equation*}
+y(x,t)=A\sin(kx-\omega t)+A\sin(kx+\omega t)
+\end{equation*}
+genera el patrón estacionario
+\begin{equation}
+y(x,t)=2A\cos(\omega t)\sin(kx)\,, \label{eqcuerda}
+\end{equation}
+en el que los nodos satisfacen $y(x_n,t)=0$ para todo $t$ \parencite{OpenStax16-2,MIT8.03Lec9}.
+
+\paragraph{Nodos, antinodos y cuantización.}
+De $y(x_n,t)=0$ se sigue
+\begin{equation*}
+\sin(kx_n)=0 \;\Longrightarrow\; kx_n=n\pi \quad (n\in\mathbb{N})\,,
+\end{equation*}
+de modo que
+\begin{equation*}
+k_n=\frac{n\pi}{L}\,, \qquad \lambda_n=\frac{2\pi}{k_n}=\frac{2L}{n}\,.
+\end{equation*}
+En este contexto $n$ coincide con el número de \emph{antinodos} del modo $n$ \parencite{OpenStax16-6,FeynmanI49}.
+
+\paragraph{Frecuencias permitidas.}
+Si la velocidad de fase de las ondas en la cuerda es $v$ y $\nu$ denota la frecuencia, se cumple $v=\lambda \nu$. Por tanto, las frecuencias de los modos estacionarios son
+\begin{equation}
+\nu_n=\frac{v}{\lambda_n}=\frac{n}{2L}\,v
+=\frac{n}{2L}\sqrt{\frac{T}{\mu}}\,, \label{eqnun}
+\end{equation}
+donde $T$ es la tensión y $\mu$ la densidad lineal de masa \parencite{OpenStax16-6,HyperPhysicsString,MIT8.03Lec9}. La relación \eqref{eqnun} es la base de los dos protocolos experimentales que usaremos más adelante: uno con $T$ fija (variando $\nu$) y otro con $\nu$ fija (variando $T$).
+\end{multicols}
+newpage
+\begin{multicols}{2}
+[\subsection*{Relaciones operativas para extraer \texorpdfstring{$\mu$}{mu}}]
+
+En una cuerda tensa la velocidad de fase cumple
+\begin{align}
+    v^{2}=\frac{T}{\mu}\,, \label{eqv2}
+\end{align}
+donde \(T\) es la \textbf{tensión} y \(\mu\) la \textbf{densidad lineal de masa} \parencite{OpenStax16-6,MIT8.03Lec9}. Combinando \eqref{eqv2} con \eqref{eqnun}, se obtienen las relaciones de trabajo:
+\begin{align*}
+    \nu_{n}^{2}&=\frac{n^{2}\,T}{4L^{2}\mu}\,,\\
+    T_{n}&=\frac{4L^{2}\,\nu^{2}}{n^{2}}\,\mu\,,
+\end{align*}
+que vinculan las magnitudes medibles con \(\mu\). Aquí \(\nu_{n}\) y \(T_{n}\) son los valores \emph{por modo} (variables entre puntos), mientras que \(\nu\) o \(T\) se mantienen \textbf{fijos} según el protocolo aplicado.
+
+Estas expresiones sustentan los dos procedimientos experimentales: con \textbf{\(T\) fija} se grafica \(\nu\) vs.\ \(n\) (pendiente \(\propto \sqrt{T/\mu}\)); con \textbf{\(\nu\) fija} se grafica \(T\) vs.\ \(1/n^{2}\) (pendiente \(\propto L^{2}\nu^{2}\mu\)). El \textbf{largo efectivo} \(L\), la \textbf{frecuencia} \(\nu\), la \textbf{tensión} \(T\) y el \textbf{número de antinodos} \(n\) son accesibles experimentalmente.
+\end{multicols}

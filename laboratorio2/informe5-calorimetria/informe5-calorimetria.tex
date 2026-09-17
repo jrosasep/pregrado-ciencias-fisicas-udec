@@ -1,0 +1,335 @@
+\documentclass[11pt,twocolumn]{article}
+
+% --- Codificación y lenguaje ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% --- Matemática y fuentes ---
+\usepackage{amsfonts, amssymb, amsthm}
+\usepackage{derivative}
+\usepackage{physics} 
+
+% --- Gráficos y tablas ---
+\usepackage{graphicx}
+\usepackage{caption}        % <-- primero caption
+\usepackage{subcaption}     % <-- luego subcaption
+\usepackage{booktabs}
+
+% --- Varios útiles ---
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{csquotes}
+\usepackage{cuted}          % para elementos a dos columnas (opcional)
+\usepackage{stackrel}
+%\usepackage{microtype}      % cargar una sola vez
+\usepackage{float}
+\usepackage{placeins}
+% \usepackage{nameref}      % NO necesario: hyperref ya define \nameref
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% --- Bibliografía (BibTeX + apacite) ---
+\usepackage[backend=biber,style=apa,language=spanish]{biblatex}
+\addbibresource{referencias.bib} % tu archivo original con @online
+
+
+% --- Hipervínculos (casi al final) ---
+\usepackage[
+  colorlinks=true,
+  linkcolor=black, urlcolor=black, citecolor=black, filecolor=black,
+  pdfborder={0 0 0}
+]{hyperref}
+% --- Colores para hipervínculos (citas en azul) ---
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,      % refs, índice
+  urlcolor=Blue,
+  citecolor=Blue   % color del link de la cita
+}
+
+% --- Forzar que TODA la cita (no solo el link) salga en color
+\makeatletter
+\let\orig@cite\cite
+\renewcommand{\cite}[1]{\textcolor{Blue}{\orig@cite{#1}}}
+
+% Si en el texto usaste \citeA (cita textual tipo Autor (Año)),
+% la convertimos también a formato entre paréntesis y color:
+% --- Citas parentéticas y en color, compatible con apacite o biblatex ---
+\makeatletter
+% ¿Existe \citeA (apacite)? Si no, asumimos biblatex.
+\@ifundefined{citeA}{%
+  % --------- rama biblatex ---------
+  % Si existe \parencite, la coloreamos y mapeamos \cite / \citeA a paréntesis:
+  \@ifundefined{parencite}{}{%
+    \let\orig@parencite\parencite
+    \renewcommand{\parencite}[1]{\textcolor{Blue}{\orig@parencite{#1}}}
+    \renewcommand{\cite}[1]{\parencite{#1}}      % \cite -> (Autor, Año)
+    \providecommand{\citeA}[1]{\parencite{#1}}   % por si quedó \citeA en el texto
+    % (Opcional) forzar \textcite también a parentético:
+    % \let\orig@textcite\textcite
+    % \renewcommand{\textcite}[1]{\parencite{#1}}
+  }%
+}{%
+  % --------- rama apacite ---------
+  \let\orig@cite\cite
+  \renewcommand{\cite}[1]{\textcolor{Blue}{\orig@cite{#1}}} % color a (Autor, Año)
+  % Hacer que \citeA (Autor (Año)) también salga parentético y en color:
+  \let\orig@citeA\citeA
+  \renewcommand{\citeA}[1]{\textcolor{Blue}{\orig@cite{#1}}}
+}
+\makeatother
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture,overlay]
+  \node[anchor=north east, inner sep=0pt]
+    at ($(current page.north east)+(-1.8cm,-1.2cm)$)
+    {\includegraphics[height=2.8cm]{UdeC_logo_azul.png}};
+\end{tikzpicture}
+
+\begin{strip}
+\begin{center}
+\vspace*{-5\baselineskip}
+{\Large \textbf{Universidad de Concepción}}\\[-2pt]
+\small Facultad de Ciencias Físicas y Matemáticas\\[-2pt]
+\small \textit{Laboratorio II (510352-1)}\\[4pt]
+
+{\Large \bfseries Informe 5: Calorimetría}\\[2pt]
+{\Large \bfseries Calor específico y calor latente}\\[0pt]
+\small Profesor: Paulraj Manidurai\\[-2pt]
+\small F. Contreras M., J. Rosas S., J. Chandia V., M. Díaz S., M. Fierro S.\\[-2pt]
+\small Concepción, Chile — 02 de noviembre de 2025
+\end{center}
+\vspace{0.5\baselineskip}
+\hrule
+\vspace{0.8\baselineskip}
+
+\begin{abstract}
+Se determinan (i) el calor específico de un metal por el método de mezcla agua–metal y 
+(ii) el calor latente de fusión del hielo mediante mezcla hielo–agua a diferentes temperaturas iniciales. 
+El análisis se basa en conservación de energía en un calorímetro ideal (o corrigiendo, si se dispone, por la 
+capacidad calorífica del recipiente) y en propagación de incertidumbres instrumentales. Se presentan los
+datos crudos, el tratamiento cuantitativo y la comparación con valores tabulados.
+\end{abstract}
+
+\noindent\rule{\textwidth}{0.4pt}\par\vspace{0.3cm}
+\end{strip}
+
+\section{Objetivos.}
+\begin{itemize}
+    \item Estimar el calor específico \(c_m\) de metales (Fe y Al) mediante el método de mezcla agua–metal en calorímetro ideal, incorporando, de ser necesario, la corrección \(C_{\text{cal}}\).
+    \item Determinar el calor latente de fusión \(L\) del hielo a partir de mezclas agua–hielo, considerando el calentamiento del hielo hasta \(0^{\circ}\mathrm{C}\), la fusión y el calentamiento del agua fundida hasta \(T_f\).
+    \item Cuantificar la incertidumbre de \(c_m\) y \(L\) mediante propagación diferencial y repetición experimental, reportando \(\overline{y}\pm\sigma_{\overline{y}}\).
+    \item Contrastar los resultados con valores tabulados (a \(20^{\circ}\mathrm{C}\)) y analizar la influencia de fuentes sistemáticas: no adiabaticidad, capacidad calorífica del calorímetro, agua superficial del hielo, subenfriamiento del hielo y resolución instrumental.
+\end{itemize}
+
+
+\section{Introducción.}
+La calorimetría estudia intercambios de energía térmica por contacto entre sistemas que evolucionan
+hacia el equilibrio \cite{serway,tipler,halliday}. En un \emph{calorímetro ideal} (sin pérdidas netas al entorno),
+el calor cedido por las partes a mayor temperatura es igual al calor absorbido por las partes a menor
+temperatura. Bajo este principio de conservación de energía, pueden determinarse calores específicos y
+calores latentes a partir de mediciones de masas y temperaturas \cite{serway,tipler}.
+
+\section{Marco teórico.}
+
+\subsection{Calor específico por método de mezcla}
+Sea un bloque de metal de masa $m_m$ a temperatura inicial $T_{m,i}$, introducido en un volumen de agua 
+de masa $m_a$ a temperatura $T_{a,i}$ dentro de un calorímetro bien aislado. Tras el intercambio de calor,
+todo el sistema alcanza una temperatura común $T_f$ (sin cambios de fase). Si se desprecia el calor absorbido
+por el recipiente, \emph{el calor cedido por el metal} coincide con \emph{el calor absorbido por el agua}
+\cite{serway,tipler}:
+\begin{equation*}
+    m_m\,c_m\,(T_{m,i}-T_f) \;=\; m_a\,c_0\,(T_f - T_{a,i}),
+\end{equation*}
+de donde se despeja el calor específico del metal
+\begin{equation*}
+    c_m \;=\; \frac{m_a\,c_0\,(T_f - T_{a,i})}{m_m\,(T_{m,i}-T_f)},
+\end{equation*}
+con $c_0 \equiv c_{\text{agua}} \simeq 4186\;\mathrm{J\,kg^{-1}K^{-1}}$. Si se conoce la capacidad calorífica del
+recipiente $C_{\text{cal}}$ (en J/K), puede corregirse reemplazando $m_a c_0 \to m_a c_0 + C_{\text{cal}}$ \cite{halliday}.
+
+\subsection{Calor latente de fusión del hielo}
+Se mezcla una masa de agua $m_a$ a temperatura inicial $T_{a,i}>0^\circ\mathrm{C}$ con una masa de hielo $m_h$
+a $T_{h,i}\le 0^\circ\mathrm{C}$, en un calorímetro aislado. El equilibrio térmico se alcanza a temperatura $T_f$
+($0^\circ\mathrm{C}\le T_f < T_{a,i}$). El agua entrega calor al hielo, que (i) se calienta hasta $0^\circ\mathrm{C}$,
+(ii) se funde y (iii) el agua fundida se calienta hasta $T_f$. El balance energético ideal es \cite{serway,tipler,zemansky}
+\begin{equation*}
+    m_a\,c_0\,(T_{a,i}-T_f) \;=\; m_h\,c_h\,(0 - T_{h,i}) \;+\; m_h\,L \;+\; m_h\,c_0\,(T_f - 0),
+\end{equation*}
+donde $c_h$ es el calor específico del hielo ($\sim\!2100\;\mathrm{J\,kg^{-1}K^{-1}}$). Luego,
+\begin{equation*}
+    L \;=\; \frac{m_a\,c_0\,(T_{a,i}-T_f)}{m_h} \;-\; c_h\,(0 - T_{h,i}) \;-\; c_0\,T_f.
+\end{equation*}
+Si $C_{\text{cal}}$ no es despreciable, sustituir $m_a c_0 \to m_a c_0 + C_{\text{cal}}$ en el primer término \cite{halliday}.
+(La forma aquí usada coincide con el algoritmo implementado para el análisis de datos del laboratorio.)
+
+\subsection{Estimación de incertidumbre (método diferencial)}
+Sea $y=f(\boldsymbol{x})$ una magnitud calculada a partir de variables de entrada
+independientes $\boldsymbol{x}=(x_1,\dots,x_n)$, cada una con incertidumbre estándar
+$\Delta x_k$. Su incertidumbre se estima por
+\begin{equation*}
+    \Delta y \;\approx\; \sqrt{\sum_{k=1}^n \left(\frac{\partial f}{\partial x_k}\,\Delta x_k\right)^{\!2}}\,,
+\end{equation*}
+asumiendo independencia (sin correlaciones) \cite{taylor_error}. 
+
+\paragraph{(A) Mezcla agua–metal: $c_m$.}
+Modelo usado en el análisis:
+\begin{equation*}
+    c_m \;=\; \frac{(m_a c_0 + C_{\text{cal}})\,(T_f - T_{a,i})}{m_m\,(T_{m,i} - T_f)}\,,
+\end{equation*}
+con variables $\boldsymbol{x}=(m_a,\,m_m,\,T_{a,i},\,T_{m,i},\,T_f)$. Definiendo 
+$A \equiv (m_a c_0 + C_{\text{cal}})$ y $D \equiv (T_{m,i}-T_f)$:
+\begin{align*}
+    \pdv{c_m}{m_a} &= \frac{c_0\,(T_f - T_{a,i})}{m_m\,D}, 
+    &
+    \pdv{c_m}{m_m} &= -\,\frac{A\,(T_f - T_{a,i})}{m_m^{2}\,D}, \\[2pt]
+    \pdv{c_m}{T_{a,i}} &= -\,\frac{A}{m_m\,D}, 
+    &
+    \pdv{c_m}{T_{m,i}} &= -\,\frac{A\,(T_f - T_{a,i})}{m_m\,D^{2}}, \\[2pt]
+    \pdv{c_m}{T_f} &= \frac{A}{m_m}\,\frac{T_{m,i}-T_{a,i}}{D^{2}}\,.
+\end{align*}
+
+\paragraph{(B) Mezcla agua–hielo: $L$.}
+Forma operativa usada en el código:
+\begin{equation*}
+    L \;=\; \frac{(m_a c_0 + C_{\text{cal}})\,(T_{a,i}-T_f)}{m_h}
+    \;-\; c_h\,(0 - T_{h,i}) \;-\; c_0\,T_f\,,
+\end{equation*}
+con $\boldsymbol{x}=(m_a,\,m_h,\,T_{a,i},\,T_{h,i},\,T_f)$ y derivadas correspondientes,
+lo que permite la propagación de incertidumbres de $L$ \cite{taylor_error}.
+
+\section{Materiales.}
+\begin{itemize}
+    \item Calorímetro con tapa (tipo vaso) y agitación manual.
+    \item Bloques metálicos (Fe, Al) y balanza analítica.
+    \item Agua a temperatura ambiente y a $T \approx 100^\circ$C (baño de ebullición / vapor).
+    \item Termómetro de mercurio (véase la Figura~\ref{fig:termometro}).
+    \item Generador de vapor / baño de ebullición (véase la Figura~\ref{fig:vapor_generator}).
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{materials/generador_de_vapor.jpg}
+    \caption{Generador de vapor de laboratorio usado para suministrar vapor saturado de forma continua y estabilizar un entorno cercano a $100^\circ$C (a presión atmosférica) para el acondicionamiento térmico de muestras. Requiere precauciones por alta temperatura y presión.}
+    \label{fig:vapor_generator}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{materials/termómetro_de_mercurio.jpg}
+    \caption{Termómetro de vidrio con mercurio para laboratorio, con división típica de $0{,}1^\circ$C y rango adecuado en $0\text{–}100^\circ$C, apropiado para lecturas de equilibrio térmico en calorimetría. Manipular con cuidado por el contenido de mercurio.}
+    \label{fig:termometro}
+\end{figure}
+
+
+\section{Procedimiento.}
+
+\subsection*{A. Calor específico del metal (método de mezcla)}
+Se emplearon dos muestras metálicas: un bloque de hierro (Fe) de masa $m_m=230{.}8\,$g y
+un cilindro de aluminio (Al) de $m_m=69{.}0\,$g. Para cada material se realizaron tres corridas
+en un calorímetro ideal (sin pérdidas), variando la masa de agua $m_a$ y registrando la
+temperatura de equilibrio $T_f$.
+
+\begin{enumerate}
+    \item Se midió la masa del metal a temperatura ambiente con balanza (metal seco).
+    \item Se calentó el metal en agua en ebullición hasta su temperatura inicial $T_{m,i}$ (Fe: $99^\circ$C; Al: $100^\circ$C).
+    \item Se preparó en el calorímetro una masa de agua $m_a$ a temperatura $T_{a,i}$ (Fe: $16^\circ$C; Al: $16{.}5$–$18{.}0^\circ$C).
+    \item Se secó rápidamente la muestra metálica para eliminar agua adherida, se introdujo en el calorímetro,
+          se cerró la tapa y se agitó suavemente hasta alcanzar equilibrio térmico.
+    \item Se registró la temperatura de equilibrio $T_f$ y se repitió el procedimiento tres veces por material,
+          variando $m_a$ (Fe: $400$, $300$, $200$ g; Al: $210$, $251$, $285{.}7$ g).
+\end{enumerate}
+
+\subsection*{B. Calor latente de fusión del hielo (plan de medición)}
+Para la determinación de $L$ se usa el mismo calorímetro, mezclando agua a $T_{a,i}>0^\circ$C
+con hielo de masa $m_h$ a $T_{h,i}\le 0^\circ$C.
+\begin{enumerate}
+    \item Medir $m_a$ y $T_{a,i}$ dentro del calorímetro.
+    \item Secar el hielo con papel, medir $m_h$ y, si es posible, $T_{h,i}\le 0^\circ$C.
+    \item Agregar el hielo, cerrar, agitar hasta equilibrio térmico y registrar $T_f$.
+    \item Repetir con distintas masas para estimar promedio y dispersión.
+\end{enumerate}
+(En esta sesión no se registraron corridas de agua–hielo en el cuaderno; por ello no se incluyen tablas ni cálculos numéricos para esta parte.)
+
+\subsection*{A. Mezcla agua–metal}
+
+\subsubsection*{A1. Bloque de Fe ($m_m = 230{.}8$ g, $T_{m,i}=99^\circ$C, $T_{a,i}=16^\circ$C)}
+\begin{strip}
+\begin{center}
+\captionof{table}{Mezcla agua--metal para bloque de Fe (\(m_m = 230{.}8\,\mathrm{g}\), \(T_{m,i}=99^\circ\mathrm{C}\), \(T_{a,i}=16^\circ\mathrm{C}\)). Cálculo con \(c_0=4186\,\mathrm{J\,kg^{-1}K^{-1}}\) y \(C_{\text{cal}}=0\).}
+\label{tab:cm_fe}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Ensayo} & \(m_m\) (g) & \(m_a\) (g) & \(T_{m,i}\) (\(^\circ\)C) & \(T_{a,i}\) (\(^\circ\)C) & \(T_f\) (\(^\circ\)C) & \(c_m\) (J\,kg\(^{-1}\)K\(^{-1}\)) \\
+\hline
+1 & $230.8$ & $400.0$ & $99.0$ & $16.0$ & $21.0$ & $465.05$ \\
+2 & $230.8$ & $300.0$ & $99.0$ & $16.0$ & $23.0$ & $501.15$ \\
+3 & $230.8$ & $200.0$ & $99.0$ & $16.0$ & $27.0$ & $554.18$ \\
+\hline
+\end{tabular}%
+}
+\end{center}
+\end{strip}
+
+\subsubsection*{A2. Cilindro de Al ($m_m = 69{.}0$ g, $T_{m,i}=100^\circ$C)}
+\begin{strip}
+\begin{center}
+\captionof{table}{Mezcla agua--metal para cilindro de Al (\(m_m = 69{.}0\,\mathrm{g}\), \(T_{m,i}=100^\circ\mathrm{C}\)). Cálculo con \(c_0=4186\,\mathrm{J\,kg^{-1}K^{-1}}\) y \(C_{\text{cal}}=0\).}
+\label{tab:cm_al}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Ensayo} & \(m_m\) (g) & \(m_a\) (g) & \(T_{m,i}\) (\(^\circ\)C) & \(T_{a,i}\) (\(^\circ\)C) & \(T_f\) (\(^\circ\)C) & \(c_m\) (J\,kg\(^{-1}\)K\(^{-1}\)) \\
+\hline
+1 & $69.0$ & $210.0$ & $100.0$ & $16.5$ & $22.0$ & $898.33$ \\
+2 & $69.0$ & $251.0$ & $100.0$ & $17.0$ & $21.0$ & $771.00$ \\
+3 & $69.0$ & $285.7$ & $100.0$ & $18.0$ & $21.4$ & $749.75$ \\
+\hline
+\end{tabular}%
+}
+\end{center}
+\end{strip}
+\FloatBarrier
+
+
+\subsection*{B. Mezcla agua--hielo}
+No se incluyen tablas para la mezcla agua--hielo, porque en el cuaderno de laboratorio no quedaron registradas corridas experimentales completas para esta parte. Para evitar que el informe muestre tablas vacías, esta sección queda solamente como referencia metodológica y no se reportan valores numéricos de $L$.
+
+\section{Análisis de datos.}
+\subsection*{A. Cálculo de $c_m$ y su incertidumbre}
+Para cada ensayo, calcule $c_m$ con la expresión anterior. Estime $\Delta c_m$ usando las derivadas parciales
+indicadas y las resoluciones instrumentales (termómetro y balanza). Reporte $\overline{c}_m \pm \sigma_{\overline{c}}$.
+
+\subsection*{B. Cálculo de $L$ y su incertidumbre}
+Como no se dispone de corridas completas de agua--hielo, no se calcula numéricamente el calor latente de fusión en esta versión del informe. La expresión de $L$ y su propagación de incertidumbre se conservaron en el marco teórico para dejar indicado el procedimiento que habría que aplicar si se agregan datos experimentales en una versión posterior.
+
+\section{Discusión.}
+Comente la validez de las hipótesis (calorímetro ideal, pérdidas, evaporación, hielo con agua adherida,
+medición de $T_{h,i}$, etc.). Señale las fuentes dominantes de incertidumbre y los signos esperados de los
+sesgos sistemáticos (por ejemplo, $L$ subestimado si parte del hielo entra con agua líquida adherida).
+
+\section{Conclusiones.}
+\begin{itemize}
+    \item Se obtuvo $c_m$ del metal por mezcla agua–metal y se comparó con tablas.
+    \item No se reportó un valor experimental de $L$ para el hielo, porque no se registraron datos completos de mezcla agua--hielo.
+    \item Se evaluaron las principales fuentes de error y la consistencia con valores de referencia.
+\end{itemize}
+
+\section*{Constantes y valores tabulados.}
+\begin{itemize}
+    \item $c_0 \equiv c_{\text{agua}} = 4186\ \mathrm{J\,kg^{-1}K^{-1}}$ (a $20^\circ$C).
+    \item $c_h \equiv c_{\text{hielo}} \approx 2100\ \mathrm{J\,kg^{-1}K^{-1}}$.
+    \item $L_{\text{hielo}} \approx 334\ \mathrm{kJ\,kg^{-1}}$.
+\end{itemize}
+
+\newpage{}
+\onecolumn{}
+\printbibliography[title={Referencias}]
+
+\end{document}

@@ -1,0 +1,78 @@
+\documentclass{article}
+
+% --- Codificación / idioma ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} % (pdfLaTeX)
+\usepackage[spanish,es-tabla]{babel}
+%\usepackage{microtype}
+
+% --- Matemática / tablas / figuras ---
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\sisetup{output-decimal-marker=.,detect-all}
+\usepackage{enumitem}
+\usepackage{multicol}
+\setlength{\columnsep}{0.5cm}
+\usepackage[margin=2cm]{geometry}
+
+% --- Bibliografía ---
+\usepackage{csquotes} % Cargar ANTES de biblatex
+\usepackage[
+  backend=biber,
+  style=numeric,
+  sorting=none,
+  giveninits=true,
+  maxnames=6,
+  doi=false,
+  isbn=false,
+  url=false
+]{biblatex}
+\addbibresource{bibliografia.bib}
+
+% --- Enlaces y referencias cruzadas ---
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalize,nameinlink]{cleveref}
+
+% (Opcional) Traducciones de biblatex al español
+\DefineBibliographyStrings{spanish}{andothers={et al.}}
+
+\newcommand{\capconst}[1]{\par\smallskip\textit{Constantes: }#1}
+% Teoremas
+\newtheorem{theorem}{Teorema}[section]
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[section]
+\newtheorem{proposition}{Proposición}[section]
+\newtheorem{exercise}{Ejercicio}[section]
+\theoremstyle{remark}
+\newtheorem*{example}{\textbf{Ejemplos}}
+
+
+\title{Informe 1, Laboratorio II - Ondas estacionarias.}
+\author{%
+\begin{tabular}{cc}
+\multicolumn{2}{c}{\textbf{Profesor: Paulraj Manidurai}} \\
+Fabián Contreras Muñoz & José Rosas Sepúlveda \\
+Javier Chandia Valdés & Mario Díaz San Martín \\
+\multicolumn{2}{c}{Martin Fierro Sagredo.}
+\end{tabular}
+}
+\date{08/09/2025}
+\begin{document}
+\maketitle
+% La regla va fuera de \author:
+\noindent\makebox[\linewidth]{\rule{1\linewidth}{0.4pt}}\par\vspace{0.3cm}
+
+
+\begin{abstract}
+Se determinó la \textbf{densidad lineal} de cuerdas de \textbf{algodón}, \textbf{goma delgada} y \textbf{goma gruesa} mediante \textbf{ondas estacionarias} en un montaje con \textbf{parlante, polea y masas}. Se aplicaron dos protocolos: \textbf{tensión variable} (frecuencia fija) y \textbf{frecuencia variable} (tensión fija). Se utilizaron \textbf{seis cuerdas} en total (dos por material, una por protocolo), por lo que los resultados se interpretaron \textbf{por material/protocolo} y no como \textbf{comparación directa entre métodos}. A partir de \textbf{ajustes lineales} se estimó la densidad y se contrastó con la \textbf{estimación geométrica} (masa/longitud): en general hubo \textbf{concordancia de orden de magnitud}, con mayores \textbf{discrepancias en cuerdas de goma} atribuibles a \textbf{extensibilidad} y \textbf{fricción} del montaje.
+\end{abstract}
+
+\input{objetivos.tex}
+\input{introduccion.tex}
+\input{experimento.tex}
+
+\printbibliography
+
+\end{document}
