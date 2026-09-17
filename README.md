@@ -1,6 +1,6 @@
 # Pregrado en Ciencias Físicas — UdeC
 
-Recopilación personal de tareas, certámenes, informes, scripts y portafolios que he desarrollado durante las asignaturas que he cursado durante mi Licenciatura en Ciencias Físicas en la Universidad de Concepción, durante los años 2023 y 2026.
+Recopilación personal de tareas, certámenes, informes, scripts y portafolios que he desarrollado a lo largo de la Licenciatura en Ciencias Físicas de la Universidad de Concepción, entre 2023 y 2026.
 
 ## Asignaturas
 
