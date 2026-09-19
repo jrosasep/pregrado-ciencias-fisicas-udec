@@ -1,0 +1,218 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 8}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 8\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.-]
+\item Para dos vectores normalizados $\ket\psi$ y $\ket\phi$, demuestre la desigualdad de Cauchy--Schwarz
+\begin{equation}|\braket{\phi|\psi}|\le1.\end{equation}
+Use $\ket s=\ket\psi-\braket{\phi|\psi}\ket\phi$ y $\braket{s|s}\ge0$.
+\item Demuestre:
+\begin{enumerate}[label=\alph*)]
+\item $[A,B]=-[B,A]$.
+\item $[\lambda A,B]=\lambda[A,B]$.
+\item $[A,B]^\dagger=[B^\dagger,A^\dagger]$.
+\item $[A,B+C]=[A,B]+[A,C]$.
+\item $[AB,C]=A[B,C]+[A,C]B$.
+\item $[A,BC]=[A,B]C+B[A,C]$.
+\item $[A,[B,C]]+[B,[C,A]]+[C,[A,B]]=0$.
+\item $[A,B^n]=nB^{n-1}[A,B]$ si $[B,[A,B]]=0$; use inducción.
+\end{enumerate}
+\item Si $A$ y $B$ son hermíticos, demuestre que $[A,B]$ es antihermítico.
+\item Si $A$ y $B$ son hermíticos, demuestre que $\{A,B\}$ es hermítico.
+\item Si $H$ es hermítico, demuestre que $\braket{\psi|H|\psi}$ es real.
+\item Si $A$ es antihermítico, demuestre que $\braket{\psi|A|\psi}$ es puramente imaginario para todo $\ket\psi\neq\ket{\mathrm{null}}$. El apunte recuerda que un escalar $z$ es puramente imaginario cuando $z^*=-z$, con $z\neq0$.
+\item Demuestre las identidades de las matrices de Pauli:
+\begin{align}
+\sigma_x^2&=\sigma_y^2=\sigma_z^2=I,\\
+\sigma_x\sigma_y&=i\sigma_z,\quad \sigma_y\sigma_z=i\sigma_x,\quad \sigma_z\sigma_x=i\sigma_y,\\
+\sigma_x\sigma_y&=-\sigma_y\sigma_x,\quad\text{y permutaciones cíclicas},\\
+[\sigma_x,\sigma_y]&=2i\sigma_z,\quad[\sigma_y,\sigma_z]=2i\sigma_x,\quad[\sigma_z,\sigma_x]=2i\sigma_y.
+\end{align}
+\item Demuestre la ciclicidad de la traza: $\operatorname{Tr}(AB)=\operatorname{Tr}(BA)$ y $\operatorname{Tr}(ABC)=\operatorname{Tr}(BCA)=\operatorname{Tr}(CAB)$.
+\item Para $l=1$, el operador $L_z$ tiene base propia $\{\ket{-1},\ket0,\ket1\}$ y
+\begin{align}
+L_x\ket{-1}&=\frac{\hbar}{\sqrt2}\ket0,\\
+L_x\ket0&=\frac{\hbar}{\sqrt2}(\ket{-1}+\ket1),\\
+L_x\ket1&=\frac{\hbar}{\sqrt2}\ket0.
+\end{align}
+Encuentre los valores y estados propios de $L_x$.
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+Partimos de la positividad del producto interno, exactamente como se hace en la clase para construir desigualdades entre amplitudes. Sean $\ket\psi$ y $\ket\phi$ normalizados y definamos
+\begin{equation}
+\ket s=\ket\psi-\braket{\phi|\psi}\ket\phi.
+\end{equation}
+Como $\langle s|s\rangle\ge0$,
+\begin{align}
+\langle s|s\rangle
+&=(\langle\psi|-\langle\psi|\phi\rangle\langle\phi|)
+(|\psi\rangle-\langle\phi|\psi\rangle|\phi\rangle)\\
+&=\langle\psi|\psi\rangle
+-\langle\phi|\psi\rangle\langle\psi|\phi\rangle
+-\langle\psi|\phi\rangle\langle\phi|\psi\rangle
++|\langle\phi|\psi\rangle|^2\langle\phi|\phi\rangle\\
+&=1-|\langle\phi|\psi\rangle|^2.
+\end{align}
+En la última línea usamos la normalización y $\langle\psi|\phi\rangle=\langle\phi|\psi\rangle^*$. Por tanto,
+\begin{align}
+1-|\langle\phi|\psi\rangle|^2&\ge0.
+\end{align}
+Entonces
+\begin{equation}
+\boxed{|\braket{\phi|\psi}|\le1.}
+\end{equation}
+
+\section{Problema 2}
+Usando $[A,B]=AB-BA$ se verifican directamente
+\begin{align}
+[A,B]&=-[B,A],\\
+[\lambda A,B]&=\lambda[A,B],\\
+[A,B]^\dagger&=[B^\dagger,A^\dagger],\\
+[A,B+C]&=[A,B]+[A,C],\\
+[AB,C]&=A[B,C]+[A,C]B,\\
+[A,BC]&=[A,B]C+B[A,C].
+\end{align}
+Para la identidad de Jacobi no omitimos la expansión:
+\begin{align}
+[A,[B,C]]&=ABC-ACB-BCA+CBA,\\
+[B,[C,A]]&=BCA-BAC-CAB+ACB,\\
+[C,[A,B]]&=CAB-CBA-ABC+BAC.
+\end{align}
+Al sumar, cada producto aparece una vez con signo positivo y una vez con signo negativo, por lo que
+\begin{equation}
+[A,[B,C]]+[B,[C,A]]+[C,[A,B]]=0.
+\end{equation}
+Si $[B,[A,B]]=0$, entonces $[A,B]$ conmuta con $B$. La inducción parte de $n=1$ y usa
+\begin{align}
+[A,B^{n+1}]&=[A,B^n]B+B^n[A,B]\\
+&=nB^{n-1}[A,B]B+B^n[A,B]\\
+&=(n+1)B^n[A,B].
+\end{align}
+Así,
+\begin{equation}
+\boxed{[A,B^n]=nB^{n-1}[A,B].}
+\end{equation}
+
+\section{Problema 3}
+Si $A=A^\dagger$ y $B=B^\dagger$,
+\begin{equation}
+[A,B]^\dagger=[B,A]=-[A,B],
+\end{equation}
+por lo que el conmutador es antihermítico. Asimismo,
+\begin{equation}
+\{A,B\}^\dagger=(AB+BA)^\dagger=BA+AB=\{A,B\},
+\end{equation}
+y el anticonmutador es hermítico.
+
+Para $H=H^\dagger$,
+\begin{equation}
+\braket{\psi|H|\psi}^*=\braket{\psi|H^\dagger|\psi}=\braket{\psi|H|\psi},
+\end{equation}
+de modo que el promedio es real. Si $A^\dagger=-A$,
+\begin{equation}
+\braket{A}^*=-\braket A,
+\end{equation}
+por lo que $\braket A$ es imaginario puro.
+\paragraph{Observación.}
+El cero también satisface $z^*=-z$. Por ello un valor esperado de un operador antihermítico puede ser cero; no es correcto exigir que sea imaginario no nulo para todo estado.
+
+
+\section{Problema 4}
+Las matrices
+\begin{equation}
+\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+\sigma_y=\begin{pmatrix}0&-\ii\\\ii&0\end{pmatrix},\quad
+\sigma_z=\begin{pmatrix}1&0\\0&-1\end{pmatrix}
+\end{equation}
+satisfacen
+\begin{equation}
+\sigma_i\sigma_j=\delta_{ij}\id+\ii\varepsilon_{ijk}\sigma_k.
+\end{equation}
+De aquí siguen $\sigma_i^2=\id$, la anticonmutación para $i\neq j$ y
+\begin{equation}
+[\sigma_i,\sigma_j]=2\ii\varepsilon_{ijk}\sigma_k.
+\end{equation}
+
+\section{Problema 5}
+En una base ortonormal,
+\begin{align}
+\operatorname{Tr}(AB)&=\sum_{ij}A_{ij}B_{ji}
+=\sum_{ji}B_{ji}A_{ij}=\operatorname{Tr}(BA).
+\end{align}
+Aplicando el mismo argumento,
+\begin{equation}
+\boxed{\operatorname{Tr}(ABC)=\operatorname{Tr}(BCA)=\operatorname{Tr}(CAB).}
+\end{equation}
+
+\section{Problema 6}
+En la base ordenada $\{\ket{-1},\ket0,\ket1\}$, las relaciones del enunciado producen
+\begin{equation}
+L_x=\frac{\hb}{\sqrt2}
+\begin{pmatrix}
+0&1&0\\1&0&1\\0&1&0
+\end{pmatrix}.
+\end{equation}
+Es real simétrica, luego hermítica. Sus valores propios son $-\hb,0,+\hb$. Una elección ortonormal de estados propios es
+\begin{align}
+\ket{+}_x&=\frac12\left(\ket{-1}+\sqrt2\ket0+\ket1\right),\\
+\ket{0}_x&=\frac1{\sqrt2}\left(\ket{-1}-\ket1\right),\\
+\ket{-}_x&=\frac12\left(\ket{-1}-\sqrt2\ket0+\ket1\right).
+\end{align}
+La estructura reproduce la isotropía del momento angular: $L_x$ tiene el mismo espectro que $L_z$, aunque sus vectores propios sean superposiciones distintas.
+
+
+\end{document}

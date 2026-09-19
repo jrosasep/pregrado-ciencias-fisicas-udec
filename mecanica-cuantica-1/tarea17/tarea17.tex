@@ -1,0 +1,160 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 17}}
+\fancyhead[R]{Mecánica Cuántica I}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+{\Huge\bfseries Tarea 17\par}
+\vspace{.4cm}
+{\Huge\bfseries Mecánica Cuántica I\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.]
+\item Demuestre que:
+\begin{enumerate}[label=\alph*)]
+\item al aplicar $\mathrm{CNOT}_{12}$ sobre los estados de Bell, éstos se factorizan como productos de estados propios de $S_{1x}$ y $S_{2z}$;
+\item al aplicar $\mathrm{CNOT}_{21}$, se factorizan como productos de estados propios de $S_{1z}$ y $S_{2x}$.
+\end{enumerate}
+\item Dos qubits están en el estado puro normalizado
+\begin{equation}
+\ket\psi=\alpha\ket\uparrow_1\ket\downarrow_2+\beta\ket+_1\ket-_2,
+\qquad \alpha,\beta\in\mathbb R.
+\end{equation}
+\begin{enumerate}[label=\alph*)]
+\item Use la normalización para encontrar la relación entre $\alpha$ y $\beta$.
+\item Calcule la concurrencia.
+\item Determine los valores que maximizan el entrelazamiento y el valor máximo.
+\item Determine los valores que minimizan el entrelazamiento y el valor mínimo.
+\end{enumerate}
+\item \textbf{Swapping de estados.} Para dos estados desconocidos $\ket\phi_1$ y $\ket\varphi_2$, demuestre que
+\begin{equation}
+\mathrm{CNOT}_{12}\mathrm{CNOT}_{21}\mathrm{CNOT}_{12}\ket\phi_1\ket\varphi_2
+=\ket\varphi_1\ket\phi_2,
+\end{equation}
+con los operadores CNOT definidos en la clase.
+\end{enumerate}
+
+
+\section{Problema 1}
+Usamos la acción de CNOT definida en la clase: el primer qubit es control y el segundo objetivo. La linealidad permite actuar término a término sobre cada estado de Bell.
+
+Adoptamos
+\begin{align}
+\ket{\Phi_\pm}&=\frac{\ket{\downarrow\downarrow}\pm\ket{\uparrow\uparrow}}{\sqrt2},\\
+\ket{\Psi_\pm}&=\frac{\ket{\downarrow\uparrow}\pm\ket{\uparrow\downarrow}}{\sqrt2}.
+\end{align}
+Con la convención del apunte, $\mathrm{CNOT}_{12}$ usa el qubit 1 como control y cambia el qubit 2 cuando el control está en $\ket\uparrow$. Se obtiene
+\begin{align}
+\mathrm{CNOT}_{12}\ket{\Phi_\pm}&=\ket{\pm x}_1\ket\downarrow_2,\\
+\mathrm{CNOT}_{12}\ket{\Psi_\pm}&=\ket{\pm x}_1\ket\uparrow_2.
+\end{align}
+Por tanto los estados quedan factorizados en una base $S_{1x}\otimes S_{2z}$. Análogamente,
+\begin{align}
+\mathrm{CNOT}_{21}\ket{\Phi_\pm}&=\ket\downarrow_1\ket{\pm x}_2,\\
+\mathrm{CNOT}_{21}\ket{\Psi_\pm}&=\ket\uparrow_1\ket{\pm x}_2,
+\end{align}
+que es una factorización $S_{1z}\otimes S_{2x}$.
+
+\section{Problema 2}
+El estado es
+\begin{equation}
+\ket\psi=\alpha\ket{\uparrow\downarrow}+\beta\ket{+}_1\ket{-}_2,
+\qquad \alpha,\beta\in\R.
+\end{equation}
+Al expandir en la base $z$,
+\begin{equation}
+\ket\psi=\frac\beta2\ket{\uparrow\uparrow}
++\left(\alpha-\frac\beta2\right)\ket{\uparrow\downarrow}
++\frac\beta2\ket{\downarrow\uparrow}-\frac\beta2\ket{\downarrow\downarrow}.
+\end{equation}
+La normalización produce
+\begin{equation}
+\boxed{\alpha^2-\alpha\beta+\beta^2=1.}
+\end{equation}
+Para un estado puro de dos qubits con coeficientes $a,b,c,d$, la concurrencia es $C=2|ad-bc|$. Sustituyendo,
+\begin{equation}
+\boxed{C(\psi)=|\alpha\beta|.}
+\end{equation}
+Bajo la restricción de normalización, el máximo es
+\begin{equation}
+\boxed{C_{\max}=1\quad\text{para}\quad \alpha=\beta=1\ \text{o}\ \alpha=\beta=-1,}
+\end{equation}
+y el mínimo es
+\begin{equation}
+\boxed{C_{\min}=0\quad\text{cuando}\quad \alpha=0\ \text{o}\ \beta=0,}
+\end{equation}
+con el otro parámetro de módulo uno.
+
+\section{Problema 3}
+Escribimos
+\begin{equation}
+\ket\phi_1=a\ket\downarrow+b\ket\uparrow,\qquad
+\ket\varphi_2=c\ket\downarrow+d\ket\uparrow.
+\end{equation}
+Por linealidad basta seguir la acción sobre la base computacional. La secuencia
+\begin{equation}
+U=\mathrm{CNOT}_{12}\mathrm{CNOT}_{21}\mathrm{CNOT}_{12}
+\end{equation}
+realiza
+\begin{equation}
+\ket{s_1s_2}\longmapsto\ket{s_2s_1},\qquad s_i\in\{\downarrow,\uparrow\}.
+\end{equation}
+Entonces
+\begin{align}
+U\ket\phi_1\ket\varphi_2
+&=ac\ket{\downarrow\downarrow}+ad\ket{\uparrow\downarrow}
++bc\ket{\downarrow\uparrow}+bd\ket{\uparrow\uparrow}\\
+&=(c\ket\downarrow+d\ket\uparrow)_1
+(a\ket\downarrow+b\ket\uparrow)_2.
+\end{align}
+Por tanto,
+\begin{equation}
+\boxed{U\ket\phi_1\ket\varphi_2=\ket\varphi_1\ket\phi_2.}
+\end{equation}
+El circuito no depende de los coeficientes desconocidos; por eso implementa un SWAP universal.
+
+
+\end{document}

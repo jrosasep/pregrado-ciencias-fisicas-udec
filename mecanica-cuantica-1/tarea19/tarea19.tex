@@ -1,0 +1,161 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 19}}
+\fancyhead[R]{Mecánica Cuántica I}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+{\Huge\bfseries Tarea 19\par}
+\vspace{.4cm}
+{\Huge\bfseries Mecánica Cuántica I\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.]
+\item Encuentre las representaciones de $J_x$, $J_y$ y $J_z$ para $j=1$.
+\item Demuestre
+\begin{align}
+[L_x,X]&=0,&[L_x,Y]&=i\hbar Z,&[L_x,Z]&=-i\hbar Y,\\
+[L_x,P_x]&=0,&[L_x,P_y]&=i\hbar P_z,&[L_x,P_z]&=-i\hbar P_y.
+\end{align}
+\item Para una partícula con $j=3/2$:
+\begin{enumerate}[label=\alph*)]
+\item encuentre las matrices $J_x$, $J_y$, $J_z$;
+\item encuentre los valores y estados propios de $J_x$, expresados en la base propia de $J_z$;
+\item si inicialmente el estado es $\ket{3/2,m}_z$, encuentre la distribución de probabilidades de los estados propios de $J_x$;
+\item si inicialmente el estado es $\ket{3/2,1/2}_x$, encuentre la distribución de probabilidades de $J_z$ en un instante $t$.
+\end{enumerate}
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+En la base ordenada $\{\ket{1,1},\ket{1,0},\ket{1,-1}\}$,
+\begin{equation}
+\boxed{J_z=\hb\begin{pmatrix}1&0&0\\0&0&0\\0&0&-1\end{pmatrix},}
+\end{equation}
+\begin{equation}
+\boxed{J_x=\frac{\hb}{\sqrt2}
+\begin{pmatrix}0&1&0\\1&0&1\\0&1&0\end{pmatrix},\qquad
+J_y=\frac{\hb}{\sqrt2}
+\begin{pmatrix}0&-\ii&0\\\ii&0&-\ii\\0&\ii&0\end{pmatrix}.}
+\end{equation}
+
+\section{Problema 2}
+Con $L_x=YP_z-ZP_y$ y las relaciones canónicas $[X_i,P_j]=\ii\hb\delta_{ij}$,
+\begin{align}
+[L_x,X]&=[YP_z-ZP_y,X]=0,\\
+[L_x,Y]&=-Z[P_y,Y]=\ii\hb Z,\\
+[L_x,Z]&=Y[P_z,Z]=-\ii\hb Y.
+\end{align}
+Asimismo,
+\begin{align}
+[L_x,P_x]&=0,\\
+[L_x,P_y]&=[Y,P_y]P_z=\ii\hb P_z,\\
+[L_x,P_z]&=-[Z,P_z]P_y=-\ii\hb P_y.
+\end{align}
+Estas relaciones muestran que $L_x$ genera rotaciones infinitesimales en el plano $yz$.
+
+\section{Problema 3}
+En la base $\{\ket{3/2,3/2},\ket{3/2,1/2},\ket{3/2,-1/2},\ket{3/2,-3/2}\}$,
+\begin{equation}
+J_z=\hb\,\operatorname{diag}\left(\frac32,\frac12,-\frac12,-\frac32\right),
+\end{equation}
+\begin{equation}
+\boxed{J_x=\frac\hb2
+\begin{pmatrix}
+0&\sqrt3&0&0\\
+\sqrt3&0&2&0\\
+0&2&0&\sqrt3\\
+0&0&\sqrt3&0
+\end{pmatrix},}
+\end{equation}
+\begin{equation}
+\boxed{J_y=\frac\hb2
+\begin{pmatrix}
+0&-\ii\sqrt3&0&0\\
+\ii\sqrt3&0&-2\ii&0\\
+0&2\ii&0&-\ii\sqrt3\\
+0&0&\ii\sqrt3&0
+\end{pmatrix}.}
+\end{equation}
+
+Los valores propios de $J_x$ son $m_x\hb$ con $m_x=3/2,1/2,-1/2,-3/2$. Una elección de vectores propios es
+\begin{align}
+\ket{3/2}_x&=\frac{1}{2\sqrt2}(1,\sqrt3,\sqrt3,1)^T,\\
+\ket{1/2}_x&=\frac{1}{2\sqrt2}(-\sqrt3,-1,1,\sqrt3)^T,\\
+\ket{-1/2}_x&=\frac{1}{2\sqrt2}(\sqrt3,-1,-1,\sqrt3)^T,\\
+\ket{-3/2}_x&=\frac{1}{2\sqrt2}(-1,\sqrt3,-\sqrt3,1)^T.
+\end{align}
+Las componentes están escritas en la base $J_z$ indicada arriba.
+
+\subsection{Probabilidades $J_z\to J_x$}
+Si el estado inicial es un estado $\ket{3/2,m}_z$, las probabilidades son los módulos cuadrados de la fila correspondiente de la matriz de cambio de base. Para $m=\pm3/2$,
+\begin{equation}
+(P_{3/2},P_{1/2},P_{-1/2},P_{-3/2})=
+\left(\frac18,\frac38,\frac38,\frac18\right),
+\end{equation}
+y para $m=\pm1/2$,
+\begin{equation}
+(P_{3/2},P_{1/2},P_{-1/2},P_{-3/2})=
+\left(\frac38,\frac18,\frac18,\frac38\right).
+\end{equation}
+
+\subsection{Evolución del estado $\ket{3/2,1/2}_x$}
+La clase considera
+\begin{equation}
+H=\frac{J^2}{2I}-\gamma B_zJ_z.
+\end{equation}
+Dentro del subespacio fijo $j=3/2$, el primer término sólo aporta una fase global. Por tanto cada componente $m_z$ adquiere una fase $\e^{\ii\gamma B_zm_zt}$, pero su módulo no cambia. Si el estado inicial es $\ket{3/2,1/2}_x$, la distribución de $J_z$ es, para todo $t$,
+\begin{equation}
+\boxed{(P_{3/2},P_{1/2},P_{-1/2},P_{-3/2})=
+\left(\frac38,\frac18,\frac18,\frac38\right).}
+\end{equation}
+
+\paragraph{Observación.}
+El inciso temporal no vuelve a escribir el Hamiltoniano. La respuesta anterior usa explícitamente el Hamiltoniano del ejemplo inmediatamente anterior en la clase 19. Con otro Hamiltoniano, la distribución podría ser distinta.
+
+
+
+\end{document}

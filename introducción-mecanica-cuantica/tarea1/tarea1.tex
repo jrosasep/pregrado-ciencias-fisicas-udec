@@ -1,0 +1,185 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 1}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 1\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+Una partícula libre inicialmente es descrita por la función de onda $\psi(x,0)$
+\begin{equation}
+\psi(x,0)=\frac{1}{(2\pi)^{1/4}\sqrt{\sigma_x}}
+\exp\!\left(-\frac{x^2}{4\sigma_x^2}\right).
+\end{equation}
+\begin{enumerate}[label=\alph*)]
+\item Encuentre la componente $\phi(p)$ de $\psi(x,0)$ sobre la dirección definida por la onda plana
+\begin{equation}
+\phi_p(x)=\frac{e^{ipx/\hbar}}{\sqrt{2\pi\hbar}},
+\end{equation}
+es decir,
+\begin{equation}
+\phi(p)=\int_{-\infty}^{\infty}\phi_p^*(x)\psi(x,0)\,\dd x.
+\end{equation}
+\item Encuentre la función de onda $\psi(x,t)$.
+\item Encuentre el valor promedio $\langle X(t)\rangle$ de la posición,
+\begin{equation}
+\langle X(t)\rangle=\int_{-\infty}^{\infty}x|\psi(x,t)|^2\,\dd x.
+\end{equation}
+\item Demuestre que la desviación estándar de la posición es
+\begin{equation}
+\Delta X(t)=\sigma_x\sqrt{1+\frac{\hbar^2t^2}{4m^2\sigma_x^4}}.
+\end{equation}
+Recuerde que $\Delta X(t)=\sqrt{\langle X^2(t)\rangle-\langle X(t)\rangle^2}$.
+\end{enumerate}
+En lo posible, comente sus resultados en cada una de las preguntas.
+
+
+\section{Solución}
+Siguiendo la representación usada en la clase, descomponemos el estado inicial en las ondas planas $\phi_p(x)=\langle x|p\rangle$. La amplitud de la componente de momento $p$ es el producto escalar $\phi(p)=\langle p|\psi(0)\rangle$.
+
+\subsection*{a) Componente $\phi(p)$}
+La condición inicial es
+\begin{equation}
+\psi(x,0)=\frac{1}{(2\pi)^{1/4}\sqrt{\sigma_x}}
+\exp\left[-\frac{x^2}{4\sigma_x^2}\right],
+\end{equation}
+de modo que $|\psi(x,0)|^2$ es una gaussiana centrada en el origen con desviación estándar $\sigma_x$. Usaremos ondas planas normalizadas como
+\begin{equation}
+\braket{x|p}=\frac{1}{\sqrt{2\pi\hb}}\e^{\ii px/\hb}.
+\end{equation}
+
+Por definición,
+\begin{align}
+\phi(p)&=\braket{p|\psi(0)}
+=\frac{1}{\sqrt{2\pi\hb}}\int_{-\infty}^{\infty}
+\e^{-\ii px/\hb}\psi(x,0)\dd x.
+\end{align}
+La integral es gaussiana. Para evaluarla escribimos
+\begin{align}
+-\frac{x^2}{4\sigma_x^2}-\frac{i p x}{\hbar}
+&=-\frac{1}{4\sigma_x^2}\left(x+\frac{2i\sigma_x^2p}{\hbar}\right)^2
+-\frac{\sigma_x^2p^2}{\hbar^2}.
+\end{align}
+Por tanto,
+\begin{align}
+\phi(p)
+&=\frac{e^{-\sigma_x^2p^2/\hbar^2}}{\sqrt{2\pi\hbar}(2\pi)^{1/4}\sqrt{\sigma_x}}
+\int_{-\infty}^{\infty}
+\exp\!\left[-\frac{1}{4\sigma_x^2}\left(x+\frac{2i\sigma_x^2p}{\hbar}\right)^2\right]\,\mathrm dx.
+\end{align}
+La integral restante es la misma integral gaussiana que aparece en la normalización del paquete. De esta forma se obtiene
+\begin{equation}
+\boxed{\phi(p)=\left(\frac{2\sigma_x^2}{\pi\hb^2}\right)^{1/4}
+\exp\left[-\frac{\sigma_x^2p^2}{\hb^2}\right].}
+\end{equation}
+Por tanto $|\phi(p)|^2$ también es gaussiana y
+\begin{equation}
+\Delta P(0)=\frac{\hb}{2\sigma_x},\qquad
+\Delta X(0)\Delta P(0)=\frac{\hb}{2}.
+\end{equation}
+El estado inicial satura la relación de indeterminación de Heisenberg.
+
+\subsection*{b) Función de onda $\psi(x,t)$}
+Para una partícula libre, la ecuación de Schrödinger independiente del tiempo da $E(p)=p^2/(2m)$. Por esto cada onda plana evoluciona multiplicándose por la fase $\exp[-\ii p^2t/(2m\hb)]$. Entonces
+\begin{equation}
+\psi(x,t)=\frac{1}{\sqrt{2\pi\hb}}\int_{-\infty}^{\infty}
+\phi(p)\exp\left(\frac{\ii px}{\hb}-\frac{\ii p^2t}{2m\hb}\right)\dd p.
+\end{equation}
+Sustituyendo $\phi(p)$, el exponente que depende de $p$ es cuadrático. Reuniendo sus términos,
+\begin{equation}
+-\frac{\sigma_x^2}{\hbar^2}p^2-\frac{i t}{2m\hbar}p^2+\frac{i x}{\hbar}p
+=-A p^2+B p,
+\end{equation}
+con
+\begin{equation}
+A=\frac{\sigma_x^2}{\hbar^2}\left(1+i\frac{\hbar t}{2m\sigma_x^2}\right),
+\qquad B=\frac{i x}{\hbar}.
+\end{equation}
+Aplicando la integral gaussiana $\int e^{-Ap^2+Bp}\,\mathrm dp=\sqrt{\pi/A}\,e^{B^2/(4A)}$, cuya parte real de $A$ es positiva, resulta
+\begin{equation}
+\boxed{
+\psi(x,t)=\frac{1}{(2\pi\sigma_x^2)^{1/4}}
+\frac{1}{\sqrt{1+\ii\eta}}
+\exp\left[-\frac{x^2}{4\sigma_x^2(1+\ii\eta)}\right],
+\qquad
+\eta=\frac{\hb t}{2m\sigma_x^2}.}
+\end{equation}
+El módulo cuadrado es
+\begin{equation}
+|\psi(x,t)|^2=
+\frac{1}{\sqrt{2\pi}\,\sigma_x\sqrt{1+\eta^2}}
+\exp\left[-\frac{x^2}{2\sigma_x^2(1+\eta^2)}\right].
+\end{equation}
+
+\subsection*{c) Posición promedio y d) desviación estándar}
+La densidad es par en $x$, de modo que el integrando de $\langle X(t)\rangle$ es impar. Por ello,
+\begin{equation}
+\boxed{\langle X(t)\rangle=0.}
+\end{equation}
+El módulo cuadrado tiene la forma de una densidad gaussiana normalizada,
+\begin{equation}
+|\psi(x,t)|^2=\frac{1}{\sqrt{2\pi}\,s(t)}\exp\left[-\frac{x^2}{2s^2(t)}\right],
+\qquad s^2(t)=\sigma_x^2(1+\eta^2).
+\end{equation}
+Para una gaussiana de esta forma, $\langle X^2\rangle=s^2$. En consecuencia,
+\begin{equation}
+\langle X^2(t)\rangle=\sigma_x^2(1+\eta^2).
+\end{equation}
+Como $\langle X(t)\rangle=0$,
+\begin{equation}
+\boxed{\Delta X(t)=\sigma_x\sqrt{1+\frac{\hb^2t^2}{4m^2\sigma_x^4}}.}
+\end{equation}
+
+\paragraph{Comentario.}
+El centro del paquete permanece en reposo porque $\langle P\rangle=0$, pero el paquete se ensancha. El ensanchamiento no corresponde a una fuerza: proviene de que distintas componentes de momento acumulan fases diferentes durante la evolución libre. Una partícula más masiva se dispersa más lentamente.
+
+
+
+\end{document}

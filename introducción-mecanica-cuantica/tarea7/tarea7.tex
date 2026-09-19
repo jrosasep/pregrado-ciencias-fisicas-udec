@@ -1,0 +1,157 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 7}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 7\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.-]
+\item Determine si un campo magnético débil $B$ levanta total o parcialmente la degeneración del nivel $E_3$ del átomo de hidrógeno. Indique la asociación de los valores perturbados $E_{3,m}$ con las nueve funciones propias $\psi_{3,l,m}(\mathbf r)$.
+\item Una muestra de hidrógeno muy diluida absorbe fotones mediante transiciones desde $\psi_{1,0,0}$ hacia $\{\psi_{2,1,-1},\psi_{2,1,0},\psi_{2,1,1}\}$.
+\begin{enumerate}[label=\alph*)]
+\item ¿Por qué no puede ocurrir la transición $\psi_{1,0,0}\to\psi_{2,0,0}$?
+\item ¿Cuál es la frecuencia de las transiciones permitidas?
+\item En presencia del campo magnético terrestre se observan las frecuencias
+\begin{equation}
+\nu_0-2.1978\times10^6\ \text{Hz},\qquad \nu_0,\qquad
+\nu_0+2.1978\times10^6\ \text{Hz},
+\end{equation}
+con $\nu_0=1.5497\times10^{16}\,$Hz. Encuentre la intensidad $B$.
+\item Considerando que la intensidad del campo magnético terrestre es más intensa en los polos y disminuye hasta la línea del Ecuador, es decir, que $B$ va desde $25\times10^{-6}\,$T (polos) a $65\times10^{-6}\,$T (línea del Ecuador), estime el lugar de la Tierra donde está el laboratorio que observó las frecuencias anteriores.
+\end{enumerate}
+\item Una partícula de masa $m$ y carga $q$ está en una caja infinita de ancho $a$. El momento dipolar medio es
+\begin{equation}
+\langle d(t)\rangle=q\int_0^a x|\psi(x,t)|^2\,\dd x.
+\end{equation}
+Encuentre las transiciones $\phi_n\to\phi_{n'}$ permitidas y prohibidas para emisión y absorción de fotones de frecuencia
+\begin{equation}
+\omega_{n,n'}=\frac{E_{n'}-E_n}{\hbar},\qquad E_{n'}>E_n.
+\end{equation}
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+En la aproximación de campo débil usada en la clase y sin incluir el spin, el campo magnético agrega el término orbital proporcional a $L_z$. Ignorando spin, el término Zeeman orbital débil puede escribirse
+\begin{equation}
+H_Z=\frac{\mu_BB}{\hb}L_z,
+\end{equation}
+de modo que
+\begin{equation}
+\Delta E_{n,l,m}=m\mu_BB.
+\end{equation}
+Para el átomo de hidrógeno, $l=0,1,\ldots,n-1$ y $m=-l,\ldots,l$. Para $n=3$ se tienen $l=0,1,2$, en total $1+3+5=9$ estados. La perturbación produce cinco energías distintas, etiquetadas por $m=-2,-1,0,1,2$:
+\begin{center}
+\begin{tabular}{c|c|c}\toprule
+$m$&desplazamiento&estados\\\midrule
+$-2$&$-2\mu_BB$&$(3,2,-2)$\\
+$-1$&$-\mu_BB$&$(3,1,-1),(3,2,-1)$\\
+$0$&$0$&$(3,0,0),(3,1,0),(3,2,0)$\\
+$1$&$\mu_BB$&$(3,1,1),(3,2,1)$\\
+$2$&$2\mu_BB$&$(3,2,2)$\\\bottomrule
+\end{tabular}
+\end{center}
+La degeneración se levanta parcialmente: sigue habiendo degeneración entre estados con el mismo $m$ pero distinto $l$.
+
+\section{Problema 2}
+Para una interacción dipolar eléctrica, las reglas de selección son
+\begin{equation}
+\Delta l=\pm1,\qquad \Delta m=0,\pm1.
+\end{equation}
+Por eso $1s\to2s$ está prohibida: tiene $\Delta l=0$. Las transiciones $1s\to2p_m$ sí son permitidas.
+
+Sin campo, la frecuencia angular común es
+\begin{equation}
+\omega_0=\frac{E_2-E_1}{\hb}\simeq1.55\times10^{16}\ \mathrm{s}^{-1}.
+\end{equation}
+Con campo, el corrimiento es
+\begin{equation}
+\delta\omega=\frac{\mu_BB}{\hb}.
+\end{equation}
+Usando $\delta\omega=2.1978\times10^6\,\mathrm{s}^{-1}$,
+\begin{equation}
+\boxed{B=\frac{\hb\,\delta\omega}{\mu_B}\simeq2.50\times10^{-5}\ \mathrm T=25.0\ \mu\mathrm T.}
+\end{equation}
+
+\paragraph{Observación.}
+El apunte intercambia el orden típico de las intensidades terrestres: en términos generales el campo total es menor cerca del ecuador magnético y mayor hacia altas latitudes. Por tanto un valor cercano a $25\,\mu\mathrm T$ es compatible con una región próxima al ecuador magnético, no con los polos. Además, los valores dados en el ejercicio son frecuencias angulares, porque el corrimiento se compara naturalmente con $\mu_BB/\hb$.
+
+
+\section{Problema 3}
+La regla de selección se obtiene calculando el elemento de matriz del operador dipolar $qX$. Para $0<x<a$,
+\begin{equation}
+\phi_n(x)=\sqrt{\frac2a}\sin\frac{n\pi x}{a}.
+\end{equation}
+El elemento dipolar es
+\begin{equation}
+d_{n'n}=q\langle n'|X|n\rangle
+=\frac{2q}{a}\int_0^a x\sin\frac{n'\pi x}{a}\sin\frac{n\pi x}{a}\,\mathrm dx.
+\end{equation}
+Usando $\sin A\sin B=[\cos(A-B)-\cos(A+B)]/2$ e integrando $x\cos(cx)$, para $n'\neq n$ se obtiene
+\begin{equation}
+\braket{n'|X|n}=\frac{a}{\pi^2}
+\left[
+\frac{(-1)^{n'-n}-1}{(n'-n)^2}
+-\frac{(-1)^{n'+n}-1}{(n'+n)^2}
+\right].
+\end{equation}
+Este elemento se anula si $n$ y $n'$ tienen la misma paridad y es distinto de cero si tienen paridad opuesta. Por tanto,
+\begin{equation}
+\boxed{\text{transición dipolar permitida: }n+n'\ \text{impar}.}
+\end{equation}
+La frecuencia angular del fotón es
+\begin{equation}
+\omega_{nn'}=\frac{E_{n'}-E_n}{\hb}
+=\frac{\pi^2\hb}{2ma^2}(n'^2-n^2),\qquad n'>n.
+\end{equation}
+
+
+\end{document}

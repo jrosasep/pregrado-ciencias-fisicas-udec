@@ -1,0 +1,142 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 9}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 9\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+Para una partícula de spin $1/2$, la componente del momento angular a lo largo de
+\begin{equation}
+\hat n=(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta)
+\end{equation}
+es
+\begin{equation}
+S_{\theta,\varphi}=\hat n\cdot\mathbf S=\frac{\hbar}{2}\sigma_{\theta,\varphi},
+\end{equation}
+con
+\begin{equation}
+\sigma_{\theta,\varphi}=\sigma_x\sin\theta\cos\varphi+
+\sigma_y\sin\theta\sin\varphi+\sigma_z\cos\theta.
+\end{equation}
+\begin{enumerate}[label=\alph*)]
+\item Calcule la representación matricial de $\sigma_{\theta,\varphi}$ en la base $\{\ket\uparrow,\ket\downarrow\}$.
+\item Calcule sus valores propios.
+\item Encuentre sus vectores propios.
+\item Represente los estados propios de $\sigma_z$ en la base obtenida en c).
+\item Represente los estados propios de $\sigma_y$ en esa misma base.
+\item Represente los estados propios de $\sigma_x$ en esa misma base.
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+En la base $\{|\uparrow\rangle,|\downarrow\rangle\}$ usamos $S_{\hat n}=(\hbar/2)\,\hat n\cdot\boldsymbol\sigma$. El problema se reduce entonces a diagonalizar la matriz de Pauli asociada a
+\begin{equation}
+\hat n=(\sin\theta\cos\varphi,\sin\theta\sin\varphi,\cos\theta)
+\end{equation}
+es
+\begin{equation}
+\sigma_{\theta,\varphi}=\hat n\cdot\bm\sigma
+=\begin{pmatrix}
+\cos\theta&\e^{-\ii\varphi}\sin\theta\\
+\e^{\ii\varphi}\sin\theta&-\cos\theta
+\end{pmatrix}.
+\end{equation}
+El polinomio característico es
+\begin{align}
+0&=\det(\sigma_{\theta,\varphi}-\lambda I)\\
+&=(\cos\theta-\lambda)(-\cos\theta-\lambda)-\sin^2\theta\\
+&=\lambda^2-1.
+\end{align}
+Por tanto,
+\begin{equation}
+\boxed{\lambda_+=+1,\qquad \lambda_-=-1.}
+\end{equation}
+Para $S_{\hat n}=(\hb/2)\sigma_{\theta,\varphi}$ los resultados físicos son $\pm\hb/2$.
+
+Una elección normalizada de vectores propios es
+\begin{align}
+\ket{\hat n,+}&=\cos\frac\theta2\ket\uparrow
++\e^{\ii\varphi}\sin\frac\theta2\ket\downarrow,\\
+\ket{\hat n,-}&=-\e^{-\ii\varphi}\sin\frac\theta2\ket\uparrow
++\cos\frac\theta2\ket\downarrow.
+\end{align}
+Las fases globales son convencionales y no alteran las probabilidades.
+
+\section{Problema 2}
+Invirtiendo las relaciones anteriores,
+\begin{align}
+\ket\uparrow&=\cos\frac\theta2\ket{\hat n,+}
+-\e^{\ii\varphi}\sin\frac\theta2\ket{\hat n,-},\\
+\ket\downarrow&=\e^{-\ii\varphi}\sin\frac\theta2\ket{\hat n,+}
++\cos\frac\theta2\ket{\hat n,-}.
+\end{align}
+Para los estados de $S_x$,
+\begin{equation}
+\ket{\pm x}=\frac{\ket\uparrow\pm\ket\downarrow}{\sqrt2},
+\end{equation}
+y para $S_y$,
+\begin{equation}
+\ket{\pm y}=\frac{\ket\uparrow\pm\ii\ket\downarrow}{\sqrt2}.
+\end{equation}
+Sustituyendo las dos identidades de cambio de base se obtienen directamente sus representaciones en $\{\ket{\hat n,+},\ket{\hat n,-}\}$. Por ejemplo,
+\begin{align}
+\ket{+x}=\frac1{\sqrt2}\bigg[&\left(\cos\frac\theta2+\e^{-\ii\varphi}\sin\frac\theta2\right)\ket{\hat n,+}\\
+&+\left(\cos\frac\theta2-\e^{\ii\varphi}\sin\frac\theta2\right)\ket{\hat n,-}\bigg],
+\end{align}
+y expresiones análogas siguen cambiando el signo o introduciendo los factores $\pm\ii$ para $S_y$.
+
+\paragraph{Comentario.}
+Los estados $\ket{\hat n,\pm}$ son spin ``arriba'' y ``abajo'' respecto de un eje físico orientado por $(\theta,\varphi)$. El cambio de base no es un artificio algebraico: expresa cómo cambian las amplitudes de medición cuando se gira el aparato de Stern--Gerlach.
+
+
+
+\end{document}

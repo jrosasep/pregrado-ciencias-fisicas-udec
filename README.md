@@ -14,6 +14,7 @@ Recopilación personal de tareas, certámenes, informes, scripts y portafolios q
 - `electrodinamica-2/`
 - `relatividad-general-1/`
 - `introduccion-mecanica-cuantica/`
+- `mecanica-cuantica-1/`
 - `laboratorio-2/`
 - `fisica-computacional-2/`
 - `sistemas-dinamicos/`

@@ -1,0 +1,130 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 6}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 6\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.-]
+\item Una partícula de masa $m$ está confinada en un rectángulo de lados $a$ y $b$ con paredes infinitas,
+\begin{equation}
+V(x,y)=\begin{cases}0,&0<x<a,\ 0<y<b,\\\infty,&\text{fuera del rectángulo}.\end{cases}
+\end{equation}
+\begin{enumerate}[label=\alph*)]
+\item Encuentre los valores propios y las funciones propias de energía.
+\item Detalle los grados de degeneración de cada valor propio.
+\end{enumerate}
+\item Una partícula de masa $m$ está confinada en un disco de radio $a$ con pared circular infinita,
+\begin{equation}
+V(r,\varphi)=\begin{cases}0,&0\le r<a,\ 0\le\varphi<2\pi,\\\infty,&r\ge a.\end{cases}
+\end{equation}
+\begin{enumerate}[label=\alph*)]
+\item Encuentre los valores propios y las funciones propias de energía.
+\item Detalle los grados de degeneración de cada valor propio.
+\end{enumerate}
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+Dentro de $0<x<a$, $0<y<b$ el potencial es nulo. Por separación de variables, $\psi(x,y)=X(x)Y(y)$, las paredes infinitas imponen
+\begin{equation}
+X(0)=X(a)=0,\qquad Y(0)=Y(b)=0.
+\end{equation}
+Las soluciones normalizadas son
+\begin{equation}
+\boxed{\psi_{n_xn_y}(x,y)=\frac{2}{\sqrt{ab}}
+\sin\frac{n_x\pi x}{a}\sin\frac{n_y\pi y}{b},}
+\end{equation}
+con $n_x,n_y=1,2,\ldots$, y
+\begin{equation}
+\boxed{E_{n_xn_y}=\frac{\pi^2\hb^2}{2m}
+\left(\frac{n_x^2}{a^2}+\frac{n_y^2}{b^2}\right).}
+\end{equation}
+
+\subsection{Degeneración}
+Dos pares $(n_x,n_y)$ y $(n_x',n_y')$ son degenerados si
+\begin{equation}
+\frac{n_x^2-n_x'^2}{a^2}=-\frac{n_y^2-n_y'^2}{b^2}.
+\end{equation}
+Sin especificar $a/b$ no existe un único grado de degeneración para todos los niveles. Para un rectángulo genérico con razón $a^2/b^2$ irracional, no aparecen degeneraciones accidentales. Para un cuadrado, $a=b$, el intercambio $(n_x,n_y)\leftrightarrow(n_y,n_x)$ produce al menos degeneración doble cuando $n_x\neq n_y$; además pueden existir degeneraciones aritméticas cuando diferentes pares tienen la misma suma de cuadrados.
+
+\section{Problema 2}
+En coordenadas polares, dentro de $r<a$,
+\begin{equation}
+-\frac{\hb^2}{2m}\left[\frac1r\frac{\partial}{\partial r}
+\left(r\frac{\partial}{\partial r}\right)+\frac1{r^2}\frac{\partial^2}{\partial\varphi^2}\right]\psi=E\psi.
+\end{equation}
+Tomamos $\psi=R(r)\Phi(\varphi)$. La periodicidad angular exige
+\begin{equation}
+\Phi_l(\varphi)=\e^{\ii l\varphi},\qquad l\in\mathbb Z.
+\end{equation}
+La ecuación radial es la de Bessel. La regularidad en $r=0$ descarta $Y_l$ y la pared $R(a)=0$ impone
+\begin{equation}
+k_{l,s}a=j_{|l|,s},
+\end{equation}
+donde $j_{\nu,s}$ es la $s$-ésima raíz positiva de $J_\nu$. Por tanto,
+\begin{equation}
+\boxed{E_{l,s}=\frac{\hb^2j_{|l|,s}^2}{2ma^2},}
+\end{equation}
+\begin{equation}
+\boxed{\psi_{l,s}(r,\varphi)=
+\frac{J_{|l|}(j_{|l|,s}r/a)\e^{\ii l\varphi}}
+{a\sqrt\pi\,|J_{|l|+1}(j_{|l|,s})|}.}
+\end{equation}
+Los niveles con $l=0$ no poseen la degeneración $\pm l$; cada nivel con $|l|>0$ es al menos doblemente degenerado porque $E_{l,s}=E_{-l,s}$.
+
+\paragraph{Comentario.}
+En el disco, la degeneración $l\leftrightarrow-l$ proviene de la simetría rotacional y de que la energía depende de $l^2$. En el rectángulo, en cambio, la degeneración depende de relaciones aritméticas entre $a$ y $b$.
+
+
+
+\end{document}

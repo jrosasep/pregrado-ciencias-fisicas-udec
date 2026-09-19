@@ -1,0 +1,146 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 20}}
+\fancyhead[R]{Mecánica Cuántica I}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+{\Huge\bfseries Tarea 20\par}
+\vspace{.4cm}
+{\Huge\bfseries Mecánica Cuántica I\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.]
+\item Considere el oscilador armónico cargado interactuando con un campo eléctrico constante débil, es decir, considere $q\mathcal E\ll1$. Encuentre los valores propios y estados propios, al primer orden diferente de cero, del Hamiltoniano perturbado debido a la interacción con el campo eléctrico.
+\item Considere el sistema de dos osciladores armónicos idénticos estudiado en la clase, con potencial de interacción $-\delta X_1X_2$. Determine si se levanta o no la degeneración triple del nivel $E_2=3\hbar\omega$. Si la respuesta es positiva, encuentre los nuevos valores propios a primer orden en $\delta$ y los respectivos estados propios a orden cero en $\delta$.
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+Para el nivel no degenerado usamos la expansión perturbativa independiente del tiempo de la clase. Si $H=H_0+V$, la corrección de primer orden a la energía es
+\begin{equation}
+E_n^{(1)}=\langle n|V|n\rangle,
+\end{equation}
+y la corrección de primer orden al estado se obtiene proyectando $V|n\rangle$ sobre los demás estados propios de $H_0$.
+
+Tomamos
+\begin{equation}
+H=H_0+V,
+\qquad
+H_0=\hb\omega\left(a^\dagger a+\frac12\right),
+\qquad
+V=-q\mathcal E X,
+\end{equation}
+con
+\begin{equation}
+X=\sqrt{\frac{\hb}{2m\omega}}(a+a^\dagger).
+\end{equation}
+La corrección de energía de primer orden es
+\begin{equation}
+E_n^{(1)}=\braket{n|V|n}=0,
+\end{equation}
+porque $X$ sólo conecta estados con $\Delta n=\pm1$.
+
+El primer orden no nulo de la energía es segundo orden:
+\begin{align}
+E_n^{(2)}&=\sum_{m\neq n}\frac{|\braket{m|V|n}|^2}{E_n^{(0)}-E_m^{(0)}}\\
+&=\frac{q^2\mathcal E^2\hb}{2m\omega}
+\left[\frac{n}{\hb\omega}-\frac{n+1}{\hb\omega}\right]\\
+&=\boxed{-\frac{q^2\mathcal E^2}{2m\omega^2}.}
+\end{align}
+Por tanto,
+\begin{equation}
+\boxed{E_n=\hb\omega\left(n+\frac12\right)-\frac{q^2\mathcal E^2}{2m\omega^2}+O(\mathcal E^4).}
+\end{equation}
+
+Los estados sí reciben una corrección lineal. Definiendo
+\begin{equation}
+\alpha=\frac{q\mathcal E}{\sqrt{2m\hb\omega^3}},
+\end{equation}
+se obtiene
+\begin{equation}
+\boxed{\ket{n}_{\rm pert}=\ket n+\alpha\left(\sqrt{n+1}\ket{n+1}-\sqrt n\ket{n-1}\right)+O(\alpha^2).}
+\end{equation}
+Esto coincide con la expansión del estado desplazado exacto $D(\alpha)\ket n$.
+
+\section{Problema 2}
+Aquí el nivel de energía de interés es degenerado. Siguiendo la clase, antes de usar fórmulas no degeneradas debemos diagonalizar la perturbación dentro del subespacio degenerado.
+
+El subespacio degenerado está generado por
+\begin{equation}
+\ket{0,2},\qquad \ket{1,1},\qquad \ket{2,0}.
+\end{equation}
+La clase usa un acoplamiento
+\begin{equation}
+H=H_0-\delta X_1X_2.
+\end{equation}
+Dentro de este subespacio,
+\begin{equation}
+X_1X_2\ \widehat{=}\ \frac{\hb\sqrt2}{2m\omega}
+\begin{pmatrix}
+0&1&0\\1&0&1\\0&1&0
+\end{pmatrix}.
+\end{equation}
+Sus valores propios son $+\hb/(m\omega)$, $0$, $-\hb/(m\omega)$. Como la perturbación es $-\delta X_1X_2$, las energías a primer orden son
+\begin{equation}
+\boxed{E_{2,-}=3\hb\omega-\delta\frac{\hb}{m\omega},\qquad
+E_{2,0}=3\hb\omega,\qquad
+E_{2,+}=3\hb\omega+\delta\frac{\hb}{m\omega}.}
+\end{equation}
+La degeneración triple se levanta por completo. Los correspondientes estados de orden cero pueden escogerse como
+\begin{align}
+\ket{\chi_-}&=\frac12\left(\ket{0,2}+\sqrt2\ket{1,1}+\ket{2,0}\right),\\
+\ket{\chi_0}&=\frac1{\sqrt2}\left(\ket{0,2}-\ket{2,0}\right),\\
+\ket{\chi_+}&=\frac12\left(\ket{0,2}-\sqrt2\ket{1,1}+\ket{2,0}\right).
+\end{align}
+Los subíndices se han elegido según el corrimiento energético producido por $-\delta X_1X_2$.
+
+\paragraph{Comentario.}
+En perturbación degenerada no es correcto corregir por separado los estados originales $\ket{0,2}$, $\ket{1,1}$ y $\ket{2,0}$. Primero debe diagonalizarse la perturbación dentro del subespacio degenerado; esas combinaciones lineales son los estados físicos de orden cero apropiados.
+
+
+
+\end{document}

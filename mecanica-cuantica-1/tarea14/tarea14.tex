@@ -1,0 +1,156 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 14}}
+\fancyhead[R]{Mecánica Cuántica I}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+{\Huge\bfseries Tarea 14\par}
+\vspace{.4cm}
+{\Huge\bfseries Mecánica Cuántica I\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+Un oscilador armónico está inicialmente en
+\begin{equation}
+\ket{\psi(0)}=\frac{1}{\sqrt2}(\ket n+\ket{n+1}).
+\end{equation}
+\begin{enumerate}[label=\arabic*.]
+\item Encuentre $\ket{\psi(t)}$.
+\item Calcule la probabilidad de encontrar el oscilador, en un instante $t$, en el estado inicial $\ket{\psi(0)}$.
+\item Encuentre $\langle X(t)\rangle$.
+\item Encuentre $\Delta X(t)$.
+\item Encuentre $\langle P(t)\rangle$.
+\item Encuentre $\Delta P(t)$.
+\item Encuentre $\langle H(t)\rangle$.
+\item Encuentre $\Delta H$.
+\item Iguale los promedios cuánticos iniciales a condiciones iniciales clásicas
+\begin{equation}
+x_0=\sqrt{\frac{\hbar(n+1)}{2m\omega}},\qquad p_0=0,
+\end{equation}
+y compare la energía clásica asociada a la trayectoria de los promedios con la energía promedio cuántica.
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+Usamos los estados número y los operadores escalera del oscilador armónico,
+\begin{equation}
+a|n\rangle=\sqrt n\,|n-1\rangle,\qquad a^\dagger|n\rangle=\sqrt{n+1}\,|n+1\rangle.
+\end{equation}
+Cada componente de energía sólo adquiere su fase temporal.
+
+El estado inicial es
+\begin{equation}
+\ket{\psi(0)}=\frac{\ket n+\ket{n+1}}{\sqrt2}.
+\end{equation}
+Con $E_n=\hb\omega(n+1/2)$,
+\begin{equation}
+\boxed{\ket{\psi(t)}=\frac1{\sqrt2}
+\left(\e^{-\ii E_nt/\hb}\ket n+\e^{-\ii E_{n+1}t/\hb}\ket{n+1}\right).}
+\end{equation}
+El retorno al estado inicial tiene amplitud
+\begin{equation}
+\braket{\psi(0)|\psi(t)}=\e^{-\ii\omega(n+1)t}\cos\frac{\omega t}{2},
+\end{equation}
+por lo que
+\begin{equation}
+\boxed{P_{\rm retorno}(t)=\cos^2\frac{\omega t}{2}.}
+\end{equation}
+
+\section{Problema 2}
+Usamos
+\begin{equation}
+X=\sqrt{\frac{\hb}{2m\omega}}(a+a^\dagger),\qquad
+P=\ii\sqrt{\frac{m\hb\omega}{2}}(a^\dagger-a).
+\end{equation}
+El único elemento cruzado relevante es $\braket{n|a|n+1}=\sqrt{n+1}$. Entonces
+\begin{equation}
+\boxed{\langle X(t)\rangle=\sqrt{\frac{\hb(n+1)}{2m\omega}}\cos\omega t,}
+\end{equation}
+\begin{equation}
+\boxed{\langle P(t)\rangle=-\sqrt{\frac{m\hb\omega(n+1)}{2}}\sin\omega t.}
+\end{equation}
+Además,
+\begin{equation}
+\langle X^2\rangle=\frac{\hb(n+1)}{m\omega},\qquad
+\langle P^2\rangle=m\hb\omega(n+1),
+\end{equation}
+y por tanto
+\begin{align}
+\boxed{\Delta X(t)=\sqrt{\frac{\hb(n+1)}{2m\omega}\left(1+\sin^2\omega t\right)},}\\
+\boxed{\Delta P(t)=\sqrt{\frac{m\hb\omega(n+1)}{2}\left(1+\cos^2\omega t\right)}.}
+\end{align}
+
+\section{Problema 3}
+Como el Hamiltoniano es diagonal en la base número,
+\begin{equation}
+\boxed{\langle H\rangle=\hb\omega(n+1),\qquad
+\Delta H=\frac{\hb\omega}{2}.}
+\end{equation}
+
+Si se construye una trayectoria clásica usando sólo los valores medios iniciales,
+\begin{equation}
+x_0=\sqrt{\frac{\hb(n+1)}{2m\omega}},\qquad p_0=0,
+\end{equation}
+la energía clásica asociada es
+\begin{equation}
+E_{\rm cl}=\frac12m\omega^2x_0^2
+=\frac{\hb\omega(n+1)}{4}.
+\end{equation}
+Así,
+\begin{equation}
+\boxed{E_{\rm cl}\neq\langle H\rangle.}
+\end{equation}
+
+\paragraph{Comentario.}
+Los valores medios obedecen las ecuaciones clásicas del oscilador, pero no contienen toda la energía cuántica. La diferencia reside en las fluctuaciones de $X$ y $P$, que permanecen finitas incluso cuando los promedios siguen una órbita clásica.
+
+
+\paragraph{Signo del momento.}
+Con la convención estándar $P=\ii\sqrt{m\hb\omega/2}(a^\dagger-a)$, una trayectoria que parte de $x_0>0$ con $p_0=0$ tiene $p(t)=-m\omega x_0\sin\omega t$. Si en el apunte aparece el signo positivo, éste no es consistente con $\dot x=p/m$ para esa condición inicial.
+
+
+
+\end{document}

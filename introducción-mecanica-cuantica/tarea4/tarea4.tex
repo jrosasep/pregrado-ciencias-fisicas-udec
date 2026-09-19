@@ -1,0 +1,157 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=20mm,bottom=20mm]{geometry}
+\usepackage{amsmath,amssymb,amsfonts,mathtools,bm}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{lmodern,microtype}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+\numberwithin{equation}{section}
+\renewcommand{\boxed}[1]{#1}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\dd}{\,\mathrm d}
+\newcommand{\ii}{\mathrm i}
+\newcommand{\e}{\mathrm e}
+\newcommand{\hb}{\hbar}
+\newcommand{\R}{\mathbb R}
+\newcommand{\C}{\mathbb C}
+\newcommand{\id}{\mathbb I}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyhead[L]{\textit{Tarea 4}}
+\fancyhead[R]{Física VII: Introducción a la Mecánica Cuántica}
+\begin{document}
+\begin{titlepage}
+\centering
+\vspace*{1.8cm}
+\includegraphics[width=.22\textwidth]{UdeC_escudo.png}
+\vspace{1.1cm}
+
+{\Huge\bfseries Tarea 4\par}
+\vspace{.4cm}
+{\Huge\bfseries Física VII: Introducción a la Mecánica Cuántica\par}
+\vspace{1.5cm}
+{\Large José Ignacio Rosas Sepúlveda\par}
+\vspace{.8cm}
+{\Large Solución\par}
+\vfill
+\thispagestyle{empty}
+\end{titlepage}
+\tableofcontents
+\newpage
+\section*{Enunciado}
+\addcontentsline{toc}{section}{Enunciado}
+\begin{enumerate}[label=\arabic*.-]
+\item Describa, como una receta o protocolo, los pasos fundamentales que permiten pasar desde el planteamiento de un problema cuántico hasta obtener $\psi(x,t)$.
+\item Escriba las diferencias fundamentales entre los resultados clásicos y cuánticos del problema de caída libre descrito en la clase.
+\item Calcule numéricamente, para $n,m=1,2$, las integrales
+\begin{equation}
+I_{nm}=\int_0^\infty \operatorname{Ai}(u-|u_n|)\operatorname{Ai}(u-|u_m|)\,\dd u,
+\end{equation}
+donde $u_n$ son ceros de la función de Airy.
+\item Una partícula de masa $m$ se mueve libremente sobre una trayectoria circular sin roce, de perímetro $l$.
+\begin{enumerate}[label=\alph*)]
+\item Encuentre las funciones propias $\{\phi_n(x)\}$ y los valores propios $\{E_n\}$.
+\item Inicialmente $\psi(x,0)=N$ para $0\le x\le l$. Encuentre $N$.
+\item Encuentre la distribución $\operatorname{prob}(E_n)$.
+\item Encuentre $\psi(x,t)$.
+\item Grafique $l|\psi(x,t)|^2$ como función de $x/l$ para distintos valores de $\tau=E_1t/\hbar$.
+\end{enumerate}
+\end{enumerate}
+En lo posible, comente sus resultados.
+
+
+\section{Problema 1}
+La receta es la misma utilizada en la clase para la caída libre y para los problemas anteriores. Para un Hamiltoniano independiente del tiempo, el procedimiento utilizado en la clase puede organizarse de la siguiente forma:
+\begin{enumerate}[label=\arabic*.]
+\item Definir con precisión el dominio, el potencial $V(x)$ y las condiciones de borde.
+\item Resolver la ecuación estacionaria $H\phi_n=E_n\phi_n$ y descartar soluciones no normalizables.
+\item Imponer las condiciones de borde para cuantizar, cuando corresponda, los valores de energía.
+\item Normalizar las funciones propias y verificar su ortogonalidad.
+\item Expandir la condición inicial: $c_n=\braket{\phi_n|\psi(0)}$.
+\item Evolucionar cada componente con su fase: $c_n\e^{-\ii E_nt/\hb}$.
+\item Reconstruir
+\begin{equation}
+\boxed{\psi(x,t)=\sum_n c_n\phi_n(x)\e^{-\ii E_nt/\hb},}
+\end{equation}
+o reemplazar la suma por una integral si el espectro es continuo.
+\item Comprobar normalización y, si se usan métodos numéricos, convergencia al aumentar el número de estados de la expansión.
+\end{enumerate}
+
+\section{Problema 2}
+En la clase se estudia $V(x)=mgx$ para $x>0$ con pared infinita en $x=0$.
+\begin{itemize}
+\item Clásicamente, la energía $E=mgx_0$ puede tomar cualquier valor no negativo; cuánticamente el espectro es discreto.
+\item Clásicamente el valor mínimo es $E=0$; cuánticamente la condición de borde produce una energía fundamental positiva.
+\item Clásicamente $x(t)$ y $p(t)$ están determinados por las condiciones iniciales. Cuánticamente el estado determina distribuciones de probabilidad y sus momentos.
+\item Los estados estacionarios cuánticos están descritos por funciones de Airy y no por trayectorias.
+\end{itemize}
+Los niveles son
+\begin{equation}
+E_n=|u_n|\left(\frac{mg^2\hb^2}{2}\right)^{1/3},
+\end{equation}
+donde $u_n<0$ son las raíces de $\operatorname{Ai}(u)$.
+
+\section{Problema 3}
+Definimos
+\begin{equation}
+I_{nm}=\int_0^\infty \operatorname{Ai}(u-|u_n|)\operatorname{Ai}(u-|u_m|)\dd u.
+\end{equation}
+Con $u_1=-2.33810741$ y $u_2=-4.08794944$, la integración numérica da
+\begin{center}
+\begin{tabular}{c|cc}\toprule
+&$m=1$&$m=2$\\\midrule
+$n=1$&$0.4916966$&$\simeq0$\\
+$n=2$&$\simeq0$&$0.6449879$\\\bottomrule
+\end{tabular}
+\end{center}
+Estos valores coinciden con
+\begin{equation}
+I_{nn}=[\operatorname{Ai}'(u_n)]^2,
+\end{equation}
+con $|\operatorname{Ai}'(u_1)|\simeq0.7012108$ y $|\operatorname{Ai}'(u_2)|\simeq0.8031114$. Los términos cruzados se anulan por ortogonalidad.
+
+\section{Problema 4}
+Sea $x\in[0,l)$ una coordenada periódica, $\psi(x+l)=\psi(x)$. Para
+\begin{equation}
+H=-\frac{\hb^2}{2m}\frac{\dd^2}{\dd x^2},
+\end{equation}
+las soluciones periódicas normalizadas pueden escribirse
+\begin{equation}
+\boxed{\phi_n(x)=\frac1{\sqrt l}\e^{\ii2\pi nx/l},\qquad
+E_n=\frac{2\pi^2\hb^2}{ml^2}n^2,\qquad n\in\mathbb Z.}
+\end{equation}
+Los niveles $n$ y $-n$ son degenerados para $n\neq0$.
+
+Para la condición inicial uniforme, $\psi(x,0)=N$, la normalización da
+\begin{equation}
+\boxed{N=\frac1{\sqrt l}.}
+\end{equation}
+Este estado es precisamente $\phi_0$, por lo que
+\begin{equation}
+P(E_0)=1,\qquad P(E_{n\neq0})=0,
+\end{equation}
+y
+\begin{equation}
+\boxed{\psi(x,t)=\frac1{\sqrt l}.}
+\end{equation}
+La densidad escalada solicitada es simplemente $l|\psi|^2=1$ para todo $x/l$ y para todo tiempo.
+
+\paragraph{Comentario.}
+Aunque el Hamiltoniano permite movimiento con momento distinto de cero, una función inicial uniforme es un estado propio de momento cero. No se dispersa porque ya es un estado estacionario.
+
+
+
+\end{document}
